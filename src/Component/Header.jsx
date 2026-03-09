@@ -1,6 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 
+import {
+  FaEnvelope,
+  FaClock,
+  FaFacebookF,
+  FaXTwitter,
+  FaInstagram,
+  FaBars
+} from "react-icons/fa6";
+
 export default function Header() {
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -8,11 +17,8 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 120) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      if (window.scrollY > 80) setScrolled(true);
+      else setScrolled(false);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -22,79 +28,65 @@ export default function Header() {
   return (
     <header className="w-full">
 
-      {/* Hide Top Header when scroll */}
-      {!scrolled && (
-        <>
-          {/* Top Bar */}
-          <div className="bg-black text-white text-xs sm:text-sm">
-            <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
+      {/* Top Bar */}
+      
 
-              <div className="flex gap-6">
-                <p>✉ Demo@example.com</p>
-                <p>Open hours: Mon - Fri: 9:00AM - 6:00PM</p>
-              </div>
-
-              <div className="flex gap-4">
-                <span>f</span>
-                <span>X</span>
-                <span>📷</span>
-              </div>
-
-            </div>
-          </div>
-
-
-          {/* Middle Header */}
-          <div className="bg-gray-100">
-            <div className="max-w-7xl mx-auto grid grid-cols-3 items-center px-4 py-4">
-
-              <div className="flex items-center gap-3">
-                📍
-                <div>
-                  <p className="font-semibold">Location</p>
-                  <p className="text-gray-500 text-sm">
-                    2334 Peterson Street Kingston
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center text-3xl font-bold text-blue-600">
-                MAYA FISH FARM
-              </div>
-
-              <div className="flex justify-end items-center gap-3">
-                ✉
-                <div>
-                  <p className="font-semibold">Telephone</p>
-                  <p className="text-gray-500 text-sm">
-                    +199 1123-2234-21
-                  </p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </>
-      )}
 
       {/* Navbar */}
       <nav
         className={`w-full z-50 transition-all duration-300 ${
           scrolled
-            ? "fixed top-0 bg-black/70 backdrop-blur-md shadow-lg"
-            : "bg-blue-500"
+            ? "fixed top-0 bg-black/80 backdrop-blur-md shadow-lg"
+            : "bg-blue-600"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-center items-center gap-10 text-white text-lg">
 
-          <a href="#" className="hover:text-blue-300">Home</a>
-          <a href="#" className="hover:text-blue-300">About</a>
-          <a href="#" className="hover:text-blue-300">Service</a>
-          <a href="#" className="hover:text-blue-300">Pages</a>
-          <a href="#" className="hover:text-blue-300">Contact</a>
-          
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center text-white">
+
+          {/* Logo */}
+          <div className="text-xl md:text-2xl font-bold">
+            MAYA FISH FARM
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex gap-10 text-lg">
+
+            <a href="#" className="hover:text-blue-300">Home</a>
+            <a href="#" className="hover:text-blue-300">About</a>
+            <a href="#" className="hover:text-blue-300">Service</a>
+            <a href="#" className="hover:text-blue-300">Pages</a>
+            <a href="#" className="hover:text-blue-300">Contact</a>
+
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-2xl"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <FaBars />
+          </button>
 
         </div>
+
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden bg-blue-600 text-white px-6 pb-6">
+
+            <div className="flex flex-col gap-4 text-lg">
+
+              <a href="#" className="border-b border-blue-400 pb-2">Home</a>
+              <a href="#" className="border-b border-blue-400 pb-2">About</a>
+              <a href="#" className="border-b border-blue-400 pb-2">Service</a>
+              <a href="#" className="border-b border-blue-400 pb-2">Pages</a>
+              <a href="#" className="border-b border-blue-400 pb-2">Contact</a>
+
+            </div>
+
+          </div>
+        )}
+
       </nav>
 
     </header>
