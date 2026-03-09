@@ -3,6 +3,9 @@ import Header from "../Component/Header"
 import Hero   from "../Component/Hero"
 import FishVarieties from "@/Component/FishVarieties";
 import AboutMayaFish from "@/Component/AboutMayaFish";
+import LiveFishFeed from "@/Component/LiveFishFeed";
+import WhyChooseMaya from "@/Component/WhyChooseMaya";
+import CallToAction from "@/Component/CallToAction";
 export default function Home() {
   return (
     <div>
@@ -10,7 +13,10 @@ export default function Home() {
       <Hero />
       <AboutMayaFish/>
       <FishVarieties/>
-      <Footer />
+      <LiveFishFeed/>
+      <WhyChooseMaya/>  
+      <CallToAction/>
+      <Footer/>
     </div>
   );
 }

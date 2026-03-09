@@ -3,68 +3,88 @@ export default function FishVarieties() {
   const fishes = [
     {
       name: "Gold Fish",
-      image: "https://images.unsplash.com/photo-1571759934494-7d0d1b5bb7ec"
+      image: "goldfish.png",
+      desc: "Popular aquarium fish known for its bright golden color."
     },
     {
       name: "Angel Fish",
-      image: "https://images.unsplash.com/photo-1609424578068-9a5b3f2c5f9b"
+      image: "angel.png",
+      desc: "Elegant freshwater fish with beautiful triangular fins."
     },
     {
       name: "Yellow Molly",
-      image: "https://images.unsplash.com/photo-1583212292454-1fe6229603b7"
+      image: "yellowmolly.png",
+      desc: "Peaceful live-bearing fish perfect for community aquariums."
     },
     {
       name: "Guppies",
-      image: "https://images.unsplash.com/photo-1520302630591-fd1c66ed9a5c"
+      image: "guppies.png",
+      desc: "Small colorful fish loved by aquarium hobbyists."
     },
     {
       name: "Fighter Fish (Betta)",
-      image: "https://images.unsplash.com/photo-1598133894008-61f7fdb8cc3a"
+      image: "fighter.png",
+      desc: "Vibrant fish famous for its flowing fins and colors."
     },
     {
       name: "Koi Carp",
-      image: "https://images.unsplash.com/photo-1589923188651-268a9765e432"
+      image: "koicrap.png",
+      desc: "Large ornamental fish often kept in garden ponds."
     }
   ];
 
   return (
-    <section className="bg-gray-100 py-16 px-4">
+    <section className="bg-white py-24 px-6">
 
       <div className="max-w-7xl mx-auto">
 
-        {/* Title */}
-        <h2 className="text-2xl md:text-4xl font-bold text-center mb-14">
-          🐠 Our Popular Fish Varieties
-        </h2>
+        {/* Heading */}
+        <div className="text-center mb-16">
+
+          <p className="text-blue-600 font-semibold mb-2">
+            Our Fish Collection
+          </p>
+
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800">
+            Popular Fish Varieties
+          </h2>
+
+          <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+            Explore a wide range of healthy ornamental fishes bred with care
+            at Maya Fish Firm.
+          </p>
+
+        </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
 
           {fishes.map((fish, index) => (
             <div
               key={index}
-              className="relative group overflow-hidden rounded-xl shadow-lg cursor-pointer"
+              className="relative group overflow-hidden shadow-xl cursor-pointer rounded-[60px_20px_60px_20px]"
             >
 
               {/* Image */}
               <img
-                src={`${fish.image}?auto=format&fit=crop&w=800&q=60`}
+                src={fish.image}
                 alt={fish.name}
-                className="w-full h-[260px] sm:h-[280px] md:h-[300px] object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:rotate-1"
+                className="w-full h-72 object-cover transition duration-700 group-hover:scale-110 rounded-[60px_20px_60px_20px]"
               />
 
-              {/* Dark gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
+              {/* Dark Hover Overlay */}
+              <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition duration-500 rounded-[60px_20px_60px_20px]"></div>
 
-              {/* White hover overlay */}
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-80 transition-all duration-500"></div>
+              {/* Center Text */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 opacity-0 group-hover:opacity-100 transition duration-500">
 
-              {/* Text */}
-              <div className="absolute bottom-6 left-6 z-10 transform transition-all duration-500 group-hover:bottom-10">
-
-                <h3 className="text-white group-hover:text-black text-lg md:text-xl font-semibold">
+                <h3 className="text-white text-2xl font-bold mb-3 transform translate-y-4 group-hover:translate-y-0 transition duration-500">
                   {fish.name}
                 </h3>
+
+                <p className="text-gray-300 text-sm transform translate-y-6 group-hover:translate-y-0 transition duration-700">
+                  {fish.desc}
+                </p>
 
               </div>
 
