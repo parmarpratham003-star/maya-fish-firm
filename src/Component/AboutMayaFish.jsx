@@ -1,34 +1,28 @@
 export default function AboutMayaFish() {
   return (
-    <section className="py-24 bg-gray-100 px-6">
+    <section className="py-24 px-6">
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
-        {/* LEFT IMAGE SECTION */}
-        <div className="relative">
+        {/* LEFT IMAGE */}
+        <div className="relative group animate-slideLeft">
 
-          {/* Main Image */}
           <img
             src="/all.png"
             alt="Fish Farm"
-            className="rounded-lg shadow-lg w-full"
+            className="rounded-2xl shadow-xl w-full transition duration-700 group-hover:scale-105"
           />
 
-          {/* Floating Video/Image Card */}
-          <div className="absolute bottom-[-40px] right-[-40px] bg-white p-3 rounded-lg shadow-xl w-64">
+          {/* Floating Card */}
+          <div className="absolute -bottom-8 -right-8 bg-white p-6 rounded-xl shadow-xl">
 
-            <div className="relative">
+            <p className="text-[#0A84D6] font-semibold text-sm">
+              Premium Quality Fish
+            </p>
 
-              
-
-              {/* Play Button
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-white p-4 rounded-full shadow-md">
-                  ▶
-                </div>
-              </div> */}
-
-            </div>
+            <p className="text-[#083B66] text-xs">
+              Healthy ornamental fish breeding
+            </p>
 
           </div>
 
@@ -36,47 +30,27 @@ export default function AboutMayaFish() {
 
 
         {/* RIGHT CONTENT */}
-        <div>
+        <div className="animate-slideRight">
 
-          <p className="text-blue-600 font-semibold mb-2">
+          <p className="text-[#0A84D6] font-semibold mb-3">
             About Us
           </p>
 
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#083B66] mb-6 transition duration-500 hover:text-[#0A84D6]">
             We Provide Best Fish Farmers Mission
           </h2>
 
-          <p className="text-gray-600 leading-relaxed mb-8">
+          <p className="text-[#083B66] leading-relaxed mb-8">
             Maya Fish Firm specializes in breeding high-quality ornamental
             fish and supplying healthy aquarium fish for hobbyists,
             pet stores, and bulk buyers. We maintain clean water systems
             and proper breeding methods to ensure strong fish.
           </p>
 
-
-          {/* Feature Card
-          <div className="flex items-center bg-white rounded-full p-4 shadow-md mb-8">
-
-            <img
-              src="/goldfish.png"
-              alt="Fish Farmer"
-              className="w-14 h-14 rounded-full object-cover mr-4"
-            />
-
-            <div>
-              <h4 className="font-semibold text-gray-800">
-                Giant Fishes Farming
-              </h4>
-              <p className="text-gray-500 text-sm">
-                Professional fish breeding and farming techniques
-              </p>
-            </div>
-
-          </div> */}
-
-
           {/* Button */}
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition">
+          <button className="bg-[#0A84D6] text-white px-8 py-3 rounded-full
+          hover:bg-[#4FD1E8] hover:scale-105 transition duration-300
+          shadow-lg animate-slideUp">
             About More
           </button>
 

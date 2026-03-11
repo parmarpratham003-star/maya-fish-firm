@@ -14,7 +14,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative text-white"
+      className="relative text-white font-sans"
       style={{
         backgroundImage: "url('/image.png')",
         backgroundSize: "cover",
@@ -42,11 +42,11 @@ export default function Footer() {
 
           {/* About */}
           <div>
-            <h2 className="text-3xl font-bold text-blue-400 mb-4">
+            <h2 className="text-3xl font-extrabold tracking-wider text-blue-400 mb-4">
               MAYA FISH FARM
             </h2>
 
-            <p className="text-gray-300 text-sm mb-4">
+            <p className="text-gray-300 text-sm leading-relaxed mb-4 font-light">
               Sustainable aquaculture solutions providing fresh fish
               production and quality services for local markets.
             </p>
@@ -61,10 +61,12 @@ export default function Footer() {
 
           {/* Useful Links */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Useful Links</h3>
+            <h3 className="text-xl font-semibold tracking-wide mb-4">
+              Useful Links
+            </h3>
 
-            <ul className="space-y-2 text-gray-300">
-              {["Home","About","Service",,"Contact Us"].map((item,i)=>(
+            <ul className="space-y-2 text-gray-300 text-sm font-light">
+              {["Home","About","Service","Contact Us"].map((item,i)=>(
                 <li
                   key={i}
                   className="cursor-pointer hover:text-blue-400 transition transform hover:translate-x-1"
@@ -77,14 +79,16 @@ export default function Footer() {
 
           {/* Working Hours */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Working Hours</h3>
+            <h3 className="text-xl font-semibold tracking-wide mb-4">
+              Working Hours
+            </h3>
 
-            <p className="text-gray-300 text-sm mb-4">
+            <p className="text-gray-300 text-sm leading-relaxed mb-4 font-light">
               Visit our farm during working hours for fresh fish
               and aquaculture services.
             </p>
 
-            <div className="space-y-2 text-gray-300 text-sm">
+            <div className="space-y-2 text-gray-300 text-sm font-light">
               <p>Mon - Fri : 9:00AM - 6:00PM</p>
               <p>Sat - Sun : 8:00AM - 4:00PM</p>
             </div>
@@ -92,19 +96,21 @@ export default function Footer() {
 
           {/* Subscribe */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Subscribe</h3>
+            <h3 className="text-xl font-semibold tracking-wide mb-4">
+              Subscribe
+            </h3>
 
-            <p className="text-gray-300 text-sm mb-4">
+            <p className="text-gray-300 text-sm leading-relaxed mb-4 font-light">
               Get latest updates about fish farming and offers.
             </p>
 
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-3 mb-3 bg-transparent border border-gray-400 focus:outline-none focus:border-blue-400"
+              className="w-full px-4 py-3 mb-3 bg-transparent border border-gray-400 focus:outline-none focus:border-blue-400 text-sm"
             />
 
-            <button className="w-full bg-blue-500 hover:bg-blue-600 py-3 font-semibold transition">
+            <button className="w-full bg-blue-500 hover:bg-blue-600 py-3 font-semibold tracking-wide transition">
               Subscribe
             </button>
           </div>
@@ -112,7 +118,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-gray-600 text-center pt-6 mt-10 text-gray-300 text-sm">
+        <div className="border-t border-gray-600 text-center pt-6 mt-10 text-gray-300 text-sm tracking-wide">
           Copyright © Maya Fish Farm. All rights reserved.
         </div>
 

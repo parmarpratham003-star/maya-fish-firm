@@ -1,109 +1,91 @@
 import { FaFish, FaWater, FaTruck, FaUserFriends, FaCheckCircle } from "react-icons/fa";
 
 export default function WhyChooseMaya() {
+
+  const cards = [
+    {
+      icon: <FaFish />,
+      title: "Healthy & Disease-Free Fish",
+      text: "Carefully bred fish with strong immunity and proper care."
+    },
+    {
+      icon: <FaWater />,
+      title: "Clean Breeding System",
+      text: "Maintained tanks and clean water systems for healthy fish."
+    },
+    {
+      icon: <FaTruck />,
+      title: "Affordable Bulk Supply",
+      text: "Reliable and affordable fish supply for shops and dealers."
+    },
+    {
+      icon: <FaCheckCircle />,
+      title: "Expert Fish Care Guidance",
+      text: "Professional help for aquarium care and maintenance."
+    },
+    {
+      icon: <FaUserFriends />,
+      title: "Trusted Service",
+      text: "Dedicated support for hobbyists and aquarium businesses."
+    }
+  ];
+
   return (
-    <section className="bg-gray-50 py-24 px-6">
+    <section className="py-24 px-6 overflow-hidden bg-[#071A2F]">
 
       <div className="max-w-7xl mx-auto">
 
-        {/* Heading (same style as About section) */}
-        <div className="text-center mb-20">
+        {/* Heading */}
+        <div className="text-center mb-16">
 
-          <p className="text-blue-600 font-semibold mb-2">
+          <p className="text-[#4FD1E8] font-semibold mb-2 animate-slideLeft">
             Why Choose Us
           </p>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800">
+          <h2 className="text-4xl md:text-5xl font-bold text-white animate-slideRight">
             Why Choose Maya Fish Firm
           </h2>
 
-          <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+          <p className="text-[#C7D5E0] mt-4 max-w-2xl mx-auto animate-slideLeft">
             We provide healthy ornamental fish, clean breeding systems,
             and reliable service for aquarium hobbyists and pet shops.
           </p>
 
         </div>
 
-        {/* Cards */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10">
 
-          {/* Card */}
-          <div className="bg-white p-8 shadow-md hover:shadow-xl transition 
-          [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%)]">
+        {/* Auto Moving Cards */}
+        <div className="relative w-full overflow-hidden">
 
-            <FaFish className="text-blue-600 text-3xl mb-4" />
+          <div className="flex gap-8 animate-marquee hover:[animation-play-state:paused]">
 
-            <h3 className="font-semibold text-gray-800 mb-2">
-              Healthy & Disease-Free Fish
-            </h3>
+            {cards.concat(cards).map((card, index) => (
+              <div
+                key={index}
+                className="min-w-[280px] backdrop-blur-md bg-white/10 border border-white/20
+                rounded-2xl p-8 shadow-lg transition duration-300 group
+                hover:-translate-y-2 hover:shadow-[0_0_25px_rgba(79,209,232,0.5)]"
+              >
 
-            <p className="text-gray-500 text-sm">
-              Carefully bred fish with strong immunity and proper care.
-            </p>
+                <div className="w-14 h-14 flex items-center justify-center
+                rounded-full bg-[#083B66] mb-5 group-hover:bg-[#0A84D6] transition">
 
-          </div>
+                  <div className="text-[#4FD1E8] text-2xl group-hover:text-white transition">
+                    {card.icon}
+                  </div>
 
+                </div>
 
-          <div className="bg-white p-8 shadow-md hover:shadow-xl transition 
-          [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%)]">
+                <h3 className="font-semibold text-white mb-3 text-lg">
+                  {card.title}
+                </h3>
 
-            <FaWater className="text-blue-600 text-3xl mb-4" />
+                <p className="text-[#C7D5E0] text-sm leading-relaxed">
+                  {card.text}
+                </p>
 
-            <h3 className="font-semibold text-gray-800 mb-2">
-              Clean Breeding System
-            </h3>
-
-            <p className="text-gray-500 text-sm">
-              Maintained tanks and clean water systems for healthy fish.
-            </p>
-
-          </div>
-
-
-          <div className="bg-white p-8 shadow-md hover:shadow-xl transition 
-          [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%)]">
-
-            <FaTruck className="text-blue-600 text-3xl mb-4" />
-
-            <h3 className="font-semibold text-gray-800 mb-2">
-              Affordable Bulk Supply
-            </h3>
-
-            <p className="text-gray-500 text-sm">
-              Reliable and affordable fish supply for shops and dealers.
-            </p>
-
-          </div>
-
-
-          <div className="bg-white p-8 shadow-md hover:shadow-xl transition 
-          [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%)]">
-
-            <FaCheckCircle className="text-blue-600 text-3xl mb-4" />
-
-            <h3 className="font-semibold text-gray-800 mb-2">
-              Expert Fish Care Guidance
-            </h3>
-
-            <p className="text-gray-500 text-sm">
-              Professional help for aquarium care and maintenance.
-            </p>
-
-          </div>
-
-
-          <div className="bg-white p-8 shadow-md hover:shadow-xl transition 
-          [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%)]">
-
-            <FaUserFriends className="text-blue-600 text-3xl mb-4" />
-
-            <h3 className="font-semibold text-gray-800 mb-2">
-              Trusted Service
-            </h3>
-
-            <p className="text-gray-500 text-sm">
-              Dedicated support for hobbyists and aquarium businesses.
-            </p>
+              </div>
+            ))}
 
           </div>
 
