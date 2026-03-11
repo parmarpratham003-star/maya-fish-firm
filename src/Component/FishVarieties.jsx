@@ -17,9 +17,7 @@ export default function FishVarieties() {
       { threshold: 0.2 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
 
     return () => observer.disconnect();
   }, []);
@@ -39,18 +37,20 @@ export default function FishVarieties() {
       <div className="max-w-7xl mx-auto">
 
         {/* Heading */}
-        <div className={`text-center mb-16 transition-all duration-1000 
-        ${visible ? "animate-slideDown opacity-100" : "opacity-0"}`}>
+        <div className="text-center mb-16">
 
-          <p className="text-[#0A84D6] font-semibold mb-2">
+          <p className={`text-[#0A84D6] font-semibold mb-2 transition-all duration-700
+          ${visible ? "animate-slideLeft opacity-100" : "opacity-0"}`}>
             Our Fish Collection
           </p>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-[#083B66]">
+          <h2 className={`text-4xl md:text-5xl font-bold text-[#083B66] transition-all duration-700
+          ${visible ? "animate-slideRight opacity-100" : "opacity-0"}`}>
             Popular Fish Varieties
           </h2>
 
-          <p className="text-[#083B66] mt-4 max-w-2xl mx-auto">
+          <p className={`text-[#083B66] mt-4 max-w-2xl mx-auto transition-all duration-700
+          ${visible ? "animate-slideUp opacity-100" : "opacity-0"}`}>
             Explore a wide range of healthy ornamental fishes bred with care
             at Maya Fish Firm.
           </p>

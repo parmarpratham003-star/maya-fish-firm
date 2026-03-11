@@ -51,26 +51,26 @@ export default function LiveFishFeed() {
         </div>
 
 
-        {/* Organic Cards */}
+        {/* Feed Cards */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-12">
 
           {/* Worms */}
-          <div className={`group bg-white p-10 shadow-xl
+          <div className={`group bg-[#0F2F4F] p-10 shadow-xl
           rounded-[60%_40%_55%_45%/45%_60%_40%_55%]
           hover:scale-105 transition duration-500 relative overflow-hidden
           ${visible ? "animate-slideUp opacity-100" : "opacity-0"}`}>
 
             <div className="flex items-center gap-4 mb-6">
 
-              <FaBug className="text-[#0A84D6] text-3xl transition-transform duration-500 group-hover:rotate-12 group-hover:scale-125" />
+              <FaBug className="text-[#4FD1E8] text-3xl transition-transform duration-500 group-hover:rotate-12 group-hover:scale-125" />
 
-              <h3 className="text-xl font-semibold text-[#083B66] transition duration-500 group-hover:text-[#0A84D6] group-hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-white transition duration-500 group-hover:text-[#4FD1E8] group-hover:-translate-y-1">
                 Worms
               </h3>
 
             </div>
 
-            <p className="text-[#083B66] text-sm leading-relaxed transition duration-500 group-hover:translate-y-[-3px]">
+            <p className="text-[#C7D5E0] text-sm leading-relaxed transition duration-500 group-hover:translate-y-[-3px]">
               Protein-rich live worms ideal for fish growth and
               strengthening immunity in aquarium fish.
             </p>
@@ -79,7 +79,7 @@ export default function LiveFishFeed() {
 
 
           {/* Natural Feed */}
-          <div className={`group bg-white p-10 shadow-xl
+          <div className={`group bg-[#0F2F4F] p-10 shadow-xl
           rounded-[55%_45%_60%_40%/40%_60%_45%_55%]
           hover:scale-105 transition duration-500 relative overflow-hidden
           ${visible ? "animate-slideUp opacity-100" : "opacity-0"}`}
@@ -89,13 +89,13 @@ export default function LiveFishFeed() {
 
               <FaLeaf className="text-[#4FD1E8] text-3xl transition-transform duration-500 group-hover:rotate-12 group-hover:scale-125" />
 
-              <h3 className="text-xl font-semibold text-[#083B66] transition duration-500 group-hover:text-[#0A84D6] group-hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-white transition duration-500 group-hover:text-[#4FD1E8] group-hover:-translate-y-1">
                 Natural Live Feed
               </h3>
 
             </div>
 
-            <p className="text-[#083B66] text-sm leading-relaxed transition duration-500 group-hover:translate-y-[-3px]">
+            <p className="text-[#C7D5E0] text-sm leading-relaxed transition duration-500 group-hover:translate-y-[-3px]">
               Natural feed that keeps fish active, healthy,
               and improves vitality and coloration.
             </p>
@@ -104,7 +104,7 @@ export default function LiveFishFeed() {
 
 
           {/* Breeding Feed */}
-          <div className={`group bg-white p-10 shadow-xl
+          <div className={`group bg-[#0F2F4F] p-10 shadow-xl
           rounded-[45%_55%_40%_60%/60%_40%_55%_45%]
           hover:scale-105 transition duration-500 relative overflow-hidden
           ${visible ? "animate-slideUp opacity-100" : "opacity-0"}`}
@@ -112,15 +112,15 @@ export default function LiveFishFeed() {
 
             <div className="flex items-center gap-4 mb-6">
 
-              <FaFish className="text-[#0A84D6] text-3xl transition-transform duration-500 group-hover:rotate-12 group-hover:scale-125" />
+              <FaFish className="text-[#4FD1E8] text-3xl transition-transform duration-500 group-hover:rotate-12 group-hover:scale-125" />
 
-              <h3 className="text-xl font-semibold text-[#083B66] transition duration-500 group-hover:text-[#0A84D6] group-hover:-translate-y-1">
+              <h3 className="text-xl font-semibold text-white transition duration-500 group-hover:text-[#4FD1E8] group-hover:-translate-y-1">
                 Breeding Support Feed
               </h3>
 
             </div>
 
-            <p className="text-[#083B66] text-sm leading-relaxed transition duration-500 group-hover:translate-y-[-3px]">
+            <p className="text-[#C7D5E0] text-sm leading-relaxed transition duration-500 group-hover:translate-y-[-3px]">
               Special breeding feed that enhances reproduction
               and increases breeding success.
             </p>
