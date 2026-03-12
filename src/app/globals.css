@@ -232,3 +232,20 @@
 .animate-slideRight {
   animation: slideRight 1s ease forwards;
 }
+@keyframes bubble {
+  0% { transform: translateY(0); opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-120px); opacity: 0; }
+}
+
+.animate-bubble {
+  animation: bubble 6s infinite linear;
+}
+
+.animate-bubble2 {
+  animation: bubble 8s infinite linear;
+}
+
+.animate-bubble3 {
+  animation: bubble 10s infinite linear;
+}
