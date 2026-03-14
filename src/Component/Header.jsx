@@ -11,15 +11,6 @@ const navLinks = [
   { label: "Contact",  href: "/contact" },
 ];
 
-const PhoneIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-    <path
-      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
-      stroke="#0A84D6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
-    />
-  </svg>
-);
-
 const WhatsAppIcon = ({ color = "#fff" }) => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
     <path
@@ -73,8 +64,6 @@ export default function Header() {
 
           {/* ── Brand / Logo ── */}
           <Link href="/" className="flex items-center gap-1 flex-shrink-0">
-
-            {/* mix-blend-multiply makes the black background invisible on white */}
             <Image
               src="/logo1.png"
               alt="Maya Fish Farm logo"
@@ -82,7 +71,6 @@ export default function Header() {
               height={58}
               className="object-contain mix-blend-multiply"
             />
-
             <div className="flex flex-col leading-tight -ml-1">
               <span className="text-[#083B66] font-semibold tracking-[2px] text-[13px]">
                 MAYA FISH FARM
@@ -91,7 +79,6 @@ export default function Header() {
                 Ornamental · Aquarium
               </span>
             </div>
-
           </Link>
 
           {/* ── Desktop nav links ── */}
@@ -109,20 +96,10 @@ export default function Header() {
           </div>
 
           {/* ── Desktop actions ── */}
-          <div className="hidden md:flex items-center gap-3.5">
-            
-             <a href="tel:+91XXXXXXXXXX"
-              className="flex items-center gap-1.5 text-[#3a6680] text-[12px] font-medium hover:text-[#0A84D6] transition-colors"
-            >
-              <PhoneIcon />
-              +91 XXXXX XXXXX
-            </a>
-
-            <div className="w-px h-[18px] bg-[rgba(8,59,102,0.12)]" />
-
+          <div className="hidden md:flex items-center">
             
              <a href="https://wa.me/91XXXXXXXXXX"
-              className="flex items-center gap-1.5 bg-[#0A84D6] hover:bg-[#0e9cc4] text-white text-[12px] font-semibold px-4 py-2 rounded-lg transition-all duration-200 hover:-translate-y-px"
+              className="flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[12px] font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 hover:-translate-y-px shadow-[0_4px_14px_rgba(37,211,102,0.3)]"
             >
               <WhatsAppIcon />
               WhatsApp
@@ -161,22 +138,14 @@ export default function Header() {
                 </Link>
               ))}
 
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                
-                 <a href="tel:+91XXXXXXXXXX"
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 border border-[rgba(10,132,214,0.15)] rounded-lg text-[12px] text-[#3a6680] font-medium hover:border-[#4FD1E8] hover:text-[#0A84D6] transition-colors"
-                >
-                  <PhoneIcon />
-                  Call Us
-                </a>
-                
-                 <a href="https://wa.me/91XXXXXXXXXX"
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0A84D6] rounded-lg text-[12px] text-white font-semibold hover:bg-[#0e9cc4] transition-colors"
-                >
-                  <WhatsAppIcon />
-                  WhatsApp
-                </a>
-              </div>
+              {/* WhatsApp only — full width on mobile */}
+              
+               <a href="https://wa.me/91XXXXXXXXXX"
+                className="flex items-center justify-center gap-2 mt-2 px-4 py-3 bg-[#25D366] hover:bg-[#1ebe5d] rounded-lg text-[13px] text-white font-semibold transition-colors shadow-[0_4px_14px_rgba(37,211,102,0.25)]"
+              >
+                <WhatsAppIcon />
+                Chat on WhatsApp
+              </a>
 
             </div>
           </div>
