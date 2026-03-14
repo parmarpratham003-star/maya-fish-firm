@@ -1,123 +1,188 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { FaBars } from "react-icons/fa6";
+import { useState, useEffect } from "react";
+
+const navLinks = [
+  { label: "Home",     href: "/" },
+  { label: "About",    href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Contact",  href: "/contact" },
+];
+
+const PhoneIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+      stroke="#0A84D6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const WhatsAppIcon = ({ color = "#fff" }) => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
+      stroke={color}
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const MenuIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M3 12h18M3 6h18M3 18h18" stroke="#083B66" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M18 6L6 18M6 6l12 12" stroke="#083B66" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+
+const ChevronRight = () => (
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+    <path d="M4 2l4 4-4 4" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 export default function Header() {
-
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 60) setScrolled(true);
-      else setScrolled(false);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <header className="w-full">
-
       <nav
-        className={`w-full transition-all duration-300 z-50 ${
-          scrolled
-            ? "fixed top-0 bg-white shadow-md border-b border-[#1F3D5A]/20"
-            : "bg-white border-b border-[#1F3D5A]/20"
-        }`}
+        className={`w-full z-50 transition-all duration-300 font-['Outfit',sans-serif]
+          ${scrolled
+            ? "fixed top-0 bg-white/90 backdrop-blur-md shadow-[0_2px_20px_rgba(8,59,102,0.08)] border-b border-[rgba(8,59,102,0.08)]"
+            : "relative bg-white border-b border-[rgba(8,59,102,0.08)]"
+          }`}
       >
+        <div className="max-w-5xl mx-auto px-6 h-[72px] flex items-center justify-between gap-6">
 
-        <div className="max-w-7xl mx-auto px-6 h-[90px] grid grid-cols-3 items-center">
+          {/* ── Brand / Logo ── */}
+          <Link href="/" className="flex items-center gap-1 flex-shrink-0">
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
+            {/* mix-blend-multiply makes the black background invisible on white */}
             <Image
               src="/logo1.png"
-              alt="Maya Fish Firm"
-              width={85}
-              height={85}
-              priority
-              className="object-contain"
+              alt="Maya Fish Farm logo"
+              width={58}
+              height={58}
+              className="object-contain mix-blend-multiply"
             />
+
+            <div className="flex flex-col leading-tight -ml-1">
+              <span className="text-[#083B66] font-semibold tracking-[2px] text-[13px]">
+                MAYA FISH FARM
+              </span>
+              <span className="text-[#4FD1E8] text-[9px] font-medium tracking-[2.5px] uppercase">
+                Ornamental · Aquarium
+              </span>
+            </div>
+
           </Link>
 
-          {/* Center Title */}
-          <h1 className="text-center text-[#083B66] text-2xl md:text-3xl font-bold tracking-[3px] font-serif">
-            MAYA FISH FIRM
-          </h1>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex justify-end gap-8 text-[#083B66] text-sm font-medium">
-
-            <Link href="/" className="hover:text-[#4FD1E8] transition">
-              Home
-            </Link>
-
-            <Link href="/about" className="hover:text-[#4FD1E8] transition">
-              About
-            </Link>
-
-            <Link href="/services" className="hover:text-[#4FD1E8] transition">
-              Services
-            </Link>
-
-            <Link href="/pages" className="hover:text-[#4FD1E8] transition">
-              Pages
-            </Link>
-
-            <Link href="/contact" className="hover:text-[#4FD1E8] transition">
-              Contact
-            </Link>
-
+          {/* ── Desktop nav links ── */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map(({ label, href }) => (
+              <Link
+                key={label}
+                href={href}
+                className="group relative text-[#3a6680] text-[13px] font-medium hover:text-[#083B66] transition-colors duration-200 pb-0.5"
+              >
+                {label}
+                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#4FD1E8] group-hover:w-full transition-all duration-250" />
+              </Link>
+            ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* ── Desktop actions ── */}
+          <div className="hidden md:flex items-center gap-3.5">
+            
+             <a href="tel:+91XXXXXXXXXX"
+              className="flex items-center gap-1.5 text-[#3a6680] text-[12px] font-medium hover:text-[#0A84D6] transition-colors"
+            >
+              <PhoneIcon />
+              +91 XXXXX XXXXX
+            </a>
+
+            <div className="w-px h-[18px] bg-[rgba(8,59,102,0.12)]" />
+
+            
+             <a href="https://wa.me/91XXXXXXXXXX"
+              className="flex items-center gap-1.5 bg-[#0A84D6] hover:bg-[#0e9cc4] text-white text-[12px] font-semibold px-4 py-2 rounded-lg transition-all duration-200 hover:-translate-y-px"
+            >
+              <WhatsAppIcon />
+              WhatsApp
+            </a>
+          </div>
+
+          {/* ── Mobile hamburger ── */}
           <button
-            className="md:hidden text-[#083B66] text-xl absolute right-6"
+            className="md:hidden text-[#083B66] p-1"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
           >
-            <FaBars />
+            {menuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
 
         </div>
 
-        {/* Mobile Menu */}
+        {/* ── Mobile menu ── */}
         {menuOpen && (
-          <div className="md:hidden bg-[#E6F6FF] px-6 py-4 text-[#083B66]">
+          <div className="md:hidden bg-white border-t border-[rgba(8,59,102,0.08)] px-5 py-5">
+            <div className="flex flex-col gap-2">
 
-            <div className="flex flex-col gap-4 text-sm font-medium">
+              {navLinks.map(({ label, href }, i) => (
+                <Link
+                  key={label}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`flex items-center justify-between px-4 py-3 rounded-[10px] text-[13px] font-medium transition-colors
+                    ${i === 0
+                      ? "bg-[#F0F9FF] text-[#083B66] border border-[rgba(10,132,214,0.12)]"
+                      : "bg-white text-[#3a6680] border border-[rgba(8,59,102,0.07)] hover:bg-[#F5FBFF] hover:text-[#083B66]"
+                    }`}
+                >
+                  {label}
+                  <ChevronRight />
+                </Link>
+              ))}
 
-              <Link href="/" className="hover:text-[#0A84D6]">
-                Home
-              </Link>
-
-              <Link href="/about" className="hover:text-[#0A84D6]">
-                About
-              </Link>
-
-              <Link href="/services" className="hover:text-[#0A84D6]">
-                Services
-              </Link>
-
-              <Link href="/pages" className="hover:text-[#0A84D6]">
-                Pages
-              </Link>
-
-              <Link href="/contact" className="hover:text-[#0A84D6]">
-                Contact
-              </Link>
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                
+                 <a href="tel:+91XXXXXXXXXX"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 border border-[rgba(10,132,214,0.15)] rounded-lg text-[12px] text-[#3a6680] font-medium hover:border-[#4FD1E8] hover:text-[#0A84D6] transition-colors"
+                >
+                  <PhoneIcon />
+                  Call Us
+                </a>
+                
+                 <a href="https://wa.me/91XXXXXXXXXX"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0A84D6] rounded-lg text-[12px] text-white font-semibold hover:bg-[#0e9cc4] transition-colors"
+                >
+                  <WhatsAppIcon />
+                  WhatsApp
+                </a>
+              </div>
 
             </div>
-
           </div>
         )}
 
       </nav>
-
     </header>
   );
 }
