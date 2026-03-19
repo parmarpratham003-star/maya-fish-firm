@@ -75,8 +75,8 @@ export default function Hero() {
 
         .hero-section {
           position: relative;
-          height: 88vh;
-          min-height: 520px;
+          height: 100vh;
+          min-height: 600px;
           display: flex;
           flex-direction: column;
           overflow: hidden;
@@ -88,14 +88,20 @@ export default function Hero() {
           background-size: cover;
           background-position: center;
           z-index: 0;
+          animation: crossFade 0.9s ease-in-out both;
+        }
+
+        @keyframes crossFade {
+          from { opacity: 0; }
+          to   { opacity: 1; }
         }
 
         /* Darker on left-bottom for text, fades right */
         .slide-overlay {
           position: absolute; inset: 0;
           background:
-            linear-gradient(to bottom, rgba(4,17,31,0.20) 0%, rgba(4,17,31,0.92) 100%),
-            linear-gradient(to right,  rgba(4,17,31,0.80) 0%, rgba(4,17,31,0.10) 60%);
+            linear-gradient(to bottom, rgba(4,17,31,0.15) 0%, rgba(4,17,31,0.96) 100%),
+            linear-gradient(to right,  rgba(4,17,31,0.82) 0%, rgba(4,17,31,0.08) 60%);
           z-index: 1;
         }
 
@@ -158,7 +164,7 @@ export default function Hero() {
           z-index: 10;
           margin-top: auto;
           width: 100%;
-          padding-bottom: 2.5rem;
+          padding-bottom: 4rem;
         }
         .hero-container {
           max-width: 64rem;        /* Tailwind max-w-5xl */
@@ -173,7 +179,7 @@ export default function Hero() {
           color: #4FD1E8;
           font-size: 11px; font-weight: 600;
           letter-spacing: 5px; text-transform: uppercase;
-          margin-bottom: 1.2rem;
+          margin-bottom: 1.6rem;
         }
         .eyebrow::before, .eyebrow::after {
           content: ''; display: block; width: 28px; height: 1px;
@@ -200,23 +206,24 @@ export default function Hero() {
           color: #4FD1E8;
           font-size: clamp(2.2rem, 4.6vw, 4.2rem);
           line-height: 1.15;
-          margin-bottom: 1.4rem;
+          margin-bottom: 2rem;
           white-space: nowrap;
         }
 
-        /* Sub-text — small, muted white */
+        /* Sub-text */
         .hero-sub {
           font-size: 0.95rem;
           color: rgba(176,212,232,0.88);
-          line-height: 1.75;
+          line-height: 1.8;
           font-weight: 300;
           max-width: 520px;
-          margin-bottom: 2rem;
+          margin-bottom: 2.4rem;
         }
 
         /* CTAs */
         .cta-group {
-          display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+          display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+          margin-bottom: 0.4rem;
         }
         .btn-primary {
           padding: 13px 36px; border-radius: 6px;
@@ -248,7 +255,7 @@ export default function Hero() {
 
         /* Slide dots */
         .slide-dots {
-          display: flex; gap: 8px; margin-top: 1.8rem;
+          display: flex; gap: 8px; margin-top: 2.2rem;
         }
         .sdot {
           width: 28px; height: 3px; border-radius: 2px;
