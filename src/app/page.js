@@ -6,6 +6,7 @@ import AboutMayaFish from "@/Component/AboutMayaFish";
 import WhyChooseMaya from "@/Component/WhyChooseMaya";
 import CallToAction from "@/Component/CallToAction";
 import Testimonials from "@/Component/Testimonials";
+import Footer1 from "../Component/Footer1";
 export default function Home() {
   return (
     <div>
@@ -16,7 +17,7 @@ export default function Home() {
       <WhyChooseMaya/>  
       <Testimonials/>
       <CallToAction/>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

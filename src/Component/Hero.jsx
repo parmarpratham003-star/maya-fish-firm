@@ -183,16 +183,17 @@ export default function Hero() {
         }
 
         .hero-section {
-          position: relative;
-          min-height: 75vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          background: linear-gradient(175deg, #020D18 0%, #04192E 35%, #071F38 60%, #062035 100%);
-          font-family: 'Outfit', sans-serif;
-        }
+  position: relative;
+  min-height: 100vh;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000000;
+  font-family: 'Outfit', sans-serif;
+}
         .caustic {
           position: absolute;
           top: -20%; left: -10%;

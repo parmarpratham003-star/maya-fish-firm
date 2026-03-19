@@ -1,137 +1,140 @@
-    "use client";
+"use client";
 
-    import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
-    import { FaArrowUp } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
 
-    export default function Footer() {
+export default function Footer() {
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
-      const scrollTop = () => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      };
-
-      return (
-        <footer
-          className="relative text-white font-sans"
-          style={{
-            backgroundImage: "url('/image.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+  return (
+    <footer
+      className="relative text-white font-['Outfit',sans-serif]"
+      style={{
+        backgroundImage: "url('/image.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Wave Shape — tight, no gap */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+        <svg
+          viewBox="0 0 500 80"
+          preserveAspectRatio="none"
+          style={{ display: "block", height: "60px", width: "100%" }}
         >
-          {/* Wave Shape */}
-          <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
-            <svg
-              viewBox="0 0 500 150"
-              preserveAspectRatio="none"
-              className="w-full h-20"
-            >
-              <path
-                d="M0.00,49.98 C150.00,150.00 349.20,-49.98 500.00,49.98 L500.00,0.00 L0.00,0.00 Z"
-                className="fill-white"
-              ></path>
-            </svg>
-          </div>
+          <path
+            d="M0.00,30 C150.00,90 349.20,-20 500.00,30 L500.00,0.00 L0.00,0.00 Z"
+            fill="white"
+          />
+        </svg>
+      </div>
 
-          {/* Dark Overlay */}
-          <div className="bg-black/80 pt-28 pb-12 px-6">
+      {/* Dark Overlay */}
+      <div className="bg-black/80 pt-20 pb-12 px-6">
 
-            <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-3">
 
-              {/* About */}
-              <div>
-                <h2 className="text-3xl font-extrabold tracking-wider text-blue-400 mb-4">
-                  MAYA FISH FARM
-                </h2>
-
-                <p className="text-gray-300 text-sm leading-relaxed mb-4 font-light">
-                  Sustainable aquaculture solutions providing fresh fish
-                  production and quality services for local markets.
-                </p>
-
-                <div className="flex gap-4 text-lg">
-                  <FaFacebookF className="cursor-pointer hover:text-blue-400 transition" />
-                  <FaTwitter className="cursor-pointer hover:text-blue-400 transition" />
-                  <FaInstagram className="cursor-pointer hover:text-blue-400 transition" />
-                  <FaLinkedin className="cursor-pointer hover:text-blue-400 transition" />
-                </div>
-              </div>
-
-              {/* Useful Links */}
-              <div>
-                <h3 className="text-xl font-semibold tracking-wide mb-4">
-                  Useful Links
-                </h3>
-
-                <ul className="space-y-2 text-gray-300 text-sm font-light">
-                  {["Home","About","Service","Contact Us"].map((item,i)=>(
-                    <li
-                      key={i}
-                      className="cursor-pointer hover:text-blue-400 transition transform hover:translate-x-1"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Working Hours */}
-              <div>
-                <h3 className="text-xl font-semibold tracking-wide mb-4">
-                  Working Hours
-                </h3>
-
-                <p className="text-gray-300 text-sm leading-relaxed mb-4 font-light">
-                  Visit our farm during working hours for fresh fish
-                  and aquaculture services.
-                </p>
-
-                <div className="space-y-2 text-gray-300 text-sm font-light">
-                  <p>Mon - Fri : 9:00AM - 6:00PM</p>
-                  <p>Sat - Sun : 8:00AM - 4:00PM</p>
-                </div>
-              </div>
-
-              {/* Subscribe */}
-              <div>
-                <h3 className="text-xl font-semibold tracking-wide mb-4">
-                  Subscribe
-                </h3>
-
-                <p className="text-gray-300 text-sm leading-relaxed mb-4 font-light">
-                  Get latest updates about fish farming and offers.
-                </p>
-
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-3 mb-3 bg-transparent border border-gray-400 focus:outline-none focus:border-blue-400 text-sm"
-                />
-
-                <button className="w-full bg-blue-500 hover:bg-blue-600 py-3 font-semibold tracking-wide transition">
-                  Subscribe
-                </button>
-              </div>
-
+          {/* Brand / About */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-[#4FD1E8]" />
+              <h2 className="text-2xl font-semibold tracking-wider text-[#ECF6FF]">
+                MAYA FISH FARM
+              </h2>
             </div>
 
-            {/* Bottom */}
-            <div className="border-t border-gray-600 text-center pt-6 mt-10 text-gray-300 text-sm tracking-wide">
-              Copyright © Maya Fish Farm. All rights reserved.
-            </div>
+            <p className="text-[#6d97b0] text-xs leading-relaxed mb-6">
+              Sustainable aquaculture solutions providing fresh fish
+              production and quality services for local markets.
+            </p>
 
+            {/* Social Icons */}
+            <div className="flex gap-2.5">
+              {[
+                { Icon: FaFacebookF, label: "Facebook" },
+                { Icon: FaInstagram, label: "Instagram" },
+                { Icon: FaYoutube, label: "YouTube" },
+              ].map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="w-9 h-9 rounded-full border border-[rgba(79,209,232,0.2)] flex items-center justify-center hover:bg-[#4FD1E8]/10 text-[#4FD1E8] transition cursor-pointer text-sm"
+                >
+                  <Icon />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Scroll to Top Button */}
-          <button
-            onClick={scrollTop}
-            className="fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-600 p-3 rounded-full shadow-lg transition"
-          >
-            <FaArrowUp />
-          </button>
+          {/* Quick Links */}
+          <div>
+            <p className="text-[#ECF6FF] text-xs font-semibold tracking-wide mb-4">
+              Quick Links
+            </p>
 
-        </footer>
-      );
-    }
+            <ul className="space-y-2">
+              {["Home", "About", "Services", "Contact"].map((item, i) => (
+                <li key={i}>
+                  <a
+                    href="#"
+                    className="flex items-center gap-2 text-xs text-[#6d97b0] hover:text-[#4FD1E8] transition group/link"
+                  >
+                    <svg className="w-3 h-3 opacity-0 group-hover/link:opacity-100 transition-opacity" viewBox="0 0 12 12" fill="none">
+                      <path d="M2 10L10 2M10 2H5M10 2V7" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Working Hours */}
+          <div>
+            <p className="text-[#ECF6FF] text-xs font-semibold tracking-wide mb-4">
+              Working Hours
+            </p>
+
+            <p className="text-[#6d97b0] text-xs leading-relaxed mb-4">
+              Visit our farm during working hours for fresh fish
+              and aquaculture services.
+            </p>
+
+            <div className="space-y-2 text-[#6d97b0] text-xs">
+              <p>Mon – Fri : 9:00 AM – 6:00 PM</p>
+              <p>Sat – Sun : 8:00 AM – 4:00 PM</p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-white/10 pt-6 mt-10 flex flex-col md:flex-row items-center justify-between gap-3 text-[#4a6a80] text-xs tracking-wide">
+          <p>© Maya Fish Farm. All rights reserved.</p>
+          <div className="flex gap-4">
+            <a href="#" className="hover:text-[#4FD1E8] transition">Privacy Policy</a>
+            <span>|</span>
+            <a href="#" className="hover:text-[#4FD1E8] transition">Terms of Service</a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollTop}
+        className="fixed bottom-6 right-6 z-20 w-11 h-11 rounded-full bg-[#0A84D6] hover:bg-[#0e9cc4] hover:-translate-y-1 flex items-center justify-center transition-all duration-200 shadow-lg"
+        aria-label="Scroll to top"
+      >
+        <FaArrowUp className="text-white text-sm" />
+      </button>
+
+    </footer>
+  );
+}
