@@ -1,107 +1,32 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const fishSvgs = [
-  // Orange Goldfish
-  `<svg width="72" height="36" viewBox="0 0 72 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
-    <path d="M56 18 C40 4, 14 4, 4 18 C14 32, 40 32, 56 18Z" fill="rgba(255,140,0,0.75)"/>
-    <path d="M56 18 C48 10, 48 26, 56 18Z" fill="rgba(255,100,0,0.5)"/>
-    <path d="M56 18 L72 5 L66 18 L72 31Z" fill="rgba(255,120,0,0.5)"/>
-    <path d="M20 10 C28 6, 44 6, 52 14" stroke="rgba(255,200,80,0.4)" stroke-width="1.5" fill="none"/>
-    <path d="M20 26 C28 30, 44 30, 52 22" stroke="rgba(255,200,80,0.3)" stroke-width="1" fill="none"/>
-    <circle cx="14" cy="16" r="3" fill="rgba(255,255,255,0.8)"/>
-    <circle cx="14" cy="16" r="1.5" fill="rgba(60,20,0,0.7)"/>
-    <circle cx="13.3" cy="15.3" r="0.6" fill="rgba(255,255,255,0.9)"/>
-  </svg>`,
-
-  // Blue Fighter Fish
-  `<svg width="60" height="34" viewBox="0 0 60 34" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
-    <path d="M44 17 C30 4, 10 4, 3 17 C10 30, 30 30, 44 17Z" fill="rgba(30,100,220,0.8)"/>
-    <path d="M44 17 L60 4 L54 17 L60 30Z" fill="rgba(30,80,200,0.5)"/>
-    <path d="M44 17 C50 8, 58 5, 60 4" stroke="rgba(100,180,255,0.6)" stroke-width="2" fill="none"/>
-    <path d="M44 17 C50 26, 58 29, 60 30" stroke="rgba(100,180,255,0.5)" stroke-width="2" fill="none"/>
-    <path d="M15 8 Q25 4 38 10" stroke="rgba(120,200,255,0.5)" stroke-width="1.2" fill="none"/>
-    <path d="M15 26 Q25 30 38 24" stroke="rgba(80,160,255,0.4)" stroke-width="1" fill="none"/>
-    <circle cx="11" cy="15" r="3" fill="rgba(255,255,255,0.85)"/>
-    <circle cx="11" cy="15" r="1.5" fill="rgba(10,20,80,0.8)"/>
-    <circle cx="10.3" cy="14.3" r="0.6" fill="rgba(255,255,255,0.9)"/>
-  </svg>`,
-
-  // Purple/Pink Guppy
-  `<svg width="52" height="28" viewBox="0 0 52 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
-    <path d="M38 14 C26 3, 8 3, 3 14 C8 25, 26 25, 38 14Z" fill="rgba(170,60,210,0.75)"/>
-    <path d="M38 14 L52 4 L47 14 L52 24Z" fill="rgba(200,80,230,0.45)"/>
-    <path d="M12 7 Q22 4 34 10" stroke="rgba(230,150,255,0.5)" stroke-width="1.2" fill="none"/>
-    <path d="M12 21 Q22 24 34 18" stroke="rgba(200,100,240,0.4)" stroke-width="1" fill="none"/>
-    <ellipse cx="10" cy="12" rx="2.5" ry="2" fill="rgba(255,255,255,0.85)"/>
-    <circle cx="10" cy="12" r="1.2" fill="rgba(40,0,60,0.75)"/>
-    <circle cx="9.4" cy="11.4" r="0.5" fill="rgba(255,255,255,0.9)"/>
-  </svg>`,
-
-  // Red/White Angel-ish Fish (tall)
-  `<svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
-    <path d="M32 26 C20 16, 8 18, 4 26 C8 34, 20 36, 32 26Z" fill="rgba(220,50,50,0.75)"/>
-    <path d="M32 26 L44 18 L40 26 L44 34Z" fill="rgba(200,40,40,0.45)"/>
-    <path d="M14 18 C18 8, 22 2, 24 0" stroke="rgba(255,120,120,0.55)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-    <path d="M14 34 C18 44, 22 50, 24 52" stroke="rgba(255,100,100,0.5)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-    <path d="M10 20 Q18 14 28 20" stroke="rgba(255,180,180,0.4)" stroke-width="1.2" fill="none"/>
-    <path d="M10 32 Q18 38 28 32" stroke="rgba(255,150,150,0.35)" stroke-width="1" fill="none"/>
-    <circle cx="10" cy="25" r="3" fill="rgba(255,255,255,0.9)"/>
-    <circle cx="10" cy="25" r="1.5" fill="rgba(80,0,0,0.75)"/>
-    <circle cx="9.3" cy="24.3" r="0.6" fill="rgba(255,255,255,0.95)"/>
-  </svg>`,
-
-  // Green Molly
-  `<svg width="64" height="30" viewBox="0 0 64 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
-    <path d="M48 15 C34 3, 10 3, 4 15 C10 27, 34 27, 48 15Z" fill="rgba(30,160,80,0.75)"/>
-    <path d="M48 15 L64 4 L58 15 L64 26Z" fill="rgba(20,140,60,0.45)"/>
-    <path d="M14 7 Q28 3 42 10" stroke="rgba(100,230,140,0.45)" stroke-width="1.3" fill="none"/>
-    <path d="M14 23 Q28 27 42 20" stroke="rgba(60,200,100,0.4)" stroke-width="1" fill="none"/>
-    <path d="M22 5 L20 2 M28 4 L27 1 M34 5 L33 2" stroke="rgba(80,210,120,0.5)" stroke-width="1.2" stroke-linecap="round"/>
-    <circle cx="12" cy="13" r="3" fill="rgba(255,255,255,0.85)"/>
-    <circle cx="12" cy="13" r="1.5" fill="rgba(0,40,10,0.75)"/>
-    <circle cx="11.3" cy="12.3" r="0.6" fill="rgba(255,255,255,0.9)"/>
-  </svg>`,
-
-  // Yellow Koi
-  `<svg width="80" height="38" viewBox="0 0 80 38" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
-    <path d="M62 19 C44 4, 14 4, 5 19 C14 34, 44 34, 62 19Z" fill="rgba(240,200,20,0.78)"/>
-    <path d="M28 8 Q38 5 52 12" stroke="rgba(255,140,0,0.45)" stroke-width="6" stroke-linecap="round" fill="none"/>
-    <path d="M28 30 Q38 33 52 26" stroke="rgba(255,100,0,0.3)" stroke-width="4" stroke-linecap="round" fill="none"/>
-    <path d="M62 19 L80 5 L73 19 L80 33Z" fill="rgba(220,180,0,0.45)"/>
-    <path d="M18 9 Q30 5 46 12" stroke="rgba(255,230,100,0.4)" stroke-width="1.3" fill="none"/>
-    <path d="M18 29 Q30 33 46 26" stroke="rgba(255,210,60,0.35)" stroke-width="1" fill="none"/>
-    <circle cx="14" cy="17" r="3.5" fill="rgba(255,255,255,0.9)"/>
-    <circle cx="14" cy="17" r="1.8" fill="rgba(60,40,0,0.75)"/>
-    <circle cx="13.2" cy="16.2" r="0.7" fill="rgba(255,255,255,0.95)"/>
-  </svg>`,
+const slides = [
+  { image: "/s1.png" },
+  { image: "/s2.png" },
+  { image: "/silde3.png" },
 ];
 
 export default function Hero() {
-  const bubblesRef = useRef(null);
-  const raysRef    = useRef(null);
-  const fishRef    = useRef(null);
+  const raysRef = useRef(null);
+  const [current, setCurrent] = useState(0);
+  const [animKey, setAnimKey] = useState(0);
+  const total = slides.length;
 
   useEffect(() => {
-    // Bubbles
-    const bubblesEl = bubblesRef.current;
-    for (let i = 0; i < 22; i++) {
-      const b    = document.createElement("div");
-      const size = 4 + Math.random() * 18;
-      Object.assign(b.style, {
-        position:     "absolute",
-        borderRadius: "50%",
-        border:       "1px solid rgba(79,209,232,0.25)",
-        background:   "rgba(79,209,232,0.04)",
-        width:        `${size}px`,
-        height:       `${size}px`,
-        left:         `${Math.random() * 100}%`,
-        animation:    `rise ${7 + Math.random() * 16}s ${Math.random() * 14}s linear infinite`,
-      });
-      bubblesEl.appendChild(b);
-    }
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % total);
+      setAnimKey((k) => k + 1);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [total]);
 
-    // Rays
+  const goTo = (idx) => {
+    setCurrent(idx);
+    setAnimKey((k) => k + 1);
+  };
+
+  useEffect(() => {
     const raysEl = raysRef.current;
     for (let i = 0; i < 12; i++) {
       const r = document.createElement("div");
@@ -111,42 +36,16 @@ export default function Hero() {
         width:           "1px",
         left:            `${5 + i * 8 + Math.random() * 5}%`,
         height:          `${50 + Math.random() * 30}%`,
-        background:      "linear-gradient(to bottom, rgba(79,209,232,0.12), transparent)",
+        background:      "linear-gradient(to bottom, rgba(79,209,232,0.10), transparent)",
         transformOrigin: "top center",
         animation:       `sway ${3 + Math.random() * 4}s ${Math.random() * 3}s ease-in-out infinite alternate`,
-        opacity:         `${0.3 + Math.random() * 0.5}`,
+        opacity:         `${0.2 + Math.random() * 0.4}`,
       });
       raysEl.appendChild(r);
     }
-
-    // Fish — pick random from colorful set
-    const fishContainer = fishRef.current;
-    function spawnFish() {
-      const wrapper  = document.createElement("div");
-      const fishIdx  = Math.floor(Math.random() * fishSvgs.length);
-      wrapper.innerHTML = fishSvgs[fishIdx];
-      const topPct   = 10 + Math.random() * 65;
-      const duration = 16 + Math.random() * 22;
-      const delay    = Math.random() * 6;
-      const scale    = 0.7 + Math.random() * 0.7; // random size variety
-      Object.assign(wrapper.style, {
-        position:  "absolute",
-        top:       `${topPct}%`,
-        left:      "0",
-        opacity:   "0",
-        transform: `scale(${scale})`,
-        transformOrigin: "left center",
-        animation: `swimLeftToRight ${duration}s ${delay}s linear forwards`,
-        zIndex:    "2",
-      });
-      fishContainer.appendChild(wrapper);
-      setTimeout(() => wrapper.remove(), (duration + delay + 1) * 1000);
-    }
-
-    for (let i = 0; i < 4; i++) spawnFish();
-    const fishInterval = setInterval(spawnFish, 4000);
-    return () => clearInterval(fishInterval);
   }, []);
+
+  const slide = slides[current];
 
   return (
     <>
@@ -154,168 +53,322 @@ export default function Hero() {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap');
 
         @keyframes causticShift {
-          0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
-          100% { transform: translate(20px, -15px) scale(1.03); opacity: 1; }
-        }
-        @keyframes rise {
-          0%   { transform: translateY(110vh) scale(0.6); opacity: 0; }
-          10%  { opacity: 1; }
-          90%  { opacity: 0.4; }
-          100% { transform: translateY(-15vh) scale(1.1); opacity: 0; }
+          0%   { transform:translate(0,0) scale(1); opacity:.7; }
+          100% { transform:translate(20px,-15px) scale(1.03); opacity:1; }
         }
         @keyframes sway {
-          0%   { transform: rotate(-6deg) scaleX(1); opacity: 0.6; }
-          100% { transform: rotate(6deg) scaleX(1.8); opacity: 1; }
-        }
-        @keyframes swimLeftToRight {
-          0%   { transform: translateX(-120px); opacity: 0; }
-          5%   { opacity: 0.7; }
-          95%  { opacity: 0.55; }
-          100% { transform: translateX(calc(100vw + 120px)); opacity: 0; }
-        }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(36px); }
-          to   { opacity: 1; transform: translateY(0); }
+          0%   { transform:rotate(-6deg) scaleX(1); opacity:.6; }
+          100% { transform:rotate(6deg) scaleX(1.8); opacity:1; }
         }
         @keyframes ringPulse {
-          0%, 100% { transform: translate(-50%, -52%) scale(1); opacity: 0.5; }
-          50%       { transform: translate(-50%, -52%) scale(1.04); opacity: 1; }
+          0%,100% { transform:translate(-50%,-50%) scale(1); opacity:.5; }
+          50%     { transform:translate(-50%,-50%) scale(1.04); opacity:1; }
+        }
+        @keyframes slideIn {
+          from { opacity:0; transform:translateY(28px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes bgZoom {
+          from { transform:scale(1.07); }
+          to   { transform:scale(1); }
+        }
+        @keyframes arrowPulse {
+          0%,100% { box-shadow:0 0 0 0 rgba(79,209,232,0.15); }
+          50%     { box-shadow:0 0 0 8px rgba(79,209,232,0); }
         }
 
         .hero-section {
-  position: relative;
-  min-height: 100vh;
-  padding: 80px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #000000;
-  font-family: 'Outfit', sans-serif;
-}
+          position:relative;
+          height:100vh;
+          min-height:600px;
+          display:flex;
+          align-items:center;
+          overflow:hidden;
+          font-family:'Outfit',sans-serif;
+        }
+
+        /* Full BG image */
+        .slide-bg {
+          position:absolute; inset:0;
+          background-size:cover;
+          background-position:center;
+          animation:bgZoom 5.5s ease-out forwards;
+          z-index:0;
+        }
+
+        /* Overlay — heavy left, fade right */
+        .slide-overlay {
+          position:absolute; inset:0;
+          background:linear-gradient(
+            105deg,
+            rgba(4,17,31,0.93) 0%,
+            rgba(4,17,31,0.72) 42%,
+            rgba(4,17,31,0.25) 100%
+          );
+          z-index:1;
+        }
+
         .caustic {
-          position: absolute;
-          top: -20%; left: -10%;
-          width: 120%; height: 120%;
+          position:absolute; top:-20%; left:-10%;
+          width:120%; height:120%;
           background:
-            radial-gradient(ellipse 600px 300px at 30% 20%, rgba(0,180,200,0.06) 0%, transparent 70%),
-            radial-gradient(ellipse 400px 200px at 70% 50%, rgba(79,209,232,0.05) 0%, transparent 60%),
-            radial-gradient(ellipse 300px 400px at 50% 80%, rgba(10,132,214,0.07) 0%, transparent 60%);
-          animation: causticShift 8s ease-in-out infinite alternate;
+            radial-gradient(ellipse 600px 300px at 30% 20%, rgba(0,180,200,0.05) 0%, transparent 70%),
+            radial-gradient(ellipse 400px 200px at 70% 50%, rgba(79,209,232,0.04) 0%, transparent 60%);
+          animation:causticShift 8s ease-in-out infinite alternate;
+          z-index:2;
         }
         .grain-overlay {
-          position: absolute; inset: 0; z-index: 2; opacity: 0.025;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-          background-size: 180px; pointer-events: none;
+          position:absolute; inset:0; z-index:3; opacity:.022;
+          background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+          background-size:180px; pointer-events:none;
         }
         .glow-ring {
-          position: absolute; top: 50%; left: 50%;
-          transform: translate(-50%, -52%);
-          width: 520px; height: 520px; border-radius: 50%;
-          border: 1px solid rgba(79,209,232,0.07);
-          z-index: 4; pointer-events: none;
-          animation: ringPulse 5s ease-in-out infinite;
+          position:absolute; top:50%; left:50%;
+          transform:translate(-50%,-50%);
+          width:560px; height:560px; border-radius:50%;
+          border:1px solid rgba(79,209,232,0.06);
+          z-index:4; pointer-events:none;
+          animation:ringPulse 5s ease-in-out infinite;
         }
         .glow-ring::before {
-          content: ''; position: absolute; inset: 40px; border-radius: 50%;
-          border: 1px solid rgba(79,209,232,0.05);
-          animation: ringPulse 5s 1s ease-in-out infinite;
+          content:''; position:absolute; inset:44px; border-radius:50%;
+          border:1px solid rgba(79,209,232,0.04);
+          animation:ringPulse 5s 1s ease-in-out infinite;
+        }
+
+        /* ── Side arrows ── exactly at 50% vertical of the hero */
+        .side-arrow {
+          position:absolute;
+          top:50%;
+          transform:translateY(-50%);
+          z-index:20;
+          width:56px; height:56px;
+          border-radius:50%;
+          border:1.5px solid rgba(79,209,232,0.28);
+          background:rgba(4,17,31,0.52);
+          backdrop-filter:blur(10px);
+          color:#4FD1E8;
+          cursor:pointer;
+          display:flex; align-items:center; justify-content:center;
+          transition:background .22s, border-color .22s, transform .22s;
+          animation:arrowPulse 3s ease-in-out infinite;
+        }
+        .side-arrow:hover {
+          background:rgba(79,209,232,0.18);
+          border-color:rgba(79,209,232,0.6);
+          transform:translateY(-50%) scale(1.1);
+        }
+        .side-arrow-left  { left:2.2rem; }
+        .side-arrow-right { right:2.2rem; }
+
+        /* ── Content ── */
+        .hero-inner {
+          position:relative; z-index:10;
+          width:100%;
+          padding:0 9rem;          /* leaves room for side arrows */
+          display:flex; align-items:center;
+          height:100%;
         }
         .hero-content {
-          position: relative; z-index: 10; text-align: center;
-          padding: 5rem 2rem 4.5rem; max-width: 860px; margin: 0 auto;
-          animation: fadeUp 1.1s cubic-bezier(0.16,1,0.3,1) both;
+          max-width:800px;
+          display:flex; flex-direction:column; gap:0;
         }
+
+        /* Eyebrow */
         .eyebrow {
-          display: inline-flex; align-items: center; gap: 10px;
-          color: #4FD1E8; font-size: 11px; font-weight: 600;
-          letter-spacing: 4px; text-transform: uppercase;
-          margin-bottom: 2.4rem;
-          animation: fadeUp 1.1s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+          display:inline-flex; align-items:center; gap:14px;
+          color:#4FD1E8; font-size:11.5px; font-weight:600;
+          letter-spacing:5px; text-transform:uppercase;
+          margin-bottom:2rem;
         }
-        .eyebrow::before, .eyebrow::after {
-          content: ''; display: block; width: 28px; height: 1px;
-          background: rgba(79,209,232,0.5);
+        .eyebrow::before,.eyebrow::after {
+          content:''; display:block; width:30px; height:1px;
+          background:rgba(79,209,232,0.5);
         }
+
+        /* Headline */
         .hero-h1 {
-          font-family: 'Playfair Display', serif; font-weight: 600;
-          font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.18;
-          color: #ECF6FF; margin-bottom: 1.2rem; letter-spacing: -0.02em;
-          animation: fadeUp 1.1s 0.18s cubic-bezier(0.16,1,0.3,1) both;
+          font-family:'Playfair Display',serif; font-weight:600;
+          font-size:clamp(3rem,5.2vw,5rem);
+          line-height:1.1;
+          color:#ECF6FF;
+          letter-spacing:-0.02em;
+          white-space:nowrap;
+          margin-bottom:0.3rem;
         }
         .italic-line {
-          display: block; font-style: italic; font-weight: 400;
-          color: #4FD1E8; font-size: clamp(2rem, 5vw, 3.6rem); margin-top: 0.3rem;
+          display:block; font-style:italic; font-weight:400;
+          color:#4FD1E8;
+          font-size:clamp(2.4rem,4.2vw,4rem);
+          margin-top:0.2rem;
+          white-space:nowrap;
         }
-        .description {
-          font-size: 0.9rem; color: #6D97B0; line-height: 1.85; font-weight: 300;
-          max-width: 580px; margin: 1.4rem auto 3rem;
-          animation: fadeUp 1.1s 0.36s cubic-bezier(0.16,1,0.3,1) both;
+
+        /* Sub-headline */
+        .sub-headline {
+          font-size:1.1rem; color:#B0D4E8; line-height:1.7; font-weight:400;
+          max-width:600px;
+          margin-top:2rem;
+          margin-bottom:1.1rem;
         }
+
+        /* Description */
+        .hero-desc {
+          font-size:0.9rem; color:#5a8099; line-height:2; font-weight:300;
+          max-width:580px;
+          margin-bottom:3rem;
+          border-left:2px solid rgba(79,209,232,0.25);
+          padding-left:1.1rem;
+        }
+
+        /* CTAs */
         .cta-group {
-          display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
-          animation: fadeUp 1.1s 0.44s cubic-bezier(0.16,1,0.3,1) both;
+          display:flex; gap:14px; flex-wrap:wrap; align-items:center;
         }
         .btn-primary {
-          padding: 13px 34px; border-radius: 4px; font-family: 'Outfit', sans-serif;
-          font-size: 0.88rem; font-weight: 600; letter-spacing: 0.5px;
-          border: none; cursor: pointer; background: #0A84D6; color: #fff;
-          position: relative; overflow: hidden; transition: background 0.25s, transform 0.18s;
+          padding:15px 38px; border-radius:4px; font-family:'Outfit',sans-serif;
+          font-size:0.95rem; font-weight:600; letter-spacing:0.5px;
+          border:none; cursor:pointer; background:#0A84D6; color:#fff;
+          transition:background .25s,transform .18s,box-shadow .25s;
+          box-shadow:0 4px 22px rgba(10,132,214,0.38);
         }
-        .btn-primary::after {
-          content: ''; position: absolute; inset: 0;
-          background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
-          transform: translateX(-100%); transition: transform 0.5s;
+        .btn-primary:hover { background:#0e9cc4; transform:translateY(-2px); box-shadow:0 6px 30px rgba(10,132,214,0.48); }
+
+        .btn-secondary {
+          padding:14px 38px; border-radius:4px; font-family:'Outfit',sans-serif;
+          font-size:0.95rem; font-weight:600; letter-spacing:0.5px;
+          cursor:pointer; background:rgba(79,209,232,0.1); color:#4FD1E8;
+          border:1.5px solid rgba(79,209,232,0.32);
+          transition:background .22s,color .22s,border-color .22s,transform .18s;
         }
-        .btn-primary:hover { background: #0e9cc4; transform: translateY(-2px); }
-        .btn-primary:hover::after { transform: translateX(100%); }
+        .btn-secondary:hover {
+          background:rgba(79,209,232,0.2); color:#ECF6FF;
+          border-color:rgba(79,209,232,0.65); transform:translateY(-2px);
+        }
+
         .btn-outline {
-          padding: 12px 34px; border-radius: 4px; font-family: 'Outfit', sans-serif;
-          font-size: 0.88rem; font-weight: 500; letter-spacing: 0.5px;
-          cursor: pointer; background: transparent; color: #B0D4E8;
-          border: 1px solid rgba(79,209,232,0.35);
-          transition: background 0.22s, color 0.22s, border-color 0.22s, transform 0.18s;
+          padding:14px 30px; border-radius:4px; font-family:'Outfit',sans-serif;
+          font-size:0.95rem; font-weight:500; letter-spacing:0.5px;
+          cursor:pointer; background:transparent; color:#6D97B0;
+          border:1.5px solid rgba(79,209,232,0.18);
+          transition:background .22s,color .22s,border-color .22s,transform .18s;
+          display:flex; align-items:center; gap:9px;
         }
         .btn-outline:hover {
-          background: rgba(79,209,232,0.1); color: #4FD1E8;
-          border-color: rgba(79,209,232,0.7); transform: translateY(-2px);
+          background:rgba(79,209,232,0.08); color:#B0D4E8;
+          border-color:rgba(79,209,232,0.42); transform:translateY(-2px);
+        }
+
+        .slide-text-anim { animation:slideIn 0.65s cubic-bezier(0.16,1,0.3,1) both; }
+
+        /* Bottom wave */
+        .bottom-wave {
+          position:absolute; bottom:0; left:0; width:100%; z-index:5; line-height:0;
+        }
+
+        @media (max-width:1024px) {
+          .hero-inner { padding:0 7rem; }
+          .hero-h1 { font-size:clamp(2.4rem,5vw,4rem); white-space:normal; }
+          .italic-line { font-size:clamp(2rem,4.2vw,3.2rem); white-space:normal; }
+        }
+        @media (max-width:640px) {
+          .hero-inner { padding:0 5rem; }
+          .side-arrow { width:42px; height:42px; }
+          .side-arrow-left  { left:0.6rem; }
+          .side-arrow-right { right:0.6rem; }
+          .hero-h1 { font-size:2rem; }
+          .italic-line { font-size:1.7rem; }
         }
       `}</style>
 
       <section className="hero-section">
-        <div style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>
+
+        {/* Full BG */}
+        <div
+          key={`bg-${animKey}`}
+          className="slide-bg"
+          style={{ backgroundImage:`url('${slide.image}')` }}
+        />
+        <div className="slide-overlay" />
+
+        {/* Atmosphere */}
+        <div style={{ position:"absolute", inset:0, overflow:"hidden", zIndex:2 }}>
           <div className="caustic" />
         </div>
-        <div ref={raysRef} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "60%", overflow: "hidden", zIndex: 1 }} />
+        <div ref={raysRef} style={{ position:"absolute", top:0, left:0, width:"100%", height:"60%", overflow:"hidden", zIndex:2 }} />
         <div className="grain-overlay" />
-        <div ref={bubblesRef} style={{ position: "absolute", inset: 0, zIndex: 1 }} />
-        <div ref={fishRef} style={{ position: "absolute", inset: 0, zIndex: 2, overflow: "hidden" }} />
         <div className="glow-ring" />
 
-        <div className="hero-content">
-          <div className="eyebrow">Ornamental Fish Breeding &amp; Aquarium Supply</div>
-          <h1 className="hero-h1">
-            Healthy Ornamental Fish
-            <span className="italic-line">For Aquariums &amp; Fish Lovers</span>
-          </h1>
-          <p className="description">
-            MAYA Fish Farm breeds vibrant and healthy ornamental fish varieties
-            for aquariums, hobbyists, and aquarium retailers.
-          </p>
-          <div className="cta-group">
-            <button className="btn-primary">Contact Us</button>
-            <button className="btn-outline">Call Now</button>
+        {/* ← Left arrow at vertical centre */}
+        <button
+          className="side-arrow side-arrow-left"
+          onClick={() => goTo((current - 1 + total) % total)}
+          aria-label="Previous slide"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4FD1E8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        {/* → Right arrow at vertical centre */}
+        <button
+          className="side-arrow side-arrow-right"
+          onClick={() => goTo((current + 1) % total)}
+          aria-label="Next slide"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4FD1E8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        {/* Content */}
+        <div className="hero-inner">
+          <div className="hero-content">
+
+            <div key={`eyebrow-${animKey}`} className="eyebrow slide-text-anim">
+              Ornamental Fish Breeding &amp; Aquarium Supply
+            </div>
+
+            <h1 key={`h1-${animKey}`} className="hero-h1 slide-text-anim" style={{ animationDelay:"0.07s" }}>
+              Healthy Ornamental Fish
+              <span className="italic-line">Breeding &amp; Aquarium Supply</span>
+            </h1>
+
+            <p key={`sub-${animKey}`} className="sub-headline slide-text-anim" style={{ animationDelay:"0.13s" }}>
+              MAYA Fish Farm specializes in breeding vibrant and healthy ornamental fish varieties
+              for aquariums, hobbyists, and aquarium retailers.
+            </p>
+
+            <p key={`desc-${animKey}`} className="hero-desc slide-text-anim" style={{ animationDelay:"0.19s" }}>
+              MAYA Fish Farm is dedicated to producing high-quality ornamental fish through responsible
+              breeding practices, proper water management, and balanced fish nutrition. Our farm supplies
+              aquarium fish varieties to hobbyists, pet stores, and aquarium businesses while promoting
+              sustainable aquaculture practices.
+            </p>
+
+            <div key={`cta-${animKey}`} className="cta-group slide-text-anim" style={{ animationDelay:"0.25s" }}>
+              <button className="btn-primary">Contact Us</button>
+              <button className="btn-secondary">Get Quote</button>
+              <button className="btn-outline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4FD1E8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{opacity:.8}}>
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
+                </svg>
+                Call Now
+              </button>
+            </div>
+
           </div>
         </div>
 
-        <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", zIndex: 5, lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style={{ width: "100%", height: "90px", display: "block" }}>
+        {/* Bottom wave */}
+        <div className="bottom-wave">
+          <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style={{ width:"100%", height:"90px", display:"block" }}>
             <path fill="#E6F6FF" d="M0,50 C240,80 480,20 720,45 C960,70 1200,25 1440,50 L1440,90 L0,90 Z" opacity="0.06" />
             <path fill="#E6F6FF" d="M0,65 C300,30 600,85 900,55 C1100,38 1280,70 1440,60 L1440,90 L0,90 Z" opacity="0.09" />
             <path fill="#E6F6FF" d="M0,75 C200,55 480,85 720,70 C960,55 1200,80 1440,72 L1440,90 L0,90 Z" opacity="0.13" />
           </svg>
         </div>
+
       </section>
     </>
   );
