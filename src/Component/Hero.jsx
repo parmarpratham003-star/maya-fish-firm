@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const slides = [
-  { image: "/ss2.png" },
+  { image: "/show-case-img-1.jpg" },
   { image: "/s2.png" },
-  { image: "/ss1.png" },
+  { image: "/silde3.png" },
 ];
 
 const slideContent = [
@@ -61,13 +61,9 @@ export default function Hero() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,700;0,800;0,900;1,300;1,400;1,700&family=Josefin+Sans:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&display=swap');
 
         /* ─── Keyframes ─── */
-        @keyframes zoomIn {
-          from { transform: scale(1); }
-          to   { transform: scale(1.08); }
-        }
         @keyframes slideEnter {
           from { opacity: 0; }
           to   { opacity: 1; }
@@ -79,8 +75,8 @@ export default function Hero() {
 
         /* text reveal */
         @keyframes revealUp {
-          from { transform: translateY(100%); opacity: 0; }
-          to   { transform: translateY(0);    opacity: 1; }
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(18px); }
@@ -106,7 +102,7 @@ export default function Hero() {
           height: 100vh;
           min-height: 660px;
           overflow: hidden;
-          font-family: 'Nunito Sans', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           background: #020c18;
         }
 
@@ -120,7 +116,7 @@ export default function Hero() {
         }
         .hv-slide.active {
           opacity: 1;
-          animation: slideEnter 1.2s ease forwards, zoomIn 7s ease forwards;
+          animation: slideEnter 1.2s ease forwards;
           z-index: 1;
         }
 
@@ -151,18 +147,17 @@ export default function Hero() {
           align-items: center; justify-content: center;
           text-align: center;
           padding: 76px 2rem 0;
-          gap: 0; /* controlled per-element via margin */
         }
 
         /* ─── Eyebrow ─── */
         .hv-eyebrow {
-          font-family: 'Josefin Sans', sans-serif;
-          font-size: 10.5px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
           font-weight: 400;
-          letter-spacing: 5.5px;
-          color: rgba(255,255,255,0.55);
-          text-transform: uppercase;
-          margin: 0 0 0.85rem;
+          letter-spacing: 0.5px;
+          color: rgba(255,255,255,0.72);
+          text-transform: none;
+          margin: 0 0 1.4rem;
           overflow: hidden;
         }
         .hv-eyebrow span { display: inline-block; }
@@ -170,53 +165,57 @@ export default function Hero() {
         /* ─── Headline ─── */
         .hv-h1 {
           margin: 0;
-          line-height: 1.08;
-          max-width: 780px;
+          max-width: 820px;
           width: 100%;
         }
         .hv-line {
           display: block;
-          overflow: hidden;
-          line-height: 1.1;
+          overflow: visible;
+          line-height: 1.2;
+          padding-bottom: 0.05em;
         }
-        .hv-line-inner { display: block; }
+        .hv-line + .hv-line { margin-top: 0.08em; }
+        .hv-line-inner { display: block; overflow: visible; }
 
-        /* bold — heavy white */
+        /* bold — matches "Plunge" / "marine marvels" in reference */
         .hv-bold {
-          font-family: 'Nunito Sans', sans-serif;
-          font-weight: 900;
-          font-size: clamp(2rem, 4.4vw, 4.2rem);
+          font-family: 'DM Sans', sans-serif;
+          font-weight: 700;
+          font-size: clamp(2.4rem, 5.5vw, 5.2rem);
           color: #ffffff;
           letter-spacing: -0.025em;
-          line-height: 1.05;
+          line-height: 1.12;
+          display: inline;
         }
-        /* thin italic */
+        /* thin — matches "into a world of" in reference */
         .hv-thin {
-          font-family: 'Nunito Sans', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           font-weight: 300;
-          font-style: italic;
-          font-size: clamp(2rem, 4.4vw, 4.2rem);
-          color: rgba(255,255,255,0.78);
-          letter-spacing: -0.015em;
-          line-height: 1.05;
-          margin-left: 0.15em;
+          font-style: normal;
+          font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+          color: rgba(255,255,255,0.72);
+          letter-spacing: -0.02em;
+          line-height: 1.12;
+          margin-left: 0.18em;
+          display: inline;
         }
 
         /* ─── Sub ─── */
         .hv-sub {
-          margin: 1.1rem auto 0;
-          max-width: 480px;
-          font-size: clamp(0.8rem, 1vw, 0.9rem);
-          font-weight: 300;
-          line-height: 1.85;
-          color: rgba(255,255,255,0.55);
-          letter-spacing: 0.01em;
+          margin: 1.8rem auto 0;
+          max-width: 540px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(0.88rem, 1.2vw, 1rem);
+          font-weight: 400;
+          line-height: 1.8;
+          color: rgba(255,255,255,0.62);
+          letter-spacing: 0em;
         }
 
         /* ─── CTAs ─── */
         .hv-cta-wrap {
-          margin-top: 1.8rem;
-          display: flex; gap: 10px;
+          margin-top: 2.2rem;
+          display: flex; gap: 12px;
           align-items: center; justify-content: center;
           flex-wrap: wrap;
         }
@@ -239,9 +238,9 @@ export default function Hero() {
           box-shadow: 0 6px 28px rgba(10,132,214,0.55);
         }
         .hv-btn-primary-label {
-          font-family: 'Josefin Sans', sans-serif;
-          font-size: 12.5px; font-weight: 700;
-          letter-spacing: 1.2px; text-transform: uppercase;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px; font-weight: 700;
+          letter-spacing: 0.5px; text-transform: uppercase;
           color: #fff; margin-right: 14px; white-space: nowrap;
         }
         .hv-btn-primary-icon {
@@ -259,9 +258,9 @@ export default function Hero() {
           border: 1.5px solid rgba(255,255,255,0.45);
           border-radius: 50px;
           background: transparent;
-          font-family: 'Josefin Sans', sans-serif;
-          font-size: 12.5px; font-weight: 600;
-          letter-spacing: 1.2px; text-transform: uppercase;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px; font-weight: 600;
+          letter-spacing: 0.5px; text-transform: uppercase;
           color: #fff; cursor: pointer; text-decoration: none;
           transition: all 0.25s;
           backdrop-filter: blur(4px);
@@ -279,9 +278,9 @@ export default function Hero() {
           border: 1px solid rgba(255,255,255,0.18);
           border-radius: 50px;
           background: rgba(255,255,255,0.06);
-          font-family: 'Josefin Sans', sans-serif;
-          font-size: 12px; font-weight: 500;
-          letter-spacing: 1px; text-transform: uppercase;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px; font-weight: 500;
+          letter-spacing: 0.3px; text-transform: uppercase;
           color: rgba(255,255,255,0.65);
           cursor: pointer; text-decoration: none;
           transition: all 0.25s;
@@ -298,19 +297,16 @@ export default function Hero() {
           flex-shrink: 0;
         }
 
-        /* Hero description — small fine print below CTAs */
+        /* Hero description */
         .hv-desc {
-          margin: 1.4rem auto 0;
+          margin: 1.8rem auto 0;
           max-width: 520px;
           font-size: clamp(0.72rem, 0.9vw, 0.8rem);
           font-weight: 300;
-          line-height: 1.9;
+          line-height: 2;
           color: rgba(255,255,255,0.38);
           letter-spacing: 0.02em;
           font-style: italic;
-        }
-          display: flex; gap: 14px;
-          align-items: center; justify-content: center;
         }
         /* ─── Side arrows — minimal circles on edges ─── */
         .hv-arrow {
@@ -353,7 +349,7 @@ export default function Hero() {
         .hv-counter {
           position: absolute; bottom: 2rem; right: 2.2rem;
           z-index: 20;
-          font-family: 'Josefin Sans', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           display: flex; align-items: baseline; gap: 4px;
         }
         .hv-counter-cur {
@@ -370,13 +366,14 @@ export default function Hero() {
         /* ─── Responsive ─── */
         @media (max-width: 768px) {
           .hv-bold, .hv-thin { font-size: clamp(1.7rem, 7.5vw, 2.8rem); }
-          .hv-sub { font-size: 0.8rem; max-width: 90%; }
-          .hv-eyebrow { font-size: 9.5px; letter-spacing: 4px; }
+          .hv-sub { font-size: 0.82rem; max-width: 90%; margin-top: 1.4rem; }
+          .hv-eyebrow { font-size: 11px; letter-spacing: 1.5px; margin-bottom: 1rem; }
           .hv-arrow-left  { left: 0.6rem; }
           .hv-arrow-right { right: 0.6rem; }
           .hv-arrow { width: 38px; height: 38px; }
           .hv-counter { display: none; }
-          .hv-cta-wrap { margin-top: 1.4rem; }
+          .hv-cta-wrap { margin-top: 1.6rem; gap: 10px; }
+          .hv-desc { display: none; }
           .hv-content { padding: 76px 1.5rem 0; }
           .hv-h1 { max-width: 100%; }
         }
@@ -428,7 +425,7 @@ export default function Hero() {
                   <span className="hv-thin">{c.line1thin}</span>
                 </span>
               </span>
-              <span className="hv-line" style={{ marginTop: "0.06em" }}>
+              <span className="hv-line">
                 <span className="hv-line-inner" style={{ animation: "revealUp 0.7s 0.30s cubic-bezier(0.16,1,0.3,1) both" }}>
                   <span className="hv-bold">{c.line2bold}</span>
                   <span className="hv-thin">{c.line2thin}</span>
@@ -445,7 +442,7 @@ export default function Hero() {
                 <span className="hv-bold">{c.line1bold}</span>
                 <span className="hv-thin">{c.line1thin}</span>
               </span>
-              <span className="hv-line" style={{ display:"block", marginTop:"0.06em" }}>
+              <span className="hv-line" style={{ display:"block" }}>
                 <span className="hv-bold">{c.line2bold}</span>
                 <span className="hv-thin">{c.line2thin}</span>
               </span>
@@ -461,7 +458,7 @@ export default function Hero() {
                   <span className="hv-thin">{c.line1thin}</span>
                 </span>
               </span>
-              <span className="hv-line" style={{ marginTop: "0.06em" }}>
+              <span className="hv-line">
                 <span className="hv-line-inner" style={{ animation: "clipUp 0.75s 0.26s cubic-bezier(0.77,0,0.18,1) both" }}>
                   <span className="hv-bold">{c.line2bold}</span>
                   <span className="hv-thin">{c.line2thin}</span>
@@ -490,10 +487,7 @@ export default function Hero() {
               </span>
             </a>
 
-            {/* Primary: Get Quote */}
-            <a href="/contact#quote" className="hv-btn-outline">
-              <span>Get a Quote</span>
-            </a>
+           
 
             {/* Secondary: Call Now */}
             <a href="tel:+919876543210" className="hv-btn-call">
@@ -506,8 +500,6 @@ export default function Hero() {
             </a>
 
           </div>
-
-          {/* Hero description */}
 
 
         </div>
