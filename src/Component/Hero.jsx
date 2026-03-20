@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const slides = [
-  { image: "/show-case-img-1.jpg" },
+  { image: "/s3.png" },
   { image: "/s2.png" },
-  { image: "/silde3.png" },
+  { image: "/ss3.png" },
 ];
 
 const slideContent = [
@@ -152,7 +152,7 @@ export default function Hero() {
         /* ─── Eyebrow ─── */
         .hv-eyebrow {
           font-family: 'DM Sans', sans-serif;
-          font-size: 14px;
+          font-size: 12px;
           font-weight: 400;
           letter-spacing: 0.5px;
           color: rgba(255,255,255,0.72);
@@ -181,7 +181,7 @@ export default function Hero() {
         .hv-bold {
           font-family: 'DM Sans', sans-serif;
           font-weight: 700;
-          font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+          font-size: clamp(1.8rem, 3.8vw, 3.6rem);
           color: #ffffff;
           letter-spacing: -0.025em;
           line-height: 1.12;
@@ -192,7 +192,7 @@ export default function Hero() {
           font-family: 'DM Sans', sans-serif;
           font-weight: 300;
           font-style: normal;
-          font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+          font-size: clamp(1.8rem, 3.8vw, 3.6rem);
           color: rgba(255,255,255,0.72);
           letter-spacing: -0.02em;
           line-height: 1.12;
@@ -203,9 +203,9 @@ export default function Hero() {
         /* ─── Sub ─── */
         .hv-sub {
           margin: 1.8rem auto 0;
-          max-width: 540px;
+          max-width: 480px;
           font-family: 'DM Sans', sans-serif;
-          font-size: clamp(0.88rem, 1.2vw, 1rem);
+          font-size: clamp(0.78rem, 0.95vw, 0.88rem);
           font-weight: 400;
           line-height: 1.8;
           color: rgba(255,255,255,0.62);
@@ -239,9 +239,9 @@ export default function Hero() {
         }
         .hv-btn-primary-label {
           font-family: 'DM Sans', sans-serif;
-          font-size: 13px; font-weight: 700;
+          font-size: 11.5px; font-weight: 700;
           letter-spacing: 0.5px; text-transform: uppercase;
-          color: #fff; margin-right: 14px; white-space: nowrap;
+          color: #fff; margin-right: 12px; white-space: nowrap;
         }
         .hv-btn-primary-icon {
           width: 34px; height: 34px; border-radius: 50%;
@@ -254,12 +254,12 @@ export default function Hero() {
         /* Outline — Get a Quote */
         .hv-btn-outline {
           display: inline-flex; align-items: center;
-          padding: 11px 24px;
+          padding: 10px 22px;
           border: 1.5px solid rgba(255,255,255,0.45);
           border-radius: 50px;
           background: transparent;
           font-family: 'DM Sans', sans-serif;
-          font-size: 13px; font-weight: 600;
+          font-size: 11.5px; font-weight: 600;
           letter-spacing: 0.5px; text-transform: uppercase;
           color: #fff; cursor: pointer; text-decoration: none;
           transition: all 0.25s;
@@ -274,12 +274,12 @@ export default function Hero() {
         /* Secondary — Call Now */
         .hv-btn-call {
           display: inline-flex; align-items: center; gap: 7px;
-          padding: 11px 20px;
+          padding: 10px 18px;
           border: 1px solid rgba(255,255,255,0.18);
           border-radius: 50px;
           background: rgba(255,255,255,0.06);
           font-family: 'DM Sans', sans-serif;
-          font-size: 13px; font-weight: 500;
+          font-size: 11.5px; font-weight: 500;
           letter-spacing: 0.3px; text-transform: uppercase;
           color: rgba(255,255,255,0.65);
           cursor: pointer; text-decoration: none;
@@ -365,14 +365,14 @@ export default function Hero() {
 
         /* ─── Responsive ─── */
         @media (max-width: 768px) {
-          .hv-bold, .hv-thin { font-size: clamp(1.7rem, 7.5vw, 2.8rem); }
-          .hv-sub { font-size: 0.82rem; max-width: 90%; margin-top: 1.4rem; }
-          .hv-eyebrow { font-size: 11px; letter-spacing: 1.5px; margin-bottom: 1rem; }
+          .hv-bold, .hv-thin { font-size: clamp(1.4rem, 6.5vw, 2.2rem); }
+          .hv-sub { font-size: 0.76rem; max-width: 90%; margin-top: 1.2rem; }
+          .hv-eyebrow { font-size: 10px; letter-spacing: 0.5px; margin-bottom: 0.9rem; }
           .hv-arrow-left  { left: 0.6rem; }
           .hv-arrow-right { right: 0.6rem; }
-          .hv-arrow { width: 38px; height: 38px; }
+          .hv-arrow { width: 36px; height: 36px; }
           .hv-counter { display: none; }
-          .hv-cta-wrap { margin-top: 1.6rem; gap: 10px; }
+          .hv-cta-wrap { margin-top: 1.4rem; gap: 8px; }
           .hv-desc { display: none; }
           .hv-content { padding: 76px 1.5rem 0; }
           .hv-h1 { max-width: 100%; }
@@ -413,69 +413,34 @@ export default function Hero() {
 
           {/* Eyebrow */}
           <p key={`ey-${animKey}`} className="hv-eyebrow">
-            <span style={{ animation: "fadeIn 0.8s 0.1s ease both" }}>{c.eyebrow}</span>
+            <span style={{ animation: "revealUp 0.6s 0.05s cubic-bezier(0.16,1,0.3,1) both" }}>{c.eyebrow}</span>
           </p>
 
-          {/* Headline — Slide 0: line-by-line clip reveal */}
-          {current === 0 && (
-            <h1 key={`h-${animKey}`} className="hv-h1">
-              <span className="hv-line">
-                <span className="hv-line-inner" style={{ animation: "revealUp 0.7s 0.18s cubic-bezier(0.16,1,0.3,1) both" }}>
-                  <span className="hv-bold">{c.line1bold}</span>
-                  <span className="hv-thin">{c.line1thin}</span>
-                </span>
-              </span>
-              <span className="hv-line">
-                <span className="hv-line-inner" style={{ animation: "revealUp 0.7s 0.30s cubic-bezier(0.16,1,0.3,1) both" }}>
-                  <span className="hv-bold">{c.line2bold}</span>
-                  <span className="hv-thin">{c.line2thin}</span>
-                </span>
-              </span>
-            </h1>
-          )}
-
-          {/* Headline — Slide 1: letter blur collapse */}
-          {current === 1 && (
-            <h1 key={`h-${animKey}`} className="hv-h1"
-              style={{ animation: "letterBlur 0.95s 0.12s cubic-bezier(0.16,1,0.3,1) both" }}>
-              <span className="hv-line" style={{ display:"block" }}>
+          {/* Headline — same revealUp animation on all slides */}
+          <h1 key={`h-${animKey}`} className="hv-h1">
+            <span className="hv-line">
+              <span className="hv-line-inner" style={{ animation: "revealUp 0.7s 0.18s cubic-bezier(0.16,1,0.3,1) both" }}>
                 <span className="hv-bold">{c.line1bold}</span>
                 <span className="hv-thin">{c.line1thin}</span>
               </span>
-              <span className="hv-line" style={{ display:"block" }}>
+            </span>
+            <span className="hv-line">
+              <span className="hv-line-inner" style={{ animation: "revealUp 0.7s 0.32s cubic-bezier(0.16,1,0.3,1) both" }}>
                 <span className="hv-bold">{c.line2bold}</span>
                 <span className="hv-thin">{c.line2thin}</span>
               </span>
-            </h1>
-          )}
-
-          {/* Headline — Slide 2: clip from bottom */}
-          {current === 2 && (
-            <h1 key={`h-${animKey}`} className="hv-h1">
-              <span className="hv-line">
-                <span className="hv-line-inner" style={{ animation: "clipUp 0.75s 0.12s cubic-bezier(0.77,0,0.18,1) both" }}>
-                  <span className="hv-bold">{c.line1bold}</span>
-                  <span className="hv-thin">{c.line1thin}</span>
-                </span>
-              </span>
-              <span className="hv-line">
-                <span className="hv-line-inner" style={{ animation: "clipUp 0.75s 0.26s cubic-bezier(0.77,0,0.18,1) both" }}>
-                  <span className="hv-bold">{c.line2bold}</span>
-                  <span className="hv-thin">{c.line2thin}</span>
-                </span>
-              </span>
-            </h1>
-          )}
+            </span>
+          </h1>
 
           {/* Sub */}
           <p key={`sub-${animKey}`} className="hv-sub"
-            style={{ animation: "fadeUp 0.75s 0.55s ease both" }}>
+            style={{ animation: "revealUp 0.7s 0.48s cubic-bezier(0.16,1,0.3,1) both" }}>
             {c.sub}
           </p>
 
           {/* CTAs */}
           <div key={`cta-${animKey}`} className="hv-cta-wrap"
-            style={{ animation: "fadeUp 0.75s 0.70s ease both" }}>
+            style={{ animation: "revealUp 0.7s 0.62s cubic-bezier(0.16,1,0.3,1) both" }}>
 
             {/* Primary: Contact Us */}
             <a href="/contact" className="hv-btn-primary">
@@ -487,8 +452,8 @@ export default function Hero() {
               </span>
             </a>
 
-           
-
+            {/* Primary: Get Quote */}
+            
             {/* Secondary: Call Now */}
             <a href="tel:+919876543210" className="hv-btn-call">
               <span className="hv-btn-call-icon">
@@ -501,6 +466,8 @@ export default function Hero() {
 
           </div>
 
+          {/* Hero description */}
+         
 
         </div>
 
