@@ -1,158 +1,592 @@
 "use client";
 
-const highlights = [
-  {
-    title: "Healthy Fish Breeding",
-    desc: "Responsible breeding with clean water systems and balanced nutrition for vibrant, strong fish.",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <path d="M12 3C7 3 3 7.5 3 12s4 9 9 9 9-4 9-9-4-9-9-9z" stroke="#0A84D6" strokeWidth="1.8" />
-        <path d="M8 12c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="#4FD1E8" strokeWidth="1.5" />
-        <circle cx="12" cy="12" r="2" fill="#0A84D6" />
-      </svg>
-    ),
-  },
-  {
-    title: "Modern Aquaculture Practices",
-    desc: "Up-to-date water quality management and scientifically guided aquaculture methods.",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="11" width="18" height="10" rx="2" stroke="#0A84D6" strokeWidth="1.8" />
-        <path d="M7 11V7a5 5 0 0110 0v4" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="12" cy="16" r="1.5" fill="#0A84D6" />
-      </svg>
-    ),
-  },
-  {
-    title: "Reliable Aquarium Supply",
-    desc: "Trusted by hobbyists, pet stores, and bulk buyers for consistent quality and healthy stock.",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"
-          stroke="#0A84D6" strokeWidth="1.8" strokeLinejoin="round"
+import { useEffect, useRef, useState } from "react";
+
+/* ─────────────────────────────────────────
+   ANIMATED COUNTER
+───────────────────────────────────────── */
+function Counter({ target, suffix = "" }) {
+  const [value, setValue] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const dur = 2200;
+          const startTime = performance.now();
+          const tick = (now) => {
+            const p = Math.min((now - startTime) / dur, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            setValue(Math.round(ease * target));
+            if (p < 1) requestAnimationFrame(tick);
+            else setValue(target);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target]);
+
+  return <span ref={ref}>{value}{suffix}</span>;
+}
+
+/* ─────────────────────────────────────────
+   BUBBLE LAYER
+───────────────────────────────────────── */
+function BubbleLayer() {
+  const bubbles = useRef(
+    Array.from({ length: 24 }, (_, i) => ({
+      id: i,
+      size: Math.round(5 + Math.random() * 18),
+      left: Math.round(Math.random() * 100),
+      bottom: Math.round(Math.random() * 40),
+      dur: (6 + Math.random() * 9).toFixed(1),
+      delay: (Math.random() * 14).toFixed(1),
+    }))
+  ).current;
+
+  return (
+    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 1 }}>
+      {bubbles.map((b) => (
+        <div
+          key={b.id}
+          style={{
+            position: "absolute",
+            width: b.size,
+            height: b.size,
+            borderRadius: "50%",
+            border: "1.5px solid rgba(255,255,255,0.25)",
+            left: `${b.left}%`,
+            bottom: `${b.bottom}%`,
+            animation: `mfBubbleRise ${b.dur}s ease-in-out infinite ${b.delay}s`,
+            opacity: 0,
+          }}
         />
-      </svg>
-    ),
-  },
+      ))}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
+   SCROLL REVEAL HOOK
+───────────────────────────────────────── */
+function useScrollReveal(threshold = 0.12) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
+      },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+/* ─────────────────────────────────────────
+   STATS DATA
+───────────────────────────────────────── */
+const STATS = [
+  { target: 75, suffix: "+", label: "Project Done" },
+  { target: 30, suffix: "",  label: "Professional Team" },
+  { target: 15, suffix: "+", label: "Years of Experience" },
+  { target: 97, suffix: "%", label: "Satisfied Client" },
 ];
 
-export default function AboutMayaFish() {
+/* ─────────────────────────────────────────
+   AQUARIUM IMAGE
+───────────────────────────────────────── */
+function AquariumIllustration() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#f0f9ff] via-[#e8f5fe] to-white py-24 px-8">
+    <img
+      src="s2.png"
+      alt="Beautiful colorful aquarium with tropical fish"
+      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", borderRadius: "16px" }}
+    />
+  );
+}
 
-      {/* Decorative rings */}
-      <div className="absolute top-[-200px] right-[-150px] w-[480px] h-[480px] rounded-full border border-[rgba(79,209,232,0.08)] pointer-events-none" />
-      <div className="absolute bottom-[-80px] left-[-60px] w-[260px] h-[260px] rounded-full border border-[rgba(79,209,232,0.08)] pointer-events-none" />
+/* ─────────────────────────────────────────
+   MAIN EXPORT
+───────────────────────────────────────── */
+export default function AboutMayaFish() {
+  const [imgRef,   imgVisible]   = useScrollReveal(0.1);
+  const [textRef,  textVisible]  = useScrollReveal(0.1);
+  const [statsRef, statsVisible] = useScrollReveal(0.1);
 
-      <div className="relative max-w-5xl mx-auto">
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&display=swap');
 
-        {/* Centered heading */}
-        <div className="text-center max-w-xl mx-auto mb-14">
+        /* ══ KEYFRAMES ══ */
 
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="w-6 h-px bg-[#4FD1E8] opacity-60" />
-            <p className="text-[#4FD1E8] text-[11px] font-semibold tracking-[4px] uppercase">
-              About Us
-            </p>
-            <span className="w-6 h-px bg-[#4FD1E8] opacity-60" />
+        @keyframes mfBubbleRise {
+          0%   { opacity: 0;    transform: translateY(0) scale(1); }
+          12%  { opacity: 0.55; }
+          85%  { opacity: 0.08; }
+          100% { opacity: 0;    transform: translateY(-320px) scale(0.38); }
+        }
+        @keyframes mfFloat {
+          0%,100% { transform: translateY(0px); }
+          50%      { transform: translateY(-8px); }
+        }
+        @keyframes mfSlideFromLeft {
+          from { opacity: 0; transform: translateX(-52px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes mfSlideFromRight {
+          from { opacity: 0; transform: translateX(52px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes mfRevealUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes mfLetterBlur {
+          from { opacity: 0; letter-spacing: 0.5em; filter: blur(8px); }
+          to   { opacity: 1; letter-spacing: 0.5px; filter: blur(0); }
+        }
+        @keyframes mfClipUp {
+          from { clip-path: inset(100% 0 0 0); opacity: 0; }
+          to   { clip-path: inset(0% 0 0 0);   opacity: 1; }
+        }
+        @keyframes mfStatPop {
+          0%   { opacity: 0; transform: scale(0.65) translateY(24px); }
+          65%  { transform: scale(1.07) translateY(-4px); }
+          100% { opacity: 1; transform: scale(1)   translateY(0); }
+        }
+        @keyframes mfStatLabel {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes mfDividerGrow {
+          from { transform: scaleY(0); opacity: 0; }
+          to   { transform: scaleY(1); opacity: 1; }
+        }
+        @keyframes mfWaveIn {
+          from { opacity: 0; transform: scaleX(0.94) translateY(16px); }
+          to   { opacity: 1; transform: scaleX(1)    translateY(0); }
+        }
+        @keyframes mfBtnShine {
+          0%   { left: -80%; }
+          100% { left: 130%; }
+        }
+        @keyframes mfPulseRing {
+          0%   { text-shadow: 0 0 0px rgba(26,184,196,0.7); }
+          50%  { text-shadow: 0 0 18px rgba(26,184,196,0.5); }
+          100% { text-shadow: 0 0 0px rgba(26,184,196,0.0); }
+        }
+        @keyframes mfImageReveal {
+          from { clip-path: inset(0 100% 0 0); opacity: 0.4; }
+          to   { clip-path: inset(0 0%   0 0); opacity: 1; }
+        }
+
+        /* ══ ROOT ══ */
+        .mf-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #fff;
+          width: 100%;
+          overflow: hidden;
+        }
+
+        /* ══ ABOUT SECTION ══ */
+        .mf-hero {
+          display: grid;
+          grid-template-columns: 0.9fr 1fr;
+          column-gap: 56px;
+          align-items: center;
+          padding: 62px 68px 74px 62px;
+          background: #fff;
+        }
+
+        /* Left column */
+        .mf-left { position: relative; }
+        .mf-left.mf-in { animation: mfSlideFromLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+
+        .mf-aquarium-img {
+          width: 100%;
+          aspect-ratio: 4 / 3.15;
+          border-radius: 16px;
+          overflow: hidden;
+          display: block;
+          position: relative;
+          box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+          transition: transform 0.55s cubic-bezier(0.16,1,0.3,1),
+                      box-shadow 0.55s ease;
+        }
+        .mf-aquarium-img:hover {
+          transform: scale(1.018);
+          box-shadow: 0 22px 60px rgba(26,184,196,0.2);
+        }
+        /* Image reveal wipe */
+        .mf-left.mf-in .mf-aquarium-img {
+          animation: mfImageReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s both;
+        }
+
+        /* Shimmer on hover */
+        .mf-aquarium-img::after {
+          content: '';
+          position: absolute; inset: 0;
+          background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.14) 50%, transparent 62%);
+          background-size: 600px 100%;
+          background-position: -600px 0;
+          border-radius: 16px;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        .mf-aquarium-img:hover::after {
+          opacity: 1;
+          animation: mfBtnShine 0.75s ease forwards;
+        }
+
+        /* Quote card */
+        .mf-quote {
+          position: absolute;
+          bottom: -18px; left: -14px;
+          background: #fff;
+          border-radius: 12px;
+          padding: 20px 22px;
+          width: 238px;
+          box-shadow: 0 14px 44px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.06);
+          animation: mfFloat 4s ease-in-out infinite;
+          z-index: 10;
+          font-family: 'DM Sans', sans-serif;
+          transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .mf-quote:hover {
+          box-shadow: 0 24px 56px rgba(0,0,0,.18), 0 4px 14px rgba(0,0,0,.08);
+          animation-play-state: paused;
+          transform: translateY(-5px) !important;
+        }
+        .mf-quote-icon {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 52px; font-weight: 800;
+          color: #1ab8c4; line-height: 0.72;
+          display: block; margin-bottom: 13px;
+          letter-spacing: -2px;
+          animation: mfPulseRing 2.8s ease-in-out infinite;
+        }
+        .mf-quote-text {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px; color: #3a3a3a;
+          line-height: 1.8; font-weight: 400;
+          margin: 0 0 13px 0;
+        }
+        .mf-quote-name {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 10.5px; font-weight: 700;
+          color: #111; letter-spacing: 0.6px;
+          text-transform: uppercase; margin-bottom: 2px;
+        }
+        .mf-quote-role {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 10.5px; color: #999; font-weight: 400;
+        }
+
+        /* Right column */
+        .mf-right { padding-left: 4px; }
+        .mf-right.mf-in { animation: mfSlideFromRight 0.9s cubic-bezier(0.16,1,0.3,1) 0.12s both; }
+
+        /* Eyebrow */
+        .mf-eyebrow {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 12px; font-weight: 400;
+          letter-spacing: 0.5px;
+          color: rgba(10,132,214,0.85);
+          margin-bottom: 16px; opacity: 0;
+        }
+        .mf-right.mf-in .mf-eyebrow {
+          animation: mfLetterBlur 0.7s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+        }
+
+        /* Heading bold line */
+        .mf-heading {
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(2rem, 3.4vw, 2.85rem);
+          font-weight: 700; color: #0c1a1f;
+          line-height: 1.12; letter-spacing: -0.025em;
+          margin: 0 0 8px 0; display: block;
+          overflow: hidden; opacity: 0;
+        }
+        .mf-right.mf-in .mf-heading {
+          animation: mfClipUp 0.72s 0.36s cubic-bezier(0.16,1,0.3,1) both;
+        }
+
+        /* Heading thin line */
+        .mf-heading-thin {
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(2rem, 3.4vw, 2.85rem);
+          font-weight: 300; color: rgba(12,26,31,0.55);
+          line-height: 1.12; letter-spacing: -0.02em;
+          display: block; margin: 0 0 26px 0;
+          overflow: hidden; opacity: 0;
+        }
+        .mf-right.mf-in .mf-heading-thin {
+          animation: mfClipUp 0.72s 0.50s cubic-bezier(0.16,1,0.3,1) both;
+        }
+
+        /* Body columns */
+        .mf-body-cols {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 22px; margin-bottom: 34px; opacity: 0;
+        }
+        .mf-right.mf-in .mf-body-cols {
+          animation: mfRevealUp 0.65s 0.62s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        .mf-body-cols p {
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(0.78rem, 0.95vw, 0.88rem);
+          color: #617d87; line-height: 1.8; font-weight: 400; margin: 0;
+        }
+
+        /* CTA Button */
+        .mf-btn {
+          display: inline-flex; align-items: center; gap: 0;
+          padding: 6px 6px 6px 24px;
+          background: #0A84D6; border: 1.5px solid #0A84D6;
+          border-radius: 50px; cursor: pointer; text-decoration: none;
+          box-shadow: 0 4px 20px rgba(10,132,214,0.45);
+          transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+          position: relative; overflow: hidden; opacity: 0;
+        }
+        .mf-right.mf-in .mf-btn {
+          animation: mfRevealUp 0.65s 0.76s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        /* Shine sweep */
+        .mf-btn::before {
+          content: ''; position: absolute;
+          top: 0; left: -80%; width: 60%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.24), transparent);
+          transform: skewX(-20deg); pointer-events: none;
+        }
+        .mf-btn:hover::before { animation: mfBtnShine 0.55s ease forwards; }
+        .mf-btn:hover {
+          background: #0872b8; border-color: #0872b8;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 28px rgba(10,132,214,0.55);
+        }
+        .mf-btn:active { transform: scale(0.97); }
+        .mf-btn-label {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 11.5px; font-weight: 700;
+          letter-spacing: 0.5px; text-transform: uppercase;
+          color: #fff; margin-right: 12px; white-space: nowrap;
+        }
+        .mf-btn-icon {
+          width: 34px; height: 34px; border-radius: 50%;
+          background: rgba(255,255,255,0.2);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          transition: background 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .mf-btn:hover .mf-btn-icon {
+          background: rgba(255,255,255,0.32);
+          transform: rotate(45deg);
+        }
+
+        /* ══ WAVE DIVIDER ══ */
+        .mf-wave-wrap {
+          background: #fff; line-height: 0;
+          overflow: hidden; margin-bottom: -3px;
+        }
+        .mf-wave-wrap svg { display: block; width: 100%; height: 70px; }
+        .mf-wave-wrap.mf-in svg {
+          animation: mfWaveIn 1.1s cubic-bezier(0.16,1,0.3,1) both;
+        }
+
+        /* ══ STATS BAND ══ */
+        .mf-stats-band {
+          position: relative; overflow: hidden;
+          background: linear-gradient(135deg, #19bcc8 0%, #0da8b4 50%, #0a8f9a 100%);
+          padding: 50px 48px 56px;
+        }
+
+        .mf-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          position: relative; z-index: 2;
+        }
+
+        .mf-stat {
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          padding: 0 16px; position: relative;
+          transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+          cursor: default;
+        }
+        .mf-stat:hover { transform: translateY(-7px); }
+
+        /* Glow on hover */
+        .mf-stat::before {
+          content: ''; position: absolute; inset: -10px;
+          border-radius: 18px;
+          background: rgba(255,255,255,0);
+          transition: background 0.35s ease;
+          pointer-events: none; z-index: 0;
+        }
+        .mf-stat:hover::before { background: rgba(255,255,255,0.07); }
+
+        /* Animated vertical divider */
+        .mf-stat:not(:last-child)::after {
+          content: ''; position: absolute;
+          right: 0; top: 10%; height: 80%; width: 1px;
+          background: rgba(255,255,255,0.24);
+          transform-origin: top; transform: scaleY(0); opacity: 0;
+        }
+        .mf-stats-band.mf-in .mf-stat:nth-child(1)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(2)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(3)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.80s both; }
+
+        /* Stat numbers — staggered scale pop */
+        .mf-stat-num {
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(3rem, 5.5vw, 4.8rem);
+          font-weight: 700; color: #fff;
+          line-height: 1; margin-bottom: 10px;
+          letter-spacing: -0.025em;
+          position: relative; z-index: 1; opacity: 0;
+        }
+        .mf-stats-band.mf-in .mf-stat:nth-child(1) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.08s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(2) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(3) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.36s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(4) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.50s both; }
+
+        /* Stat labels — staggered fade up */
+        .mf-stat-label {
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(0.78rem, 0.95vw, 0.88rem);
+          font-weight: 400; color: rgba(255,255,255,.82);
+          text-align: center; line-height: 1.8;
+          position: relative; z-index: 1; opacity: 0;
+        }
+        .mf-stats-band.mf-in .mf-stat:nth-child(1) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.34s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(2) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.48s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(3) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.62s both; }
+        .mf-stats-band.mf-in .mf-stat:nth-child(4) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.76s both; }
+
+        /* ══ RESPONSIVE ══ */
+        @media (max-width: 880px) {
+          .mf-hero { grid-template-columns: 1fr; padding: 38px 26px 52px; gap: 42px; }
+          .mf-right { padding-left: 0; }
+          .mf-body-cols { grid-template-columns: 1fr; gap: 16px; }
+          .mf-quote { width: 200px; padding: 16px 18px; }
+          .mf-left.mf-in  { animation: mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+          .mf-right.mf-in { animation: mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
+        }
+        @media (max-width: 580px) {
+          .mf-stats-grid { grid-template-columns: repeat(2, 1fr); }
+          .mf-stat { padding: 20px 12px; border-bottom: 1px solid rgba(255,255,255,.18); }
+          .mf-stat:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,.18); }
+          .mf-stat:nth-child(even) { border-right: none; }
+          .mf-stat:nth-last-child(-n+2) { border-bottom: none; }
+          .mf-stat::after { display: none !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
+
+      <div className="mf-root">
+
+        {/* ══════════════ ABOUT SECTION ══════════════ */}
+        <section className="mf-hero">
+
+          {/* LEFT — image + floating quote */}
+          <div ref={imgRef} className={`mf-left${imgVisible ? " mf-in" : ""}`}>
+            <div className="mf-aquarium-img">
+              <AquariumIllustration />
+            </div>
+            <div className="mf-quote">
+              <span className="mf-quote-icon">"</span>
+              <p className="mf-quote-text">
+                There's nothing quite like a day at the aquarium. These are the moments we live for
+              </p>
+              <div className="mf-quote-name">William Despres –</div>
+              <div className="mf-quote-role">CEO/Founder</div>
+            </div>
           </div>
 
-          <h2 className="font-serif leading-tight mb-4">
-            <span className="block text-[#083B66] text-4xl md:text-5xl font-light tracking-tight">
-              Trusted Ornamental Fish
-            </span>
-            <span className="block italic text-[#4FD1E8] text-4xl md:text-5xl font-semibold">
-              Breeders &amp; Suppliers
-            </span>
-          </h2>
+          {/* RIGHT — text content */}
+          <div ref={textRef} className={`mf-right${textVisible ? " mf-in" : ""}`}>
 
-          <p className="text-[#3a6680] text-sm leading-relaxed font-light">
-            MAYA Fish Farm is an ornamental fish breeding farm focused on producing healthy and
-            colorful aquarium fish varieties — following responsible aquaculture practices to
-            ensure strong fish growth and survival.
-          </p>
+            <p className="mf-eyebrow">About Us</p>
 
+            <h2 style={{ margin: 0 }}>
+              <span className="mf-heading">
+                Discover the most beautiful{" "}
+                <span style={{ fontWeight: 300, color: "rgba(12,26,31,0.55)", letterSpacing: "-0.02em" }}>fish</span>
+              </span>
+              <span className="mf-heading-thin">tanks from around the world</span>
+            </h2>
+
+            <div className="mf-body-cols">
+              <p>
+                Fusce duis non turpis nec vestibulum magnis torquent lacinia. Parturient hac nec
+                semper amet facilisi tellus nibh ex orci. Penatibus eget elit bibendum senectus
+                duis posuere mi. Ullamcorper a faucibus nascetur id taciti cras fringilla. Lorem
+              </p>
+              <p>
+                Facilisi dignissim arcu faucibus litora pede porta eros magna. Dignissim vel fames
+                neque quam suspendisse orci massa montes fringilla eleifend. Nulla cubilia auctor
+                scelerisque si letius.
+              </p>
+            </div>
+
+            <a className="mf-btn" href="#">
+              <span className="mf-btn-label">Discover More</span>
+              <span className="mf-btn-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 17L17 7M17 7H7M17 7v10" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </a>
+
+          </div>
+        </section>
+
+        {/* ══════════════ WAVE DIVIDER ══════════════ */}
+        <div className={`mf-wave-wrap${statsVisible ? " mf-in" : ""}`}>
+          <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1440" height="70" fill="#ffffff" />
+            <path d="M0,70 L0,32 Q180,70 360,46 Q540,22 720,46 Q900,70 1080,46 Q1260,22 1440,46 L1440,70 Z" fill="#19bcc8" />
+            <path d="M0,70 L0,50 Q180,70 360,59 Q540,47 720,59 Q900,70 1080,59 Q1260,47 1440,59 L1440,70 Z" fill="rgba(26,184,196,0.42)" />
+            <path d="M0,70 L0,62 Q360,70 720,65 Q1080,60 1440,65 L1440,70 Z" fill="rgba(100,225,235,0.18)" />
+          </svg>
         </div>
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-
-          {/* LEFT — Image */}
-          <div className="relative">
-
-            <div className="absolute -top-[18px] -left-[18px] w-[90px] h-[90px] rounded-full border-2 border-[rgba(79,209,232,0.22)] z-0 pointer-events-none">
-              <div className="absolute top-[6px] left-[6px] w-3 h-3 rounded-full bg-[#4FD1E8] opacity-45" />
-            </div>
-
-            {/* Swap this SVG for <img src="/all.png" className="w-full h-full object-cover" /> when ready */}
-            <div className="w-full rounded-[24px] overflow-hidden aspect-[4/3] transition-transform duration-500 hover:scale-[1.02]">
-              <svg width="100%" viewBox="0 0 380 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="bgGrad" x1="0" y1="0" x2="380" y2="280" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#b8dff4" />
-                    <stop offset="100%" stopColor="#7ec6e8" />
-                  </linearGradient>
-                </defs>
-                <rect width="380" height="280" fill="url(#bgGrad)" />
-                <path d="M0 200 Q95 170 190 200 Q285 230 380 200 L380 280 L0 280Z" fill="#2d8fb5" opacity="0.35" />
-                <path d="M0 222 Q95 197 190 222 Q285 247 380 222 L380 280 L0 280Z" fill="#1a7a9e" opacity="0.4" />
-                <g transform="translate(90,110)">
-                  <path d="M80 28 C60 8,20 8,5 28 C20 48,60 48,80 28Z" fill="#fff" opacity="0.85" />
-                  <path d="M80 28 L100 12 L94 28 L100 44Z" fill="#fff" opacity="0.6" />
-                  <circle cx="18" cy="24" r="4" fill="#083B66" opacity="0.7" />
-                </g>
-                <g transform="translate(200,80)">
-                  <path d="M60 20 C45 6,14 6,4 20 C14 34,45 34,60 20Z" fill="#4FD1E8" opacity="0.8" />
-                  <path d="M60 20 L75 8 L71 20 L75 32Z" fill="#4FD1E8" opacity="0.55" />
-                  <circle cx="13" cy="17" r="3" fill="#083B66" opacity="0.6" />
-                </g>
-                <g transform="translate(130,155)">
-                  <path d="M55 18 C40 5,12 5,3 18 C12 31,40 31,55 18Z" fill="#f97316" opacity="0.75" />
-                  <path d="M55 18 L68 7 L64 18 L68 29Z" fill="#ea6a00" opacity="0.6" />
-                  <circle cx="11" cy="15" r="2.8" fill="#3B0E00" opacity="0.55" />
-                </g>
-                <g transform="translate(260,140)">
-                  <path d="M48 16 C35 4,10 4,3 16 C10 28,35 28,48 16Z" fill="#a855f7" opacity="0.7" />
-                  <path d="M48 16 L60 6 L57 16 L60 26Z" fill="#9333ea" opacity="0.5" />
-                </g>
-                <circle cx="40" cy="80" r="4" fill="#fff" opacity="0.25" />
-                <circle cx="340" cy="60" r="3" fill="#fff" opacity="0.2" />
-                <path d="M30 260 Q35 240 30 220" stroke="#2d8" strokeWidth="3" opacity="0.4" fill="none" strokeLinecap="round" />
-                <path d="M350 265 Q345 248 352 228" stroke="#2d8" strokeWidth="2.5" opacity="0.35" fill="none" strokeLinecap="round" />
-              </svg>
-            </div>
-
-            {/* Floating badge */}
-            <div className="absolute -bottom-5 -right-2.5 bg-white border border-[rgba(10,132,214,0.14)] rounded-[14px] px-[18px] py-[14px] shadow-[0_6px_28px_rgba(10,132,214,0.1)] z-10">
-              <p className="text-[#0A84D6] text-[11px] font-semibold tracking-[1.5px] uppercase mb-0.5">
-                Ornamental Fish
-              </p>
-              <p className="text-[#083B66] text-[11px] font-light">Healthy aquarium fish breeding</p>
-            </div>
-
-          </div>
-
-          {/* RIGHT — Highlight cards */}
-          <div className="flex flex-col gap-3">
-            {highlights.map((h) => (
-              <div
-                key={h.title}
-                className="flex items-start gap-3.5 bg-white border border-[rgba(10,132,214,0.1)] rounded-xl px-[18px] py-4 transition-all duration-200 hover:border-[rgba(79,209,232,0.45)] hover:translate-x-1"
-              >
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#E6F6FF] to-[#c8e9f8] flex items-center justify-center flex-shrink-0">
-                  {h.icon}
-                </div>
-                <div className="pt-0.5">
-                  <p className="text-[#083B66] text-[0.88rem] font-semibold mb-1">{h.title}</p>
-                  <p className="text-[#5a88a0] text-[0.78rem] font-light leading-relaxed">{h.desc}</p>
-                </div>
+        {/* ══════════════ STATS BAND ══════════════ */}
+        <section ref={statsRef} className={`mf-stats-band${statsVisible ? " mf-in" : ""}`}>
+          <BubbleLayer />
+          <div className="mf-stats-grid">
+            {STATS.map((s) => (
+              <div className="mf-stat" key={s.label}>
+                <div className="mf-stat-num"><Counter target={s.target} suffix={s.suffix} /></div>
+                <div className="mf-stat-label">{s.label}</div>
               </div>
             ))}
           </div>
+        </section>
 
-        </div>
       </div>
-    </section>
+    </>
   );
 }

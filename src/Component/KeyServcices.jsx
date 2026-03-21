@@ -169,28 +169,28 @@ export default function KeyServices() {
           transform: translateY(-100%);
           transition: transform 0.55s cubic-bezier(0.4, 0, 0.08, 1);
           z-index: 1;
-          filter: brightness(0.50) saturate(0.85);
+          filter: brightness(0.55) saturate(0.85);
         }
         .ks-slide-img::after {
           content: '';
           position: absolute; inset: 0;
           background: linear-gradient(
             to bottom,
-            rgba(4,12,30,0.30) 0%,
-            rgba(4,12,30,0.82) 100%
+            rgba(4,12,30,0.15) 0%,
+            rgba(4,12,30,0.75) 100%
           );
         }
         .ks-card:hover .ks-slide-img { transform: translateY(0); }
 
-        /* Arrow button — square, z-index above text */
+        /* Arrow button — square, appears on hover */
         .ks-img-arrow {
           position: absolute; bottom: 1.2rem; right: 1.2rem;
           width: 36px; height: 36px; border-radius: 0;
           background: #0A84D6;
           display: flex; align-items: center; justify-content: center;
-          z-index: 6; text-decoration: none;
+          z-index: 5; text-decoration: none;
           opacity: 0; transform: translateY(8px);
-          transition: opacity 0.28s ease 0.15s, transform 0.28s ease 0.15s;
+          transition: opacity 0.28s ease 0.12s, transform 0.28s ease 0.12s;
           box-shadow: 0 4px 14px rgba(10,132,214,0.55);
           pointer-events: all;
         }
@@ -198,16 +198,18 @@ export default function KeyServices() {
         .ks-img-placeholder { display: none; }
         .ks-img-icon-circle { display: none; }
 
-        /* ── Text body — always on top of image ── */
+        /* ── Text body — sits above everything, static ── */
         .ks-body {
           padding: 1.6rem 1.6rem 1.8rem;
           display: flex; flex-direction: column;
           gap: 0.7rem; flex: 1;
           position: relative;
-          z-index: 4;
+          z-index: 3;
           background: #fff;
-          transition: background 0.45s ease;
+          transition: background 0.35s ease, color 0.35s ease;
         }
+
+        /* on hover body becomes transparent — image shows through */
         .ks-card:hover .ks-body { background: transparent; }
 
         /* num */
@@ -216,38 +218,33 @@ export default function KeyServices() {
           letter-spacing: 2.5px; text-transform: uppercase;
           color: rgba(10,132,214,0.4);
           font-family: monospace;
-          transition: color 0.35s;
+          transition: color 0.3s;
         }
-        .ks-card:hover .ks-num { color: rgba(255,255,255,0.6); }
+        .ks-card:hover .ks-num { color: rgba(255,255,255,0.55); }
 
-        /* icon */
+        /* icon — shown in default state only */
         .ks-body-icon {
           width: 52px; height: 52px;
           display: flex; align-items: center; justify-content: center;
-          transition: opacity 0.3s, transform 0.3s;
+          border-radius: 0;
+          transition: opacity 0.25s;
         }
-        .ks-card:hover .ks-body-icon {
-          opacity: 0;
-          transform: translateY(-6px);
-        }
+        .ks-card:hover .ks-body-icon { opacity: 0; }
 
         /* accent bar */
         .ks-bar {
           width: 28px; height: 2px;
           background: #0A84D6;
           flex-shrink: 0;
-          transition: background 0.35s, width 0.35s;
+          transition: background 0.3s;
         }
-        .ks-card:hover .ks-bar {
-          background: #4FD1E8;
-          width: 44px;
-        }
+        .ks-card:hover .ks-bar { background: rgba(255,255,255,0.6); }
 
         .ks-title {
           font-size: 15px; font-weight: 700;
           color: #081c30; line-height: 1.3; margin: 0;
           letter-spacing: -0.015em;
-          transition: color 0.35s;
+          transition: color 0.3s;
         }
         .ks-card:hover .ks-title { color: #fff; }
 
@@ -255,20 +252,13 @@ export default function KeyServices() {
           font-size: 12.5px; font-weight: 400;
           color: #6a88a0; line-height: 1.78;
           margin: 0; flex: 1;
-          transition: color 0.35s;
+          transition: color 0.3s;
         }
-        .ks-card:hover .ks-desc { color: rgba(255,255,255,0.78); }
+        .ks-card:hover .ks-desc { color: rgba(255,255,255,0.72); }
 
-        /* tags — hide on hover */
-        .ks-tags {
-          display: flex; flex-wrap: wrap; gap: 4px;
-          transition: opacity 0.25s, transform 0.25s;
-        }
-        .ks-card:hover .ks-tags {
-          opacity: 0;
-          transform: translateY(4px);
-          pointer-events: none;
-        }
+        /* tags */
+        .ks-tags { display: flex; flex-wrap: wrap; gap: 4px; transition: opacity 0.3s; }
+        .ks-card:hover .ks-tags { opacity: 0; }
         .ks-tpill {
           font-size: 10px; font-weight: 600;
           border-radius: 0; padding: 2px 8px;
@@ -284,9 +274,9 @@ export default function KeyServices() {
           text-transform: uppercase;
           border-bottom: 1.5px solid currentColor;
           padding-bottom: 1px;
-          transition: color 0.35s, opacity 0.2s;
+          transition: color 0.3s, opacity 0.2s;
         }
-        .ks-card:hover .ks-more { color: rgba(255,255,255,0.9) !important; }
+        .ks-card:hover .ks-more { color: rgba(255,255,255,0.8) !important; }
         .ks-more:hover { opacity: 0.75; }
 
         /* ── CTA ── */
