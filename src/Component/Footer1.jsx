@@ -1,137 +1,451 @@
 "use client";
 
-const navLinks = ["Home", "About", "Services", "Contact"];
-
-const ArrowIcon = () => (
-  <svg className="w-3 h-3 opacity-0 group-hover/link:opacity-100 transition-opacity" viewBox="0 0 12 12" fill="none">
-    <path d="M2 10L10 2M10 2H5M10 2V7" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const FacebookIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" stroke="#4FD1E8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const InstagramIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-    <rect x="2" y="2" width="20" height="20" rx="5" stroke="#4FD1E8" strokeWidth="1.8" />
-    <circle cx="12" cy="12" r="4" stroke="#4FD1E8" strokeWidth="1.6" />
-    <circle cx="17.5" cy="6.5" r="1" fill="#4FD1E8" />
-  </svg>
-);
-
-const YoutubeIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-    <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z" stroke="#4FD1E8" strokeWidth="1.7" />
-    <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="#4FD1E8" strokeWidth="1.5" strokeLinejoin="round" />
-  </svg>
-);
-
-const UpArrow = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-    <path d="M7 11V3M3 7l4-4 4 4" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Footer1() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer
-      className="relative text-[#B0C8D8] font-['Outfit',sans-serif] overflow-hidden
-      bg-[url('/image.png')] bg-cover bg-center bg-no-repeat"
-    >
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-      {/* DARK OVERLAY */}
-      <div className="absolute inset-0 bg-[#04111F]/85 backdrop-blur-[2px]" />
+        *, *::before, *::after { box-sizing: border-box; }
 
-      {/* Decorative rings */}
-      <div className="absolute top-[-300px] right-[-180px] w-[500px] h-[500px] rounded-full border border-[rgba(79,209,232,0.05)] pointer-events-none z-10" />
-      <div className="absolute bottom-[-120px] left-[-80px] w-[280px] h-[280px] rounded-full border border-[rgba(79,209,232,0.05)] pointer-events-none z-10" />
+        .f-root { font-family: 'DM Sans', sans-serif; }
 
-      {/* Wave */}
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="w-full block relative z-10" style={{ height: "60px", marginBottom: "-2px" }}>
-        <path fill="#071A2F" d="M0,30 C360,60 1080,0 1440,30 L1440,0 L0,0Z" />
-      </svg>
+        /* ══════════════════
+           BANNER
+        ══════════════════ */
+        .f-banner {
+          position: relative;
+          min-height: 320px;
+          display: flex; align-items: center; justify-content: center;
+          overflow: hidden;
+          text-align: center;
+        }
+        .f-banner-bg {
+          position: absolute; inset: 0;
+          background-image: url('/image.png');
+          background-size: cover;
+          background-position: center 30%;
+          filter: brightness(0.32) saturate(0.7);
+          z-index: 0;
+        }
+        /* gradient fades seamlessly into black footer */
+        .f-banner-fade {
+          position: absolute; inset: 0; z-index: 1;
+          background: linear-gradient(
+            to bottom,
+            rgba(6,14,31,0.25) 0%,
+            rgba(6,14,31,0.60) 70%,
+            #060e1f 100%
+          );
+        }
+        .f-banner-content {
+          position: relative; z-index: 2;
+          padding: 4rem 1.5rem 4.5rem;
+          max-width: 780px;
+          width: 100%;
+        }
+        .f-banner-h {
+          font-size: clamp(2rem, 4.5vw, 3.4rem);
+          font-weight: 700;
+          color: #fff;
+          line-height: 1.15;
+          letter-spacing: -0.025em;
+          margin: 0 0 0.85rem;
+        }
+        .f-banner-p {
+          font-size: 14px;
+          font-weight: 400;
+          color: rgba(255,255,255,0.52);
+          margin: 0 0 2rem;
+          line-height: 1.65;
+        }
+        .f-banner-row {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1.6rem;
+          flex-wrap: wrap;
+        }
+
+        /* "Any questions" pill — dark bg, white border, dark filled circle arrow */
+        .f-pill {
+          display: inline-flex; align-items: center; gap: 0;
+          padding: 5px 5px 5px 22px;
+          background: rgba(255,255,255,0.08);
+          border: 1.5px solid rgba(255,255,255,0.30);
+          border-radius: 50px;
+          text-decoration: none; cursor: pointer;
+          backdrop-filter: blur(12px);
+          transition: background 0.25s, border-color 0.25s, transform 0.2s;
+        }
+        .f-pill:hover {
+          background: rgba(255,255,255,0.14);
+          border-color: rgba(255,255,255,0.55);
+          transform: translateY(-2px);
+        }
+        .f-pill-txt {
+          font-size: 13.5px; font-weight: 600;
+          color: #fff; margin-right: 14px;
+          white-space: nowrap; letter-spacing: 0.1px;
+        }
+        /* dark filled circle with arrow — exactly like reference */
+        .f-pill-ic {
+          width: 36px; height: 36px; border-radius: 50%;
+          background: rgba(10,10,20,0.9);
+          border: 1px solid rgba(255,255,255,0.15);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+
+        /* Phone row */
+        .f-phone {
+          display: inline-flex; align-items: center;
+          gap: 11px; text-decoration: none;
+        }
+        .f-phone-ic {
+          width: 40px; height: 40px; border-radius: 50%;
+          border: 1.5px solid rgba(255,255,255,0.22);
+          background: transparent;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          transition: border-color 0.2s;
+        }
+        .f-phone:hover .f-phone-ic { border-color: rgba(255,255,255,0.5); }
+        .f-phone-info { display: flex; flex-direction: column; line-height: 1.3; text-align: left; }
+        .f-phone-lbl { font-size: 10.5px; color: rgba(255,255,255,0.45); }
+        .f-phone-num { font-size: 14px; font-weight: 600; color: #fff; }
+
+        /* ══════════════════
+           FOOTER BODY
+        ══════════════════ */
+        .f-body {
+          background: #060e1f;
+          padding: 3.5rem 2rem 0;
+        }
+        .f-inner {
+          max-width: 1160px;
+          margin: 0 auto;
+        }
+
+        /* 4 cols: brand wide, 3 equal */
+        .f-grid {
+          display: grid;
+          grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
+          gap: 2rem 3.5rem;
+          padding-bottom: 3rem;
+        }
+
+        /* ── Brand ── */
+        .f-logo {
+          display: flex; align-items: center; gap: 9px;
+          margin-bottom: 1.1rem; text-decoration: none;
+        }
+        .f-logo-txt { display: flex; flex-direction: column; line-height: 1.25; }
+        .f-logo-name {
+          font-size: 17px; font-weight: 700;
+          color: #fff; letter-spacing: 0.5px;
+        }
+        /* blue accent word matching reference logo style */
+        .f-logo-accent { color: #4FD1E8; }
+        .f-logo-sub {
+          font-size: 9px; font-weight: 400;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(79,209,232,0.6);
+          margin-top: 1px;
+        }
+        .f-desc {
+          font-size: 13px; font-weight: 400;
+          color: rgba(255,255,255,0.35);
+          line-height: 1.8; margin-bottom: 1.4rem;
+          max-width: 280px;
+        }
+        .f-socials { display: flex; gap: 7px; }
+        .f-soc {
+          width: 30px; height: 30px; border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.12);
+          background: transparent;
+          display: flex; align-items: center; justify-content: center;
+          color: rgba(255,255,255,0.40); font-size: 11px;
+          text-decoration: none; cursor: pointer;
+          transition: all 0.2s;
+        }
+        .f-soc:hover {
+          border-color: rgba(79,209,232,0.45);
+          color: #4FD1E8;
+          background: rgba(79,209,232,0.05);
+          transform: translateY(-2px);
+        }
+
+        /* ── Col headings ── */
+        .f-head {
+          font-size: 13.5px; font-weight: 700;
+          color: #fff; margin: 0 0 1.3rem;
+          letter-spacing: 0.1px;
+        }
+
+        /* ── Link lists ── */
+        .f-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.9rem; }
+        .f-links li a {
+          font-size: 13.5px; font-weight: 400;
+          color: rgba(255,255,255,0.42);
+          text-decoration: none;
+          display: block;
+          transition: color 0.18s;
+        }
+        .f-links li a:hover { color: rgba(255,255,255,0.88); }
+
+        /* ── Contact ── */
+        .f-touch { display: flex; flex-direction: column; gap: 1.05rem; }
+        .f-touch-row {
+          display: flex; align-items: center; gap: 9px;
+        }
+        /* small square-ish icon badge — matches reference */
+        .f-touch-badge {
+          width: 26px; height: 26px;
+          border-radius: 6px;
+          background: rgba(79,209,232,0.10);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          color: #4FD1E8; font-size: 10px;
+        }
+        .f-touch-val {
+          font-size: 13.5px; font-weight: 400;
+          color: rgba(255,255,255,0.42);
+        }
+        .f-touch-val a {
+          color: rgba(255,255,255,0.42);
+          text-decoration: none;
+          transition: color 0.18s;
+        }
+        .f-touch-val a:hover { color: rgba(255,255,255,0.85); }
+
+        /* ── Bottom bar ── */
+        .f-bar {
+          border-top: 1px solid rgba(255,255,255,0.07);
+          padding: 1.1rem 0 1.4rem;
+          display: flex; align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap; gap: 0.5rem;
+        }
+        .f-bar-l {
+          font-size: 12.5px; font-weight: 400;
+          color: rgba(255,255,255,0.25);
+        }
+        .f-bar-l a { color: #4FD1E8; text-decoration: none; }
+        .f-bar-r { display: flex; align-items: center; gap: 0.6rem; }
+        .f-bar-r a {
+          font-size: 12.5px; color: rgba(255,255,255,0.28);
+          text-decoration: none; transition: color 0.18s;
+        }
+        .f-bar-r a:hover { color: rgba(255,255,255,0.7); }
+        .f-bar-sep { color: rgba(255,255,255,0.14); font-size: 11px; }
+
+        /* scroll top */
+        .f-top {
+          position: fixed; bottom: 1.3rem; right: 1.3rem; z-index: 50;
+          width: 38px; height: 38px; border-radius: 8px;
+          background: #0A84D6; border: none; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          color: #fff;
+          box-shadow: 0 4px 16px rgba(10,132,214,0.45);
+          transition: all 0.2s;
+        }
+        .f-top:hover { background: #0872b8; transform: translateY(-3px); }
+
+        @media (max-width: 900px) {
+          .f-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+        }
+        @media (max-width: 520px) {
+          .f-grid { grid-template-columns: 1fr; }
+          .f-banner-row { flex-direction: column; }
+          .f-bar { flex-direction: column; align-items: flex-start; }
+        }
+      `}</style>
+
+      <footer className="f-root">
+
+        {/* ── Banner ── */}
+        <div className="f-banner">
+          <div className="f-banner-bg" />
+          <div className="f-banner-fade" />
+          <div className="f-banner-content">
+            <h2 className="f-banner-h">
+              Enhancing your dive for an<br />unforgettable adventure
+            </h2>
+            <p className="f-banner-p">
+              Whether you're starting a backyard fish farm or a commercial aquarium venture,<br />
+              your sustainable ornamental fish journey starts right here.
+            </p>
+            <div className="f-banner-row">
+
+              {/* Any questions pill */}
+              <a href="/contact" className="f-pill">
+                <span className="f-pill-txt">Any questions</span>
+                <span className="f-pill-ic">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 17L17 7M17 7H7M17 7v10"
+                      stroke="#fff" strokeWidth="2.2"
+                      strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+
+              {/* Phone */}
+              <a href="tel:+91XXXXXXXXXX" className="f-phone">
+                <span className="f-phone-ic">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"
+                      stroke="rgba(255,255,255,0.7)" strokeWidth="1.8"
+                      strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                <div className="f-phone-info">
+                  <span className="f-phone-lbl">Call us anytime</span>
+                  <span className="f-phone-num">+91 XXXXX XXXXX</span>
+                </div>
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        {/* ── Body ── */}
+        <div className="f-body">
+          <div className="f-inner">
+            <div className="f-grid">
+
+              {/* Brand */}
+              <div>
+                <a href="/" className="f-logo">
+                  <Image src="/logo1.png" alt="Maya Fish Farm"
+                    width={36} height={36}
+                    style={{ objectFit:'contain', filter:'brightness(0) invert(1)', opacity:0.9 }}
+                  />
+                  <div className="f-logo-txt">
+                    <span className="f-logo-name">
+                      MAYA <span className="f-logo-accent">FISH FARM</span>
+                    </span>
+                    <span className="f-logo-sub">Ornamental · Aquarium</span>
+                  </div>
+                </a>
+                <p className="f-desc">
+                  MAYA Fish Farm is dedicated to producing high-quality ornamental
+                  fish through responsible breeding, proper water management and
+                  balanced nutrition — supplying pet stores, hobbyists and aquarium businesses.
+                </p>
+                <div className="f-socials">
+                  {[
+                    { I: FaFacebookF, l: "Facebook", href: "#" },
+                    { I: FaInstagram, l: "Instagram", href: "#" },
+                    { I: FaYoutube,   l: "YouTube",  href: "#" },
+                  ].map(({ I, l, href }) => (
+                    <a key={l} href={href} aria-label={l} className="f-soc"><I /></a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <p className="f-head">Quick links</p>
+                <ul className="f-links">
+                  {[
+                    { label: "Home",    href: "/" },
+                    { label: "About",   href: "/about" },
+                    { label: "Services",href: "/service" },
+                    { label: "Contact", href: "/contact" },
+                  ].map(({ label, href }) => (
+                    <li key={label}><a href={href}>{label}</a></li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Information */}
+              <div>
+                <p className="f-head">Information</p>
+                <ul className="f-links">
+                  {[
+                    { label: "Ornamental Fish",    href: "/service" },
+                    { label: "Aquarium Supply",    href: "/service" },
+                    { label: "Fish Breeding",      href: "/service" },
+                    { label: "Sustainable Farming",href: "/about"   },
+                  ].map(({ label, href }) => (
+                    <li key={label}><a href={href}>{label}</a></li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Get in touch */}
+              <div>
+                <p className="f-head">Get in touch</p>
+                <div className="f-touch">
+
+                  <div className="f-touch-row">
+                    <span className="f-touch-badge">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    <span className="f-touch-val"><a href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX</a></span>
+                  </div>
+
+                  <div className="f-touch-row">
+                    <span className="f-touch-badge">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <rect x="2" y="4" width="20" height="16" rx="2"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                        <polyline points="22,6 12,13 2,6"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    <span className="f-touch-val"><a href="mailto:info@mayafishfarm.com">info@mayafishfarm.com</a></span>
+                  </div>
+
+                  <div className="f-touch-row">
+                    <span className="f-touch-badge">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="10" r="3"
+                          stroke="currentColor" strokeWidth="1.8"/>
+                      </svg>
+                    </span>
+                    <span className="f-touch-val">Maya Fish Farm, Gujarat, India</span>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom bar */}
+            <div className="f-bar">
+              <span className="f-bar-l">
+                Copyright © 2026 <a href="/">MAYA FISH FARM</a>. All rights reserved.
+              </span>
+              <div className="f-bar-r">
+                <a href="/privacy">Privacy Policy</a>
+                <span className="f-bar-sep">|</span>
+                <a href="/terms">Terms of Service</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </footer>
 
       {/* Scroll to top */}
-      <button
-        onClick={scrollTop}
-        className="absolute right-8 top-[-20px] z-20 w-11 h-11 rounded-full bg-[#0A84D6] hover:bg-[#0e9cc4] hover:-translate-y-1 flex items-center justify-center transition-all duration-200 shadow-lg"
-      >
-        <UpArrow />
+      <button className="f-top" onClick={scrollTop} aria-label="Back to top">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+          <path d="M18 15l-6-6-6 6" stroke="#fff" strokeWidth="2.5"
+            strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </button>
-
-      {/* CONTENT */}
-      <div className="relative z-10 max-w-5xl mx-auto px-8 pt-14">
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#4FD1E8]" />
-              <span className="text-2xl font-semibold text-[#ECF6FF]">
-                Maya Fish Farm
-              </span>
-            </div>
-            <p className="text-[#6d97b0] text-xs mb-5">
-              Ornamental fish breeding and aquarium supply — healthy, vibrant fish.
-            </p>
-
-            <div className="flex gap-2.5">
-              {[FacebookIcon, InstagramIcon, YoutubeIcon].map((Icon, i) => (
-                <div key={i} className="w-9 h-9 rounded-full border border-[rgba(79,209,232,0.2)] flex items-center justify-center hover:bg-[#4FD1E8]/10 cursor-pointer">
-                  <Icon />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Links */}
-          <div>
-            <p className="text-[#ECF6FF] text-xs mb-4">Quick Links</p>
-            {navLinks.map((link) => (
-              <a key={link} href="#" className="flex items-center gap-2 text-xs text-[#6d97b0] hover:text-[#4FD1E8] mb-2">
-                <ArrowIcon /> {link}
-              </a>
-            ))}
-          </div>
-
-          {/* Hours */}
-          <div>
-            <p className="text-[#ECF6FF] text-xs mb-4">Working Hours</p>
-            <p className="text-xs text-[#6d97b0]">Mon – Fri: 9AM – 6PM</p>
-            <p className="text-xs text-[#6d97b0]">Sat – Sun: 8AM – 4PM</p>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <p className="text-[#ECF6FF] text-xs mb-4">Newsletter</p>
-            <input
-              type="email"
-              placeholder="Enter email"
-              className="w-full mb-2 px-3 py-2 rounded bg-white/5 border border-white/10 text-white text-xs"
-            />
-            <button className="w-full bg-[#0A84D6] py-2 text-xs rounded hover:bg-[#0e9cc4]">
-              Subscribe
-            </button>
-          </div>
-
-        </div>
-
-        {/* Bottom */}
-        <div className="mt-10 pt-5 border-t border-white/10 flex justify-between text-xs text-[#4a6a80]">
-          <p>© 2024 Maya Fish Farm</p>
-          <div className="flex gap-3">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-          </div>
-        </div>
-
-      </div>
-    </footer>
+    </>
   );
 }

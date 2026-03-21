@@ -1,140 +1,451 @@
 "use client";
 
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
-import { FaArrowUp } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Footer() {
-  const scrollTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer
-      className="relative text-white font-['Outfit',sans-serif]"
-      style={{
-        backgroundImage: "url('/image.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Wave Shape — tight, no gap */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
-        <svg
-          viewBox="0 0 500 80"
-          preserveAspectRatio="none"
-          style={{ display: "block", height: "60px", width: "100%" }}
-        >
-          <path
-            d="M0.00,30 C150.00,90 349.20,-20 500.00,30 L500.00,0.00 L0.00,0.00 Z"
-            fill="white"
-          />
-        </svg>
-      </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-      {/* Dark Overlay */}
-      <div className="bg-black/80 pt-20 pb-12 px-6">
+        *, *::before, *::after { box-sizing: border-box; }
 
-        <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        .f-root { font-family: 'DM Sans', sans-serif; }
 
-          {/* Brand / About */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#4FD1E8]" />
-              <h2 className="text-2xl font-semibold tracking-wider text-[#ECF6FF]">
-                MAYA FISH FARM
-              </h2>
-            </div>
+        /* ══════════════════
+           BANNER
+        ══════════════════ */
+        .f-banner {
+          position: relative;
+          min-height: 320px;
+          display: flex; align-items: center; justify-content: center;
+          overflow: hidden;
+          text-align: center;
+        }
+        .f-banner-bg {
+          position: absolute; inset: 0;
+          background-image: url('/ss3.png');
+          background-size: cover;
+          background-position: center 30%;
+          filter: brightness(0.32) saturate(0.7);
+          z-index: 0;
+        }
+        /* gradient fades seamlessly into black footer */
+        .f-banner-fade {
+          position: absolute; inset: 0; z-index: 1;
+          background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(8,8,12,0.5) 70%,
+            #0a0a0f 100%
+          );
+        }
+        .f-banner-content {
+          position: relative; z-index: 2;
+          padding: 4rem 1.5rem 4.5rem;
+          max-width: 780px;
+          width: 100%;
+        }
+        .f-banner-h {
+          font-size: clamp(2rem, 4.5vw, 3.4rem);
+          font-weight: 700;
+          color: #fff;
+          line-height: 1.15;
+          letter-spacing: -0.025em;
+          margin: 0 0 0.85rem;
+        }
+        .f-banner-p {
+          font-size: 14px;
+          font-weight: 400;
+          color: rgba(255,255,255,0.52);
+          margin: 0 0 2rem;
+          line-height: 1.65;
+        }
+        .f-banner-row {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1.6rem;
+          flex-wrap: wrap;
+        }
 
-            <p className="text-[#6d97b0] text-xs leading-relaxed mb-6">
-              Sustainable aquaculture solutions providing fresh fish
-              production and quality services for local markets.
+        /* "Any questions" pill — dark bg, white border, dark filled circle arrow */
+        .f-pill {
+          display: inline-flex; align-items: center; gap: 0;
+          padding: 5px 5px 5px 22px;
+          background: rgba(255,255,255,0.08);
+          border: 1.5px solid rgba(255,255,255,0.30);
+          border-radius: 50px;
+          text-decoration: none; cursor: pointer;
+          backdrop-filter: blur(12px);
+          transition: background 0.25s, border-color 0.25s, transform 0.2s;
+        }
+        .f-pill:hover {
+          background: rgba(255,255,255,0.14);
+          border-color: rgba(255,255,255,0.55);
+          transform: translateY(-2px);
+        }
+        .f-pill-txt {
+          font-size: 13.5px; font-weight: 600;
+          color: #fff; margin-right: 14px;
+          white-space: nowrap; letter-spacing: 0.1px;
+        }
+        /* dark filled circle with arrow — exactly like reference */
+        .f-pill-ic {
+          width: 36px; height: 36px; border-radius: 50%;
+          background: rgba(10,10,20,0.9);
+          border: 1px solid rgba(255,255,255,0.15);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+
+        /* Phone row */
+        .f-phone {
+          display: inline-flex; align-items: center;
+          gap: 11px; text-decoration: none;
+        }
+        .f-phone-ic {
+          width: 40px; height: 40px; border-radius: 50%;
+          border: 1.5px solid rgba(255,255,255,0.22);
+          background: transparent;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          transition: border-color 0.2s;
+        }
+        .f-phone:hover .f-phone-ic { border-color: rgba(255,255,255,0.5); }
+        .f-phone-info { display: flex; flex-direction: column; line-height: 1.3; text-align: left; }
+        .f-phone-lbl { font-size: 10.5px; color: rgba(255,255,255,0.45); }
+        .f-phone-num { font-size: 14px; font-weight: 600; color: #fff; }
+
+        /* ══════════════════
+           FOOTER BODY
+        ══════════════════ */
+        .f-body {
+          background: #0a0a0f;
+          padding: 3.5rem 2rem 0;
+        }
+        .f-inner {
+          max-width: 1160px;
+          margin: 0 auto;
+        }
+
+        /* 4 cols: brand wide, 3 equal */
+        .f-grid {
+          display: grid;
+          grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
+          gap: 2rem 3.5rem;
+          padding-bottom: 3rem;
+        }
+
+        /* ── Brand ── */
+        .f-logo {
+          display: flex; align-items: center; gap: 9px;
+          margin-bottom: 1.1rem; text-decoration: none;
+        }
+        .f-logo-txt { display: flex; flex-direction: column; line-height: 1.25; }
+        .f-logo-name {
+          font-size: 17px; font-weight: 700;
+          color: #fff; letter-spacing: 0.5px;
+        }
+        /* blue accent word matching reference logo style */
+        .f-logo-accent { color: #4FD1E8; }
+        .f-logo-sub {
+          font-size: 9px; font-weight: 400;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(79,209,232,0.6);
+          margin-top: 1px;
+        }
+        .f-desc {
+          font-size: 13px; font-weight: 400;
+          color: rgba(255,255,255,0.35);
+          line-height: 1.8; margin-bottom: 1.4rem;
+          max-width: 280px;
+        }
+        .f-socials { display: flex; gap: 7px; }
+        .f-soc {
+          width: 30px; height: 30px; border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.12);
+          background: transparent;
+          display: flex; align-items: center; justify-content: center;
+          color: rgba(255,255,255,0.40); font-size: 11px;
+          text-decoration: none; cursor: pointer;
+          transition: all 0.2s;
+        }
+        .f-soc:hover {
+          border-color: rgba(79,209,232,0.45);
+          color: #4FD1E8;
+          background: rgba(79,209,232,0.05);
+          transform: translateY(-2px);
+        }
+
+        /* ── Col headings ── */
+        .f-head {
+          font-size: 13.5px; font-weight: 700;
+          color: #fff; margin: 0 0 1.3rem;
+          letter-spacing: 0.1px;
+        }
+
+        /* ── Link lists ── */
+        .f-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.9rem; }
+        .f-links li a {
+          font-size: 13.5px; font-weight: 400;
+          color: rgba(255,255,255,0.42);
+          text-decoration: none;
+          display: block;
+          transition: color 0.18s;
+        }
+        .f-links li a:hover { color: rgba(255,255,255,0.88); }
+
+        /* ── Contact ── */
+        .f-touch { display: flex; flex-direction: column; gap: 1.05rem; }
+        .f-touch-row {
+          display: flex; align-items: center; gap: 9px;
+        }
+        /* small square-ish icon badge — matches reference */
+        .f-touch-badge {
+          width: 26px; height: 26px;
+          border-radius: 6px;
+          background: rgba(79,209,232,0.10);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          color: #4FD1E8; font-size: 10px;
+        }
+        .f-touch-val {
+          font-size: 13.5px; font-weight: 400;
+          color: rgba(255,255,255,0.42);
+        }
+        .f-touch-val a {
+          color: rgba(255,255,255,0.42);
+          text-decoration: none;
+          transition: color 0.18s;
+        }
+        .f-touch-val a:hover { color: rgba(255,255,255,0.85); }
+
+        /* ── Bottom bar ── */
+        .f-bar {
+          border-top: 1px solid rgba(255,255,255,0.07);
+          padding: 1.1rem 0 1.4rem;
+          display: flex; align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap; gap: 0.5rem;
+        }
+        .f-bar-l {
+          font-size: 12.5px; font-weight: 400;
+          color: rgba(255,255,255,0.25);
+        }
+        .f-bar-l a { color: #4FD1E8; text-decoration: none; }
+        .f-bar-r { display: flex; align-items: center; gap: 0.6rem; }
+        .f-bar-r a {
+          font-size: 12.5px; color: rgba(255,255,255,0.28);
+          text-decoration: none; transition: color 0.18s;
+        }
+        .f-bar-r a:hover { color: rgba(255,255,255,0.7); }
+        .f-bar-sep { color: rgba(255,255,255,0.14); font-size: 11px; }
+
+        /* scroll top */
+        .f-top {
+          position: fixed; bottom: 1.3rem; right: 1.3rem; z-index: 50;
+          width: 38px; height: 38px; border-radius: 8px;
+          background: #0A84D6; border: none; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          color: #fff;
+          box-shadow: 0 4px 16px rgba(10,132,214,0.45);
+          transition: all 0.2s;
+        }
+        .f-top:hover { background: #0872b8; transform: translateY(-3px); }
+
+        @media (max-width: 900px) {
+          .f-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+        }
+        @media (max-width: 520px) {
+          .f-grid { grid-template-columns: 1fr; }
+          .f-banner-row { flex-direction: column; }
+          .f-bar { flex-direction: column; align-items: flex-start; }
+        }
+      `}</style>
+
+      <footer className="f-root">
+
+        {/* ── Banner ── */}
+        <div className="f-banner">
+          <div className="f-banner-bg" />
+          <div className="f-banner-fade" />
+          <div className="f-banner-content">
+            <h2 className="f-banner-h">
+              Enhancing your dive for an<br />unforgettable adventure
+            </h2>
+            <p className="f-banner-p">
+              Whether you're starting a backyard fish farm or a commercial aquarium venture,<br />
+              your sustainable ornamental fish journey starts right here.
             </p>
+            <div className="f-banner-row">
 
-            {/* Social Icons */}
-            <div className="flex gap-2.5">
-              {[
-                { Icon: FaFacebookF, label: "Facebook" },
-                { Icon: FaInstagram, label: "Instagram" },
-                { Icon: FaYoutube, label: "YouTube" },
-              ].map(({ Icon, label }) => (
-                <a
-                  key={label}
-                  href="#"
-                  aria-label={label}
-                  className="w-9 h-9 rounded-full border border-[rgba(79,209,232,0.2)] flex items-center justify-center hover:bg-[#4FD1E8]/10 text-[#4FD1E8] transition cursor-pointer text-sm"
-                >
-                  <Icon />
+              {/* Any questions pill */}
+              <a href="/contact" className="f-pill">
+                <span className="f-pill-txt">Any questions</span>
+                <span className="f-pill-ic">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 17L17 7M17 7H7M17 7v10"
+                      stroke="#fff" strokeWidth="2.2"
+                      strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+
+              {/* Phone */}
+              <a href="tel:+91XXXXXXXXXX" className="f-phone">
+                <span className="f-phone-ic">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"
+                      stroke="rgba(255,255,255,0.7)" strokeWidth="1.8"
+                      strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                <div className="f-phone-info">
+                  <span className="f-phone-lbl">Call us anytime</span>
+                  <span className="f-phone-num">+91 XXXXX XXXXX</span>
+                </div>
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        {/* ── Body ── */}
+        <div className="f-body">
+          <div className="f-inner">
+            <div className="f-grid">
+
+              {/* Brand */}
+              <div>
+                <a href="/" className="f-logo">
+                  <Image src="/logo1.png" alt="Maya Fish Farm"
+                    width={36} height={36}
+                    style={{ objectFit:'contain', filter:'brightness(0) invert(1)', opacity:0.9 }}
+                  />
+                  <div className="f-logo-txt">
+                    <span className="f-logo-name">
+                      MAYA <span className="f-logo-accent">FISH FARM</span>
+                    </span>
+                    <span className="f-logo-sub">Ornamental · Aquarium</span>
+                  </div>
                 </a>
-              ))}
+                <p className="f-desc">
+                  MAYA Fish Farm is dedicated to producing high-quality ornamental
+                  fish through responsible breeding, proper water management and
+                  balanced nutrition — supplying pet stores, hobbyists and aquarium businesses.
+                </p>
+                <div className="f-socials">
+                  {[
+                    { I: FaFacebookF, l: "Facebook", href: "#" },
+                    { I: FaInstagram, l: "Instagram", href: "#" },
+                    { I: FaYoutube,   l: "YouTube",  href: "#" },
+                  ].map(({ I, l, href }) => (
+                    <a key={l} href={href} aria-label={l} className="f-soc"><I /></a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <p className="f-head">Quick links</p>
+                <ul className="f-links">
+                  {[
+                    { label: "Home",    href: "/" },
+                    { label: "About",   href: "/about" },
+                    { label: "Services",href: "/service" },
+                    { label: "Contact", href: "/contact" },
+                  ].map(({ label, href }) => (
+                    <li key={label}><a href={href}>{label}</a></li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Information */}
+              <div>
+                <p className="f-head">Information</p>
+                <ul className="f-links">
+                  {[
+                    { label: "Ornamental Fish",    href: "/service" },
+                    { label: "Aquarium Supply",    href: "/service" },
+                    { label: "Fish Breeding",      href: "/service" },
+                    { label: "Sustainable Farming",href: "/about"   },
+                  ].map(({ label, href }) => (
+                    <li key={label}><a href={href}>{label}</a></li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Get in touch */}
+              <div>
+                <p className="f-head">Get in touch</p>
+                <div className="f-touch">
+
+                  <div className="f-touch-row">
+                    <span className="f-touch-badge">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    <span className="f-touch-val"><a href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX</a></span>
+                  </div>
+
+                  <div className="f-touch-row">
+                    <span className="f-touch-badge">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <rect x="2" y="4" width="20" height="16" rx="2"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                        <polyline points="22,6 12,13 2,6"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    <span className="f-touch-val"><a href="mailto:info@mayafishfarm.com">info@mayafishfarm.com</a></span>
+                  </div>
+
+                  <div className="f-touch-row">
+                    <span className="f-touch-badge">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"
+                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="10" r="3"
+                          stroke="currentColor" strokeWidth="1.8"/>
+                      </svg>
+                    </span>
+                    <span className="f-touch-val">Maya Fish Farm, Gujarat, India</span>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
-          </div>
 
-          {/* Quick Links */}
-          <div>
-            <p className="text-[#ECF6FF] text-xs font-semibold tracking-wide mb-4">
-              Quick Links
-            </p>
-
-            <ul className="space-y-2">
-              {["Home", "About", "Services", "Contact"].map((item, i) => (
-                <li key={i}>
-                  <a
-                    href="#"
-                    className="flex items-center gap-2 text-xs text-[#6d97b0] hover:text-[#4FD1E8] transition group/link"
-                  >
-                    <svg className="w-3 h-3 opacity-0 group-hover/link:opacity-100 transition-opacity" viewBox="0 0 12 12" fill="none">
-                      <path d="M2 10L10 2M10 2H5M10 2V7" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Working Hours */}
-          <div>
-            <p className="text-[#ECF6FF] text-xs font-semibold tracking-wide mb-4">
-              Working Hours
-            </p>
-
-            <p className="text-[#6d97b0] text-xs leading-relaxed mb-4">
-              Visit our farm during working hours for fresh fish
-              and aquaculture services.
-            </p>
-
-            <div className="space-y-2 text-[#6d97b0] text-xs">
-              <p>Mon – Fri : 9:00 AM – 6:00 PM</p>
-              <p>Sat – Sun : 8:00 AM – 4:00 PM</p>
+            {/* Bottom bar */}
+            <div className="f-bar">
+              <span className="f-bar-l">
+                Copyright © 2026 <a href="/">MAYA FISH FARM</a>. All rights reserved.
+              </span>
+              <div className="f-bar-r">
+                <a href="/privacy">Privacy Policy</a>
+                <span className="f-bar-sep">|</span>
+                <a href="/terms">Terms of Service</a>
+              </div>
             </div>
-          </div>
 
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-white/10 pt-6 mt-10 flex flex-col md:flex-row items-center justify-between gap-3 text-[#4a6a80] text-xs tracking-wide">
-          <p>© Maya Fish Farm. All rights reserved.</p>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-[#4FD1E8] transition">Privacy Policy</a>
-            <span>|</span>
-            <a href="#" className="hover:text-[#4FD1E8] transition">Terms of Service</a>
           </div>
         </div>
+      </footer>
 
-      </div>
-
-      {/* Scroll to Top Button */}
-      <button
-        onClick={scrollTop}
-        className="fixed bottom-6 right-6 z-20 w-11 h-11 rounded-full bg-[#0A84D6] hover:bg-[#0e9cc4] hover:-translate-y-1 flex items-center justify-center transition-all duration-200 shadow-lg"
-        aria-label="Scroll to top"
-      >
-        <FaArrowUp className="text-white text-sm" />
+      {/* Scroll to top */}
+      <button className="f-top" onClick={scrollTop} aria-label="Back to top">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+          <path d="M18 15l-6-6-6 6" stroke="#fff" strokeWidth="2.5"
+            strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </button>
-
-    </footer>
+    </>
   );
 }
