@@ -112,7 +112,7 @@ const STATS = [
 function AquariumIllustration() {
   return (
     <img
-      src="s2.png"
+      src="slide1.png"
       alt="Beautiful colorful aquarium with tropical fish"
       style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", borderRadius: "16px" }}
     />
