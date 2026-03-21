@@ -16,7 +16,7 @@ export default function Home() {
       <KeyServices/>
       <WhyChooseMaya/>  
       <Testimonials/>
-      <CallToAction/>
+      
       <Footer1 />
     </div>
   );

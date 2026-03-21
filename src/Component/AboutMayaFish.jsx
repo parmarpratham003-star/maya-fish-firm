@@ -39,35 +39,66 @@ function Counter({ target, suffix = "" }) {
 }
 
 /* ─────────────────────────────────────────
-   BUBBLE LAYER
+   BUBBLE LAYER — static scattered circles
+   matching the reference image exactly
 ───────────────────────────────────────── */
 function BubbleLayer() {
-  const bubbles = useRef(
-    Array.from({ length: 24 }, (_, i) => ({
-      id: i,
-      size: Math.round(5 + Math.random() * 18),
-      left: Math.round(Math.random() * 100),
-      bottom: Math.round(Math.random() * 40),
-      dur: (6 + Math.random() * 9).toFixed(1),
-      delay: (Math.random() * 14).toFixed(1),
-    }))
-  ).current;
+  const BUBBLES = [
+    { s:14, l:3,  t:55, f:true,  o:0.12 },
+    { s:22, l:6,  t:30, f:false, o:0.20 },
+    { s:8,  l:9,  t:65, f:true,  o:0.10 },
+    { s:36, l:12, t:20, f:false, o:0.16 },
+    { s:10, l:14, t:48, f:true,  o:0.13 },
+    { s:18, l:17, t:70, f:false, o:0.18 },
+    { s:28, l:20, t:35, f:true,  o:0.09 },
+    { s:12, l:22, t:58, f:false, o:0.22 },
+    { s:44, l:25, t:15, f:true,  o:0.07 },
+    { s:8,  l:28, t:72, f:true,  o:0.14 },
+    { s:20, l:31, t:42, f:false, o:0.19 },
+    { s:16, l:34, t:25, f:true,  o:0.11 },
+    { s:32, l:36, t:60, f:false, o:0.15 },
+    { s:10, l:39, t:80, f:true,  o:0.12 },
+    { s:24, l:42, t:38, f:false, o:0.20 },
+    { s:14, l:44, t:18, f:true,  o:0.09 },
+    { s:40, l:47, t:55, f:false, o:0.13 },
+    { s:8,  l:50, t:75, f:true,  o:0.16 },
+    { s:18, l:52, t:28, f:false, o:0.21 },
+    { s:26, l:55, t:65, f:true,  o:0.08 },
+    { s:12, l:58, t:45, f:false, o:0.18 },
+    { s:34, l:60, t:22, f:true,  o:0.10 },
+    { s:10, l:63, t:70, f:false, o:0.22 },
+    { s:22, l:65, t:38, f:true,  o:0.12 },
+    { s:16, l:68, t:55, f:false, o:0.17 },
+    { s:48, l:70, t:12, f:true,  o:0.06 },
+    { s:8,  l:72, t:78, f:true,  o:0.14 },
+    { s:20, l:74, t:32, f:false, o:0.19 },
+    { s:30, l:77, t:48, f:true,  o:0.09 },
+    { s:12, l:79, t:68, f:false, o:0.20 },
+    { s:16, l:82, t:25, f:true,  o:0.11 },
+    { s:24, l:84, t:58, f:false, o:0.16 },
+    { s:36, l:86, t:40, f:true,  o:0.08 },
+    { s:10, l:88, t:72, f:false, o:0.22 },
+    { s:18, l:90, t:18, f:true,  o:0.13 },
+    { s:28, l:92, t:50, f:false, o:0.17 },
+    { s:8,  l:94, t:82, f:true,  o:0.12 },
+    { s:22, l:96, t:35, f:false, o:0.20 },
+    { s:14, l:98, t:62, f:true,  o:0.10 },
+  ];
 
   return (
-    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 1 }}>
-      {bubbles.map((b) => (
+    <div style={{ position:"absolute", inset:0, pointerEvents:"none", overflow:"hidden", zIndex:1 }}>
+      {BUBBLES.map((b, i) => (
         <div
-          key={b.id}
+          key={i}
           style={{
             position: "absolute",
-            width: b.size,
-            height: b.size,
+            width: b.s,
+            height: b.s,
             borderRadius: "50%",
-            border: "1.5px solid rgba(255,255,255,0.25)",
-            left: `${b.left}%`,
-            bottom: `${b.bottom}%`,
-            animation: `mfBubbleRise ${b.dur}s ease-in-out infinite ${b.delay}s`,
-            opacity: 0,
+            background: b.f ? `rgba(255,255,255,${b.o})` : "transparent",
+            border: b.f ? "none" : `${b.s > 24 ? 2 : 1.5}px solid rgba(255,255,255,${b.o})`,
+            left: `${b.l}%`,
+            top: `${b.t}%`,
           }}
         />
       ))}
@@ -112,7 +143,7 @@ const STATS = [
 function AquariumIllustration() {
   return (
     <img
-      src="slide1.png"
+      src="s2.png"
       alt="Beautiful colorful aquarium with tropical fish"
       style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", borderRadius: "16px" }}
     />
@@ -122,7 +153,7 @@ function AquariumIllustration() {
 /* ─────────────────────────────────────────
    MAIN EXPORT
 ───────────────────────────────────────── */
-export default function AboutMayaFish() {
+export default function MayaFishFarm() {
   const [imgRef,   imgVisible]   = useScrollReveal(0.1);
   const [textRef,  textVisible]  = useScrollReveal(0.1);
   const [statsRef, statsVisible] = useScrollReveal(0.1);
@@ -134,11 +165,12 @@ export default function AboutMayaFish() {
 
         /* ══ KEYFRAMES ══ */
 
+        @keyframes wcmSpin {
+          to { transform: rotate(360deg); }
+        }
         @keyframes mfBubbleRise {
-          0%   { opacity: 0;    transform: translateY(0) scale(1); }
-          12%  { opacity: 0.55; }
-          85%  { opacity: 0.08; }
-          100% { opacity: 0;    transform: translateY(-320px) scale(0.38); }
+          0%   { opacity: 0; }
+          100% { opacity: 0; }
         }
         @keyframes mfFloat {
           0%,100% { transform: translateY(0px); }
@@ -217,6 +249,158 @@ export default function AboutMayaFish() {
         .mf-left { position: relative; }
         .mf-left.mf-in { animation: mfSlideFromLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
 
+        //* ── Modern Glass Frame ── */
+.mf-img-frame {
+  position: relative;
+  border-radius: 20px;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(10,132,214,0.25), rgba(79,209,232,0.15));
+  backdrop-filter: blur(8px);
+  box-shadow: 
+    0 10px 40px rgba(10,132,214,0.15),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+/* inner container */
+.mf-img-frame-inner {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+}
+
+/* glow border */
+.mf-img-frame::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  background: linear-gradient(120deg, #0A84D6, #4FD1E8, #0A84D6);
+  opacity: 0.25;
+  filter: blur(10px);
+  z-index: 0;
+}
+
+/* subtle hover effect */
+.mf-img-frame:hover {
+  transform: translateY(-4px) scale(1.01);
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 
+    0 20px 60px rgba(10,132,214,0.25),
+    inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* remove old decorations */
+.mf-frame-arc,
+.mf-frame-dot,
+.mf-frame-stat,
+.mf-frame-badge {
+  display: none;
+}
+
+        /* Second ring — closer, more opaque */
+        .mf-img-frame::after {
+          content: '';
+          position: absolute;
+          top: 18px; left: 18px;
+          right: -18px; bottom: -18px;
+          border: 2px solid rgba(79,209,232,0.15);
+          border-radius: 20px;
+          pointer-events: none;
+          z-index: 0;
+          transition: border-color 0.4s ease, transform 0.5s ease;
+        }
+        .mf-img-frame:hover::after {
+          border-color: rgba(79,209,232,0.32);
+          transform: translate(3px, 3px);
+        }
+
+        /* Year pill — bottom right floating */
+        .mf-frame-badge {
+          position: absolute;
+          bottom: -14px; right: 28px;
+          background: #fff;
+          border: 1.5px solid rgba(10,132,214,0.18);
+          color: #0A84D6;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          padding: 7px 16px;
+          border-radius: 100px;
+          z-index: 5;
+          pointer-events: none;
+          box-shadow: 0 6px 22px rgba(10,132,214,0.12);
+          animation: mfFloat 4s ease-in-out infinite;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .mf-frame-badge-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: #4FD1E8;
+          flex-shrink: 0;
+        }
+
+        /* Top-left arc ring */
+        .mf-frame-arc {
+          position: absolute;
+          top: -28px; left: -28px;
+          width: 80px; height: 80px;
+          border-radius: 50%;
+          border: 2px dashed rgba(10,132,214,0.2);
+          pointer-events: none;
+          z-index: 0;
+          animation: wcmSpin 18s linear infinite;
+        }
+
+        /* Small teal filled circle */
+        .mf-frame-dot {
+          position: absolute;
+          top: -10px; right: 60px;
+          width: 10px; height: 10px;
+          border-radius: 50%;
+          background: #4FD1E8;
+          pointer-events: none;
+          z-index: 3;
+          box-shadow: 0 0 0 3px rgba(79,209,232,0.22);
+        }
+
+        /* Experience stat card — left floating */
+        .mf-frame-stat {
+          position: absolute;
+          top: 50%; left: -24px;
+          transform: translateY(-50%);
+          background: #0A84D6;
+          border-radius: 14px;
+          padding: 14px 16px;
+          z-index: 5;
+          pointer-events: none;
+          box-shadow: 0 8px 28px rgba(10,132,214,0.38);
+          animation: mfFloat 5s ease-in-out infinite 0.8s;
+          text-align: center;
+        }
+        .mf-frame-stat-num {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 22px; font-weight: 800;
+          color: #fff; line-height: 1;
+          letter-spacing: -0.5px;
+          display: block;
+        }
+        .mf-frame-stat-lbl {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 8.5px; font-weight: 500;
+          color: rgba(255,255,255,0.75);
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          display: block;
+          margin-top: 3px;
+          white-space: nowrap;
+        }
+
         .mf-aquarium-img {
           width: 100%;
           aspect-ratio: 4 / 3.15;
@@ -224,13 +408,14 @@ export default function AboutMayaFish() {
           overflow: hidden;
           display: block;
           position: relative;
-          box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+          z-index: 1;
+          box-shadow: 0 12px 48px rgba(0,0,0,0.12);
           transition: transform 0.55s cubic-bezier(0.16,1,0.3,1),
                       box-shadow 0.55s ease;
         }
         .mf-aquarium-img:hover {
           transform: scale(1.018);
-          box-shadow: 0 22px 60px rgba(26,184,196,0.2);
+          box-shadow: 0 24px 64px rgba(10,132,214,0.22);
         }
         /* Image reveal wipe */
         .mf-left.mf-in .mf-aquarium-img {
@@ -254,49 +439,7 @@ export default function AboutMayaFish() {
           animation: mfBtnShine 0.75s ease forwards;
         }
 
-        /* Quote card */
-        .mf-quote {
-          position: absolute;
-          bottom: -18px; left: -14px;
-          background: #fff;
-          border-radius: 12px;
-          padding: 20px 22px;
-          width: 238px;
-          box-shadow: 0 14px 44px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.06);
-          animation: mfFloat 4s ease-in-out infinite;
-          z-index: 10;
-          font-family: 'DM Sans', sans-serif;
-          transition: box-shadow 0.3s, transform 0.3s;
-        }
-        .mf-quote:hover {
-          box-shadow: 0 24px 56px rgba(0,0,0,.18), 0 4px 14px rgba(0,0,0,.08);
-          animation-play-state: paused;
-          transform: translateY(-5px) !important;
-        }
-        .mf-quote-icon {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 52px; font-weight: 800;
-          color: #1ab8c4; line-height: 0.72;
-          display: block; margin-bottom: 13px;
-          letter-spacing: -2px;
-          animation: mfPulseRing 2.8s ease-in-out infinite;
-        }
-        .mf-quote-text {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 13px; color: #3a3a3a;
-          line-height: 1.8; font-weight: 400;
-          margin: 0 0 13px 0;
-        }
-        .mf-quote-name {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 10.5px; font-weight: 700;
-          color: #111; letter-spacing: 0.6px;
-          text-transform: uppercase; margin-bottom: 2px;
-        }
-        .mf-quote-role {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 10.5px; color: #999; font-weight: 400;
-        }
+
 
         /* Right column */
         .mf-right { padding-left: 4px; }
@@ -400,85 +543,96 @@ export default function AboutMayaFish() {
           transform: rotate(45deg);
         }
 
-        /* ══ WAVE DIVIDER ══ */
-        .mf-wave-wrap {
-          background: #fff; line-height: 0;
-          overflow: hidden; margin-bottom: -3px;
+
+
+        /* ══ UNDERWATER WRAPPER ══ */
+        .mf-underwater {
+          position: relative;
+          overflow: hidden;
         }
-        .mf-wave-wrap svg { display: block; width: 100%; height: 70px; }
-        .mf-wave-wrap.mf-in svg {
-          animation: mfWaveIn 1.1s cubic-bezier(0.16,1,0.3,1) both;
+
+        /* Wave SVG wrapper — sits on white bg, transitions into teal */
+        .mf-wave-svg-wrap {
+          background: #ffffff;
+          line-height: 0;
+          margin-bottom: -2px;
         }
+        .mf-wave-svg-wrap svg { display: block; width: 100%; }
 
         /* ══ STATS BAND ══ */
         .mf-stats-band {
-          position: relative; overflow: hidden;
-          background: linear-gradient(135deg, #19bcc8 0%, #0da8b4 50%, #0a8f9a 100%);
-          padding: 50px 48px 56px;
+          position: relative;
+          overflow: hidden;
+          background: #17bcca;
+          padding: 52px 56px 60px;
+        }
+
+        /* Subtle light caustic overlay */
+        .mf-stats-band::before {
+          content: "";
+          position: absolute; inset: 0; pointer-events: none; z-index: 0;
+          background:
+            radial-gradient(ellipse 600px 150px at 15% 30%, rgba(255,255,255,0.07) 0%, transparent 60%),
+            radial-gradient(ellipse 400px 120px at 65% 45%, rgba(255,255,255,0.05) 0%, transparent 60%),
+            radial-gradient(ellipse 300px 100px at 90% 20%, rgba(255,255,255,0.06) 0%, transparent 60%);
         }
 
         .mf-stats-grid {
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
           position: relative; z-index: 2;
+          max-width: 1100px;
+          margin: 0 auto;
         }
 
         .mf-stat {
           display: flex; flex-direction: column;
           align-items: center; justify-content: center;
-          padding: 0 16px; position: relative;
+          text-align: center;
+          padding: 0 20px;
+          position: relative;
           transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
           cursor: default;
         }
-        .mf-stat:hover { transform: translateY(-7px); }
+        .mf-stat:hover { transform: translateY(-6px); }
 
-        /* Glow on hover */
-        .mf-stat::before {
-          content: ''; position: absolute; inset: -10px;
-          border-radius: 18px;
-          background: rgba(255,255,255,0);
-          transition: background 0.35s ease;
-          pointer-events: none; z-index: 0;
-        }
-        .mf-stat:hover::before { background: rgba(255,255,255,0.07); }
-
-        /* Animated vertical divider */
+        /* Vertical divider — grows on scroll-in */
         .mf-stat:not(:last-child)::after {
           content: ''; position: absolute;
-          right: 0; top: 10%; height: 80%; width: 1px;
-          background: rgba(255,255,255,0.24);
+          right: 0; top: 8%; height: 84%; width: 1px;
+          background: rgba(255,255,255,0.22);
           transform-origin: top; transform: scaleY(0); opacity: 0;
         }
-        .mf-stats-band.mf-in .mf-stat:nth-child(1)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(2)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(3)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.80s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(1)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(2)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(3)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.80s both; }
 
-        /* Stat numbers — staggered scale pop */
+        /* Stat numbers */
         .mf-stat-num {
           font-family: 'DM Sans', sans-serif;
-          font-size: clamp(3rem, 5.5vw, 4.8rem);
-          font-weight: 700; color: #fff;
+          font-size: clamp(3.6rem, 6.5vw, 5.6rem);
+          font-weight: 800; color: #ffffff;
           line-height: 1; margin-bottom: 10px;
-          letter-spacing: -0.025em;
+          letter-spacing: -0.03em;
           position: relative; z-index: 1; opacity: 0;
         }
-        .mf-stats-band.mf-in .mf-stat:nth-child(1) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.08s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(2) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(3) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.36s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(4) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.50s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(1) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.08s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(2) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(3) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.36s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(4) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.50s both; }
 
-        /* Stat labels — staggered fade up */
+        /* Stat labels */
         .mf-stat-label {
           font-family: 'DM Sans', sans-serif;
-          font-size: clamp(0.78rem, 0.95vw, 0.88rem);
-          font-weight: 400; color: rgba(255,255,255,.82);
-          text-align: center; line-height: 1.8;
+          font-size: clamp(0.8rem, 1vw, 0.9rem);
+          font-weight: 400; color: rgba(255,255,255,0.82);
+          line-height: 1.6; letter-spacing: 0.2px;
           position: relative; z-index: 1; opacity: 0;
         }
-        .mf-stats-band.mf-in .mf-stat:nth-child(1) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.34s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(2) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.48s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(3) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.62s both; }
-        .mf-stats-band.mf-in .mf-stat:nth-child(4) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.76s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(1) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.34s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(2) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.48s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(3) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.62s both; }
+        .mf-underwater.mf-in .mf-stat:nth-child(4) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.76s both; }
 
         /* ══ RESPONSIVE ══ */
         @media (max-width: 880px) {
@@ -491,7 +645,8 @@ export default function AboutMayaFish() {
         }
         @media (max-width: 580px) {
           .mf-stats-grid { grid-template-columns: repeat(2, 1fr); }
-          .mf-stat { padding: 20px 12px; border-bottom: 1px solid rgba(255,255,255,.18); }
+          .mf-stats-band { padding: 40px 20px 48px; }
+          .mf-stat { padding: 16px 10px; }
           .mf-stat:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,.18); }
           .mf-stat:nth-child(even) { border-right: none; }
           .mf-stat:nth-last-child(-n+2) { border-bottom: none; }
@@ -512,17 +667,14 @@ export default function AboutMayaFish() {
 
           {/* LEFT — image + floating quote */}
           <div ref={imgRef} className={`mf-left${imgVisible ? " mf-in" : ""}`}>
-            <div className="mf-aquarium-img">
-              <AquariumIllustration />
+            <div className="mf-img-frame">
+            <div className="mf-img-frame-inner">
+              <div className="mf-aquarium-img">
+                <AquariumIllustration />
+              </div>
             </div>
-            <div className="mf-quote">
-              <span className="mf-quote-icon">"</span>
-              <p className="mf-quote-text">
-                There's nothing quite like a day at the aquarium. These are the moments we live for
-              </p>
-              <div className="mf-quote-name">William Despres –</div>
-              <div className="mf-quote-role">CEO/Founder</div>
-            </div>
+          </div>
+
           </div>
 
           {/* RIGHT — text content */}
@@ -544,11 +696,7 @@ export default function AboutMayaFish() {
                 semper amet facilisi tellus nibh ex orci. Penatibus eget elit bibendum senectus
                 duis posuere mi. Ullamcorper a faucibus nascetur id taciti cras fringilla. Lorem
               </p>
-              <p>
-                Facilisi dignissim arcu faucibus litora pede porta eros magna. Dignissim vel fames
-                neque quam suspendisse orci massa montes fringilla eleifend. Nulla cubilia auctor
-                scelerisque si letius.
-              </p>
+             
             </div>
 
             <a className="mf-btn" href="#">
@@ -563,28 +711,33 @@ export default function AboutMayaFish() {
           </div>
         </section>
 
-        {/* ══════════════ WAVE DIVIDER ══════════════ */}
-        <div className={`mf-wave-wrap${statsVisible ? " mf-in" : ""}`}>
-          <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1440" height="70" fill="#ffffff" />
-            <path d="M0,70 L0,32 Q180,70 360,46 Q540,22 720,46 Q900,70 1080,46 Q1260,22 1440,46 L1440,70 Z" fill="#19bcc8" />
-            <path d="M0,70 L0,50 Q180,70 360,59 Q540,47 720,59 Q900,70 1080,59 Q1260,47 1440,59 L1440,70 Z" fill="rgba(26,184,196,0.42)" />
-            <path d="M0,70 L0,62 Q360,70 720,65 Q1080,60 1440,65 L1440,70 Z" fill="rgba(100,225,235,0.18)" />
-          </svg>
-        </div>
+        {/* ══════════════ WAVE + STATS UNDERWATER SECTION ══════════════ */}
+        <div ref={statsRef} className={`mf-underwater${statsVisible ? " mf-in" : ""}`}>
 
-        {/* ══════════════ STATS BAND ══════════════ */}
-        <section ref={statsRef} className={`mf-stats-band${statsVisible ? " mf-in" : ""}`}>
-          <BubbleLayer />
-          <div className="mf-stats-grid">
-            {STATS.map((s) => (
-              <div className="mf-stat" key={s.label}>
-                <div className="mf-stat-num"><Counter target={s.target} suffix={s.suffix} /></div>
-                <div className="mf-stat-label">{s.label}</div>
-              </div>
-            ))}
+          {/* Wave SVG — white bg above, teal fill below */}
+          <div className="mf-wave-svg-wrap">
+            <svg viewBox="0 0 1440 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="1440" height="110" fill="#ffffff"/>
+              <path d="M0,110 L0,52 C90,22 180,72 270,50 C360,28 450,70 540,48 C630,26 720,68 810,46 C900,24 990,66 1080,44 C1170,22 1260,64 1350,46 C1395,37 1420,54 1440,48 L1440,110 Z" fill="#17bcca"/>
+              <path d="M0,110 L0,68 C120,48 240,82 360,64 C480,46 600,78 720,62 C840,46 960,76 1080,60 C1200,44 1320,72 1440,58 L1440,110 Z" fill="rgba(23,188,202,0.6)"/>
+              <path d="M0,110 L0,82 C180,68 360,92 540,78 C720,64 900,88 1080,74 C1260,60 1380,80 1440,72 L1440,110 Z" fill="rgba(23,188,202,0.3)"/>
+            </svg>
           </div>
-        </section>
+
+          {/* Underwater teal band */}
+          <div className="mf-stats-band">
+            <BubbleLayer />
+            <div className="mf-stats-grid">
+              {STATS.map((s) => (
+                <div className={`mf-stat`} key={s.label}>
+                  <div className="mf-stat-num"><Counter target={s.target} suffix={s.suffix} /></div>
+                  <div className="mf-stat-label">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
 
       </div>
     </>

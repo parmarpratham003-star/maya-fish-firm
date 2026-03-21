@@ -2,7 +2,7 @@
   import { useEffect, useRef, useState } from "react";
 
   const slides = [
-    { image: "/ss4.png" },
+    { image: "/ss1.png" },
     { image: "/s2.png" },
     { image: "/ss3.png" },
   ];
