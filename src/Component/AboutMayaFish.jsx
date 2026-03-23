@@ -137,36 +137,61 @@ const STATS = [
 ];
 
 /* ─────────────────────────────────────────
-   GOLD CORNER FRAME SVG (matching uploaded image)
+   ORNATE SCROLL-CORNER FRAME
+   — curved bracket flourishes at each corner
+   with a dashed inner border
 ───────────────────────────────────────── */
-function GoldCornerFrame({ children }) {
+function ArtDecoFrame({ children }) {
+  // Corner SVG: a curved scroll bracket, rotated for each corner
+  const Corner = ({ style }) => (
+    <svg
+      width="64" height="64" viewBox="0 0 64 64" fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ position: "absolute", zIndex: 4, pointerEvents: "none", ...style }}
+    >
+      {/* Outer arc sweep */}
+      <path d="M6 58 L6 18 Q6 6 18 6 L58 6" stroke="#1B3A6B" strokeWidth="2.4" strokeLinecap="round" fill="none"/>
+      {/* Inner arc (offset ~9px) */}
+      <path d="M14 58 L14 22 Q14 14 22 14 L58 14" stroke="#1B3A6B" strokeWidth="1.2" strokeLinecap="round" strokeOpacity="0.5" fill="none"/>
+      {/* Scroll curl at the tip — small circle */}
+      <circle cx="6"  cy="58" r="2.8" fill="#1B3A6B" opacity="0.9"/>
+      <circle cx="58" cy="6"  r="2.8" fill="#1B3A6B" opacity="0.9"/>
+      {/* Tiny inner dots */}
+      <circle cx="14" cy="56" r="1.5" fill="#1B3A6B" opacity="0.45"/>
+      <circle cx="56" cy="14" r="1.5" fill="#1B3A6B" opacity="0.45"/>
+    </svg>
+  );
+
   return (
     <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
-      {/* Top-right corner */}
+      {/* Dashed inner border rectangle */}
       <svg
-        style={{ position: "absolute", top: -14, right: -14, zIndex: 3, pointerEvents: "none" }}
-        width="90" height="90" viewBox="0 0 90 90" fill="none"
+        style={{
+          position: "absolute", inset: 0, width: "100%", height: "100%",
+          zIndex: 3, pointerEvents: "none",
+        }}
+        viewBox="0 0 400 340"
+        preserveAspectRatio="none"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Outer line */}
-        <line x1="18" y1="6" x2="84" y2="6" stroke="#C9A84C" strokeWidth="1.8"/>
-        <line x1="84" y1="6" x2="84" y2="72" stroke="#C9A84C" strokeWidth="1.8"/>
-        {/* Inner line (offset) */}
-        <line x1="26" y1="14" x2="84" y2="14" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
-        <line x1="76" y1="6" x2="76" y2="72" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
+        <rect
+          x="18" y="18" width="364" height="304"
+          stroke="#1B3A6B" strokeWidth="1" strokeOpacity="0.35"
+          strokeDasharray="6 5"
+          fill="none"
+          rx="2"
+        />
       </svg>
 
-      {/* Bottom-left corner */}
-      <svg
-        style={{ position: "absolute", bottom: -14, left: -14, zIndex: 3, pointerEvents: "none" }}
-        width="90" height="90" viewBox="0 0 90 90" fill="none"
-      >
-        {/* Outer line */}
-        <line x1="6" y1="18" x2="6" y2="84" stroke="#C9A84C" strokeWidth="1.8"/>
-        <line x1="6" y1="84" x2="72" y2="84" stroke="#C9A84C" strokeWidth="1.8"/>
-        {/* Inner line (offset) */}
-        <line x1="14" y1="18" x2="14" y2="76" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
-        <line x1="6" y1="76" x2="72" y2="76" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
-      </svg>
+      {/* Top-left corner — default orientation */}
+      <Corner style={{ top: 0, left: 0 }} />
+      {/* Top-right corner — flip horizontal */}
+      <Corner style={{ top: 0, right: 0, transform: "scaleX(-1)" }} />
+      {/* Bottom-left corner — flip vertical */}
+      <Corner style={{ bottom: 0, left: 0, transform: "scaleY(-1)" }} />
+      {/* Bottom-right corner — flip both */}
+      <Corner style={{ bottom: 0, right: 0, transform: "scale(-1,-1)" }} />
 
       {children}
     </div>
@@ -248,8 +273,8 @@ export default function MayaFishFarm() {
           from { clip-path: inset(0 100% 0 0); opacity: 0.4; }
           to   { clip-path: inset(0 0%   0 0); opacity: 1; }
         }
-        @keyframes mfGoldGlow {
-          0%, 100% { opacity: 0.6; }
+        @keyframes mfFramePulse {
+          0%, 100% { opacity: 0.7; }
           50%       { opacity: 1; }
         }
 
@@ -275,35 +300,16 @@ export default function MayaFishFarm() {
         .mf-left { position: relative; }
         .mf-left.mf-in { animation: mfSlideFromLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
 
-        /* ── Gold Corner Frame Wrapper ── */
+        /* ── Art Deco Frame Wrapper ── */
         .mf-gold-frame-wrap {
           position: relative;
           padding: 22px;
         }
 
-        /* Texture background overlay (matches uploaded image texture) */
-        .mf-gold-frame-wrap::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: 4px;
-          background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-            linear-gradient(135deg, #f9f8f6 0%, #f3f2ef 100%);
-          pointer-events: none;
-          z-index: 0;
+        /* Frame SVG pulse */
+        .mf-gold-frame-wrap svg {
+          animation: mfFramePulse 4s ease-in-out infinite;
         }
-
-        /* Gold corner — top right */
-        .mf-corner-tr,
-        .mf-corner-bl {
-          position: absolute;
-          z-index: 4;
-          pointer-events: none;
-          animation: mfGoldGlow 4s ease-in-out infinite;
-        }
-        .mf-corner-tr { top: 0; right: 0; }
-        .mf-corner-bl { bottom: 0; left: 0; }
 
         /* Image inner frame */
         .mf-img-inner {
@@ -311,12 +317,12 @@ export default function MayaFishFarm() {
           z-index: 1;
           border-radius: 12px;
           overflow: hidden;
-          box-shadow: 0 16px 52px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07);
+          box-shadow: 0 16px 52px rgba(27,58,107,0.18), 0 2px 8px rgba(27,58,107,0.10);
           transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), box-shadow 0.55s ease;
         }
         .mf-img-inner:hover {
           transform: scale(1.015);
-          box-shadow: 0 28px 72px rgba(10,132,214,0.18);
+          box-shadow: 0 28px 72px rgba(27,58,107,0.28);
         }
 
         .mf-aquarium-img {
@@ -342,7 +348,7 @@ export default function MayaFishFarm() {
           font-size: 11px; font-weight: 600;
           letter-spacing: 2px;
           text-transform: uppercase;
-          color: rgba(10,132,214,0.85);
+          color: #1B3A6B;
           margin-bottom: 16px; opacity: 0;
         }
         .mf-right.mf-in .mf-eyebrow {
@@ -390,13 +396,13 @@ export default function MayaFishFarm() {
           color: #617d87; line-height: 1.9; font-weight: 400; margin: 0;
         }
 
-        /* CTA Button */
+        /* CTA Button — navy blue */
         .mf-btn {
           display: inline-flex; align-items: center; gap: 0;
           padding: 6px 6px 6px 24px;
-          background: #0A84D6; border: 1.5px solid #0A84D6;
+          background: #1B3A6B; border: 1.5px solid #1B3A6B;
           border-radius: 50px; cursor: pointer; text-decoration: none;
-          box-shadow: 0 4px 20px rgba(10,132,214,0.45);
+          box-shadow: 0 4px 20px rgba(27,58,107,0.40);
           transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
           position: relative; overflow: hidden; opacity: 0;
         }
@@ -406,14 +412,14 @@ export default function MayaFishFarm() {
         .mf-btn::before {
           content: ''; position: absolute;
           top: 0; left: -80%; width: 60%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.24), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
           transform: skewX(-20deg); pointer-events: none;
         }
         .mf-btn:hover::before { animation: mfBtnShine 0.55s ease forwards; }
         .mf-btn:hover {
-          background: #0872b8; border-color: #0872b8;
+          background: #142d55; border-color: #142d55;
           transform: translateY(-2px);
-          box-shadow: 0 8px 28px rgba(10,132,214,0.55);
+          box-shadow: 0 8px 28px rgba(27,58,107,0.50);
         }
         .mf-btn:active { transform: scale(0.97); }
         .mf-btn-label {
@@ -424,7 +430,7 @@ export default function MayaFishFarm() {
         }
         .mf-btn-icon {
           width: 34px; height: 34px; border-radius: 50%;
-          background: rgba(255,255,255,0.2);
+          background: rgba(255,255,255,0.18);
           display: flex; align-items: center; justify-content: center;
           flex-shrink: 0;
           transition: background 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
@@ -447,21 +453,21 @@ export default function MayaFishFarm() {
         }
         .mf-wave-svg-wrap svg { display: block; width: 100%; }
 
-        /* ══ STATS BAND ══ */
+        /* ══ STATS BAND — navy blue ══ */
         .mf-stats-band {
           position: relative;
           overflow: hidden;
-          background: #17bcca;
-          padding: 28px 56px 32px;
+          background: #1B3A6B;
+          padding: 62px 56px 62px;
         }
 
         .mf-stats-band::before {
           content: "";
           position: absolute; inset: 0; pointer-events: none; z-index: 0;
           background:
-            radial-gradient(ellipse 600px 150px at 15% 30%, rgba(255,255,255,0.07) 0%, transparent 60%),
-            radial-gradient(ellipse 400px 120px at 65% 45%, rgba(255,255,255,0.05) 0%, transparent 60%),
-            radial-gradient(ellipse 300px 100px at 90% 20%, rgba(255,255,255,0.06) 0%, transparent 60%);
+            radial-gradient(ellipse 600px 150px at 15% 30%, rgba(255,255,255,0.06) 0%, transparent 60%),
+            radial-gradient(ellipse 400px 120px at 65% 45%, rgba(255,255,255,0.04) 0%, transparent 60%),
+            radial-gradient(ellipse 300px 100px at 90% 20%, rgba(255,255,255,0.05) 0%, transparent 60%);
         }
 
         .mf-stats-grid {
@@ -486,7 +492,7 @@ export default function MayaFishFarm() {
         .mf-stat:not(:last-child)::after {
           content: ''; position: absolute;
           right: 0; top: 8%; height: 84%; width: 1px;
-          background: rgba(255,255,255,0.22);
+          background: rgba(255,255,255,0.20);
           transform-origin: top; transform: scaleY(0); opacity: 0;
         }
         .mf-underwater.mf-in .mf-stat:nth-child(1)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
@@ -509,7 +515,7 @@ export default function MayaFishFarm() {
         .mf-stat-label {
           font-family: 'Montserrat', sans-serif;
           font-size: clamp(0.72rem, 0.9vw, 0.82rem);
-          font-weight: 500; color: rgba(255,255,255,0.82);
+          font-weight: 500; color: rgba(255,255,255,0.78);
           line-height: 1.6; letter-spacing: 0.8px;
           text-transform: uppercase;
           position: relative; z-index: 1; opacity: 0;
@@ -529,7 +535,7 @@ export default function MayaFishFarm() {
         }
         @media (max-width: 580px) {
           .mf-stats-grid { grid-template-columns: repeat(2, 1fr); }
-          .mf-stats-band { padding: 22px 20px 26px; }
+          .mf-stats-band { padding: 38px 20px 38px; }
           .mf-stat { padding: 16px 10px; }
           .mf-stat:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,.18); }
           .mf-stat:nth-child(even) { border-right: none; }
@@ -548,41 +554,9 @@ export default function MayaFishFarm() {
         {/* ══════════════ ABOUT SECTION ══════════════ */}
         <section className="mf-hero">
 
-          {/* LEFT — image with gold corner frames */}
+          {/* LEFT — image with art deco frame */}
           <div ref={imgRef} className={`mf-left${imgVisible ? " mf-in" : ""}`}>
             <div className="mf-gold-frame-wrap">
-
-              {/* TOP-RIGHT gold corner */}
-              <svg
-                className="mf-corner-tr"
-                width="100" height="100"
-                viewBox="0 0 100 100"
-                fill="none"
-                style={{ position: "absolute", top: 0, right: 0, zIndex: 4, pointerEvents: "none" }}
-              >
-                {/* Outer L */}
-                <line x1="22" y1="5" x2="95" y2="5" stroke="#C9A252" strokeWidth="2"/>
-                <line x1="95" y1="5" x2="95" y2="78" stroke="#C9A252" strokeWidth="2"/>
-                {/* Inner L (offset inward) */}
-                <line x1="32" y1="13" x2="87" y2="13" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
-                <line x1="87" y1="5" x2="87" y2="78" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
-              </svg>
-
-              {/* BOTTOM-LEFT gold corner */}
-              <svg
-                className="mf-corner-bl"
-                width="100" height="100"
-                viewBox="0 0 100 100"
-                fill="none"
-                style={{ position: "absolute", bottom: 0, left: 0, zIndex: 4, pointerEvents: "none" }}
-              >
-                {/* Outer L */}
-                <line x1="5" y1="22" x2="5" y2="95" stroke="#C9A252" strokeWidth="2"/>
-                <line x1="5" y1="95" x2="78" y2="95" stroke="#C9A252" strokeWidth="2"/>
-                {/* Inner L (offset inward) */}
-                <line x1="13" y1="22" x2="13" y2="87" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
-                <line x1="5" y1="87" x2="78" y2="87" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
-              </svg>
 
               {/* The actual image */}
               <div className="mf-img-inner">
@@ -590,6 +564,9 @@ export default function MayaFishFarm() {
                   <AquariumIllustration />
                 </div>
               </div>
+
+              {/* Art Deco SVG frame overlay */}
+              <ArtDecoFrame><></></ArtDecoFrame>
 
             </div>
           </div>
@@ -633,9 +610,10 @@ export default function MayaFishFarm() {
           <div className="mf-wave-svg-wrap">
             <svg viewBox="0 0 1440 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="1440" height="110" fill="#ffffff"/>
-              <path d="M0,110 L0,52 C90,22 180,72 270,50 C360,28 450,70 540,48 C630,26 720,68 810,46 C900,24 990,66 1080,44 C1170,22 1260,64 1350,46 C1395,37 1420,54 1440,48 L1440,110 Z" fill="#17bcca"/>
-              <path d="M0,110 L0,68 C120,48 240,82 360,64 C480,46 600,78 720,62 C840,46 960,76 1080,60 C1200,44 1320,72 1440,58 L1440,110 Z" fill="rgba(23,188,202,0.6)"/>
-              <path d="M0,110 L0,82 C180,68 360,92 540,78 C720,64 900,88 1080,74 C1260,60 1380,80 1440,72 L1440,110 Z" fill="rgba(23,188,202,0.3)"/>
+              {/* Wave fills updated to navy blue */}
+              <path d="M0,110 L0,52 C90,22 180,72 270,50 C360,28 450,70 540,48 C630,26 720,68 810,46 C900,24 990,66 1080,44 C1170,22 1260,64 1350,46 C1395,37 1420,54 1440,48 L1440,110 Z" fill="#1B3A6B"/>
+              <path d="M0,110 L0,68 C120,48 240,82 360,64 C480,46 600,78 720,62 C840,46 960,76 1080,60 C1200,44 1320,72 1440,58 L1440,110 Z" fill="rgba(27,58,107,0.6)"/>
+              <path d="M0,110 L0,82 C180,68 360,92 540,78 C720,64 900,88 1080,74 C1260,60 1380,80 1440,72 L1440,110 Z" fill="rgba(27,58,107,0.3)"/>
             </svg>
           </div>
 

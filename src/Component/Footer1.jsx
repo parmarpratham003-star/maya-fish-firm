@@ -30,10 +30,15 @@ export default function Footer1() {
           filter: brightness(0.32) saturate(0.7);
           z-index: 0;
         }
-        .f-banner-fade {
-          position: absolute; inset: 0; z-index: 1;
-          background: linear-gradient(to bottom, rgba(6,14,31,0.25) 0%, rgba(6,14,31,0.60) 70%, #060e1f 100%);
-        }
+       .f-banner-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(6,14,31,0.15) 0%,   /* lighter */
+    rgba(6,14,31,0.35) 60%,  /* reduced */
+    #060e1f 100%
+  );
+}
         .f-banner-content {
           position: relative; z-index: 2;
           padding: 4rem 1.5rem 4.5rem;

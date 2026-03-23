@@ -266,11 +266,20 @@ export default function WhyChooseMaya() {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="wcm-left-eyebrow">Our Values</span>
-          <h2 className="wcm-left-h2">Why<br/>Choose<br/>Us?</h2>
-          <p className="wcm-left-sub">The numbers speak<br/>for themselves.</p>
-        </motion.div>
+         <span className="wcm-left-eyebrow">Our Values</span>
 
+<h2 className="wcm-left-h2">
+  Why<br/>Choose<br/>Us?
+</h2>
+
+<p className="wcm-left-sub">
+  At MAYA Fish Farm, we focus on delivering healthy, vibrant ornamental fish
+  through responsible breeding and expert care.
+  <br/><br/>
+  Our commitment to quality, reliability, and customer satisfaction ensures
+  that every fish meets the highest standards for aquariums and retailers.
+</p>
+</motion.div>
         {/* RIGHT */}
         <div className="wcm-right">
 
