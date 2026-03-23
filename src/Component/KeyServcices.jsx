@@ -73,10 +73,10 @@ export default function KeyServices() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
         .ks-section {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Montserrat', sans-serif;
           background: linear-gradient(160deg, #f0f9ff 0%, #e4f4fd 50%, #d8eef9 100%);
           padding: 5.5rem 1.5rem;
           position: relative;
@@ -97,18 +97,21 @@ export default function KeyServices() {
         }
         .ks-eline { width: 28px; height: 1px; background: #4FD1E8; display: block; }
         .ks-etxt {
-          font-size: 11px; font-weight: 600;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10px; font-weight: 700;
           letter-spacing: 4px; text-transform: uppercase; color: #4FD1E8;
         }
         .ks-h2 {
+          font-family: 'Montserrat', sans-serif;
           font-size: clamp(1.9rem, 3.8vw, 2.8rem);
           font-weight: 800; color: #083B66;
-          line-height: 1.18; letter-spacing: -0.025em;
+          line-height: 1.18; letter-spacing: -0.03em;
           margin: 0 0 0.9rem;
         }
         .ks-h2 em { font-style: normal; color: #0A84D6; }
         .ks-lead {
-          font-size: 14px; font-weight: 400;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 13px; font-weight: 400;
           color: #5a7a90; line-height: 1.8; margin: 0;
         }
 
@@ -124,7 +127,7 @@ export default function KeyServices() {
         /* ── Card shell ── */
         .ks-card {
           position: relative;
-          border-radius: 0;
+          border-radius: 2px;
           overflow: hidden;
           background: #fff;
           border: 1px solid #e0ecf5;
@@ -132,13 +135,15 @@ export default function KeyServices() {
           display: flex;
           flex-direction: column;
           min-height: 360px;
-          transition: box-shadow 0.3s, transform 0.3s;
+          transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
         }
         .ks-card:hover {
-          box-shadow: 0 20px 56px rgba(10,132,214,0.18);
-          transform: translateY(-5px);
+          box-shadow: 0 20px 56px rgba(10,132,214,0.15);
+          transform: translateY(-6px);
+          border-color: rgba(10,132,214,0.2);
           z-index: 2;
         }
+
         /* Blue top border on hover */
         .ks-card::before {
           content: '';
@@ -152,7 +157,7 @@ export default function KeyServices() {
         }
         .ks-card:hover::before { transform: scaleX(1); }
 
-        /* ── Full-card image overlay (slides from top) ── */
+        /* ── Full-card image overlay (slides from top) — NO dark filter ── */
         .ks-img-area {
           position: absolute;
           inset: 0;
@@ -165,23 +170,15 @@ export default function KeyServices() {
           background-position: center;
           transform: translateY(-100%);
           transition: transform 0.55s cubic-bezier(0.4, 0, 0.08, 1);
-          filter: brightness(0.55) saturate(0.85);
-        }
-        .ks-slide-img::after {
-          content: '';
-          position: absolute; inset: 0;
-          background: linear-gradient(
-            to bottom,
-            rgba(4,12,30,0.15) 0%,
-            rgba(4,12,30,0.75) 100%
-          );
+          /* ── NO filter, NO dark overlay ── */
+          filter: none;
         }
         .ks-card:hover .ks-slide-img { transform: translateY(0); }
 
         /* Arrow button — appears on hover */
         .ks-img-arrow {
           position: absolute; bottom: 1.2rem; right: 1.2rem;
-          width: 36px; height: 36px; border-radius: 0;
+          width: 36px; height: 36px; border-radius: 2px;
           background: #0A84D6;
           display: flex; align-items: center; justify-content: center;
           z-index: 6; text-decoration: none;
@@ -194,16 +191,14 @@ export default function KeyServices() {
 
         /* ── Text body ── */
         .ks-body {
-          padding: 1.6rem 1.6rem 1.8rem;
+          padding: 1.8rem 1.6rem 2rem;
           display: flex; flex-direction: column;
-          gap: 0.7rem; flex: 1;
+          gap: 0.8rem; flex: 1;
           position: relative;
           z-index: 3;
           background: #fff;
-          /* Hide entire body when image slides in */
           transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        /* ← KEY CHANGE: hide ALL body content on hover */
         .ks-card:hover .ks-body {
           opacity: 0;
           visibility: hidden;
@@ -211,17 +206,17 @@ export default function KeyServices() {
 
         /* num */
         .ks-num {
-          font-size: 10px; font-weight: 700;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 9.5px; font-weight: 700;
           letter-spacing: 2.5px; text-transform: uppercase;
-          color: rgba(10,132,214,0.4);
-          font-family: monospace;
+          color: rgba(10,132,214,0.35);
         }
 
         /* icon */
         .ks-body-icon {
           width: 52px; height: 52px;
           display: flex; align-items: center; justify-content: center;
-          border-radius: 0;
+          border-radius: 10px;
         }
 
         /* accent bar */
@@ -232,31 +227,35 @@ export default function KeyServices() {
         }
 
         .ks-title {
-          font-size: 15px; font-weight: 700;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14.5px; font-weight: 700;
           color: #081c30; line-height: 1.3; margin: 0;
           letter-spacing: -0.015em;
         }
 
         .ks-desc {
-          font-size: 12.5px; font-weight: 400;
-          color: #6a88a0; line-height: 1.78;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 12px; font-weight: 400;
+          color: #6a88a0; line-height: 1.8;
           margin: 0; flex: 1;
         }
 
         /* tags */
         .ks-tags { display: flex; flex-wrap: wrap; gap: 4px; }
         .ks-tpill {
-          font-size: 10px; font-weight: 600;
-          border-radius: 0; padding: 2px 8px;
-          letter-spacing: 0.2px; text-transform: uppercase;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 9.5px; font-weight: 600;
+          border-radius: 100px; padding: 2px 9px;
+          letter-spacing: 0.3px; text-transform: uppercase;
         }
 
         /* learn more */
         .ks-more {
           display: inline-flex; align-items: center; gap: 5px;
-          font-size: 11.5px; font-weight: 700;
-          text-decoration: none; margin-top: 0.15rem;
-          width: fit-content; letter-spacing: 0.4px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10.5px; font-weight: 700;
+          text-decoration: none; margin-top: 0.2rem;
+          width: fit-content; letter-spacing: 0.8px;
           text-transform: uppercase;
           border-bottom: 1.5px solid currentColor;
           padding-bottom: 1px;
@@ -272,9 +271,11 @@ export default function KeyServices() {
           display: inline-flex; align-items: center; gap: 10px;
           padding: 13px 34px;
           background: linear-gradient(135deg, #0A84D6, #0AAFCF);
-          color: #fff; font-size: 13.5px; font-weight: 600;
+          color: #fff;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px; font-weight: 700;
           border-radius: 999px; text-decoration: none;
-          letter-spacing: 0.3px;
+          letter-spacing: 1px; text-transform: uppercase;
           box-shadow: 0 6px 24px rgba(10,132,214,0.30);
           transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -335,7 +336,7 @@ export default function KeyServices() {
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: i * 0.09, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Image overlay — slides down from top on hover */}
+              {/* Image — slides down from top on hover, fully clear */}
               <div className="ks-img-area">
                 <div className="ks-slide-img" style={{ backgroundImage: `url('${svc.img}')` }} />
                 <a href="/service" className="ks-img-arrow" aria-label="View service">
@@ -347,7 +348,7 @@ export default function KeyServices() {
                 </a>
               </div>
 
-              {/* Text body — fully hidden on hover */}
+              {/* Text body */}
               <div className="ks-body">
                 <span className="ks-num">{svc.num}</span>
 

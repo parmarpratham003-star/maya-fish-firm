@@ -39,8 +39,7 @@ function Counter({ target, suffix = "" }) {
 }
 
 /* ─────────────────────────────────────────
-   BUBBLE LAYER — static scattered circles
-   matching the reference image exactly
+   BUBBLE LAYER
 ───────────────────────────────────────── */
 function BubbleLayer() {
   const BUBBLES = [
@@ -138,6 +137,43 @@ const STATS = [
 ];
 
 /* ─────────────────────────────────────────
+   GOLD CORNER FRAME SVG (matching uploaded image)
+───────────────────────────────────────── */
+function GoldCornerFrame({ children }) {
+  return (
+    <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
+      {/* Top-right corner */}
+      <svg
+        style={{ position: "absolute", top: -14, right: -14, zIndex: 3, pointerEvents: "none" }}
+        width="90" height="90" viewBox="0 0 90 90" fill="none"
+      >
+        {/* Outer line */}
+        <line x1="18" y1="6" x2="84" y2="6" stroke="#C9A84C" strokeWidth="1.8"/>
+        <line x1="84" y1="6" x2="84" y2="72" stroke="#C9A84C" strokeWidth="1.8"/>
+        {/* Inner line (offset) */}
+        <line x1="26" y1="14" x2="84" y2="14" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
+        <line x1="76" y1="6" x2="76" y2="72" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
+      </svg>
+
+      {/* Bottom-left corner */}
+      <svg
+        style={{ position: "absolute", bottom: -14, left: -14, zIndex: 3, pointerEvents: "none" }}
+        width="90" height="90" viewBox="0 0 90 90" fill="none"
+      >
+        {/* Outer line */}
+        <line x1="6" y1="18" x2="6" y2="84" stroke="#C9A84C" strokeWidth="1.8"/>
+        <line x1="6" y1="84" x2="72" y2="84" stroke="#C9A84C" strokeWidth="1.8"/>
+        {/* Inner line (offset) */}
+        <line x1="14" y1="18" x2="14" y2="76" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
+        <line x1="6" y1="76" x2="72" y2="76" stroke="#C9A84C" strokeWidth="1.2" strokeOpacity="0.75"/>
+      </svg>
+
+      {children}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
    AQUARIUM IMAGE
 ───────────────────────────────────────── */
 function AquariumIllustration() {
@@ -161,16 +197,11 @@ export default function MayaFishFarm() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap');
 
         /* ══ KEYFRAMES ══ */
-
         @keyframes wcmSpin {
           to { transform: rotate(360deg); }
-        }
-        @keyframes mfBubbleRise {
-          0%   { opacity: 0; }
-          100% { opacity: 0; }
         }
         @keyframes mfFloat {
           0%,100% { transform: translateY(0px); }
@@ -209,27 +240,22 @@ export default function MayaFishFarm() {
           from { transform: scaleY(0); opacity: 0; }
           to   { transform: scaleY(1); opacity: 1; }
         }
-        @keyframes mfWaveIn {
-          from { opacity: 0; transform: scaleX(0.94) translateY(16px); }
-          to   { opacity: 1; transform: scaleX(1)    translateY(0); }
-        }
         @keyframes mfBtnShine {
           0%   { left: -80%; }
           100% { left: 130%; }
-        }
-        @keyframes mfPulseRing {
-          0%   { text-shadow: 0 0 0px rgba(26,184,196,0.7); }
-          50%  { text-shadow: 0 0 18px rgba(26,184,196,0.5); }
-          100% { text-shadow: 0 0 0px rgba(26,184,196,0.0); }
         }
         @keyframes mfImageReveal {
           from { clip-path: inset(0 100% 0 0); opacity: 0.4; }
           to   { clip-path: inset(0 0%   0 0); opacity: 1; }
         }
+        @keyframes mfGoldGlow {
+          0%, 100% { opacity: 0.6; }
+          50%       { opacity: 1; }
+        }
 
         /* ══ ROOT ══ */
         .mf-root {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Montserrat', sans-serif;
           background: #fff;
           width: 100%;
           overflow: hidden;
@@ -249,197 +275,62 @@ export default function MayaFishFarm() {
         .mf-left { position: relative; }
         .mf-left.mf-in { animation: mfSlideFromLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
 
-        //* ── Modern Glass Frame ── */
-.mf-img-frame {
-  position: relative;
-  border-radius: 20px;
-  padding: 10px;
-  background: linear-gradient(135deg, rgba(10,132,214,0.25), rgba(79,209,232,0.15));
-  backdrop-filter: blur(8px);
-  box-shadow: 
-    0 10px 40px rgba(10,132,214,0.15),
-    inset 0 0 0 1px rgba(255,255,255,0.08);
-}
+        /* ── Gold Corner Frame Wrapper ── */
+        .mf-gold-frame-wrap {
+          position: relative;
+          padding: 22px;
+        }
 
-/* inner container */
-.mf-img-frame-inner {
-  border-radius: 16px;
-  overflow: hidden;
-  background: #000;
-  position: relative;
-}
-
-/* glow border */
-.mf-img-frame::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 22px;
-  background: linear-gradient(120deg, #0A84D6, #4FD1E8, #0A84D6);
-  opacity: 0.25;
-  filter: blur(10px);
-  z-index: 0;
-}
-
-/* subtle hover effect */
-.mf-img-frame:hover {
-  transform: translateY(-4px) scale(1.01);
-  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
-  box-shadow: 
-    0 20px 60px rgba(10,132,214,0.25),
-    inset 0 0 0 1px rgba(255,255,255,0.1);
-}
-
-/* remove old decorations */
-.mf-frame-arc,
-.mf-frame-dot,
-.mf-frame-stat,
-.mf-frame-badge {
-  display: none;
-}
-
-        /* Second ring — closer, more opaque */
-        .mf-img-frame::after {
-          content: '';
+        /* Texture background overlay (matches uploaded image texture) */
+        .mf-gold-frame-wrap::before {
+          content: "";
           position: absolute;
-          top: 18px; left: 18px;
-          right: -18px; bottom: -18px;
-          border: 2px solid rgba(79,209,232,0.15);
-          border-radius: 20px;
+          inset: 0;
+          border-radius: 4px;
+          background:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+            linear-gradient(135deg, #f9f8f6 0%, #f3f2ef 100%);
           pointer-events: none;
           z-index: 0;
-          transition: border-color 0.4s ease, transform 0.5s ease;
-        }
-        .mf-img-frame:hover::after {
-          border-color: rgba(79,209,232,0.32);
-          transform: translate(3px, 3px);
         }
 
-        /* Year pill — bottom right floating */
-        .mf-frame-badge {
+        /* Gold corner — top right */
+        .mf-corner-tr,
+        .mf-corner-bl {
           position: absolute;
-          bottom: -14px; right: 28px;
-          background: #fff;
-          border: 1.5px solid rgba(10,132,214,0.18);
-          color: #0A84D6;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          padding: 7px 16px;
-          border-radius: 100px;
-          z-index: 5;
+          z-index: 4;
           pointer-events: none;
-          box-shadow: 0 6px 22px rgba(10,132,214,0.12);
-          animation: mfFloat 4s ease-in-out infinite;
-          white-space: nowrap;
-          display: flex;
-          align-items: center;
-          gap: 6px;
+          animation: mfGoldGlow 4s ease-in-out infinite;
         }
-        .mf-frame-badge-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #4FD1E8;
-          flex-shrink: 0;
-        }
+        .mf-corner-tr { top: 0; right: 0; }
+        .mf-corner-bl { bottom: 0; left: 0; }
 
-        /* Top-left arc ring */
-        .mf-frame-arc {
-          position: absolute;
-          top: -28px; left: -28px;
-          width: 80px; height: 80px;
-          border-radius: 50%;
-          border: 2px dashed rgba(10,132,214,0.2);
-          pointer-events: none;
-          z-index: 0;
-          animation: wcmSpin 18s linear infinite;
+        /* Image inner frame */
+        .mf-img-inner {
+          position: relative;
+          z-index: 1;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 16px 52px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07);
+          transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), box-shadow 0.55s ease;
         }
-
-        /* Small teal filled circle */
-        .mf-frame-dot {
-          position: absolute;
-          top: -10px; right: 60px;
-          width: 10px; height: 10px;
-          border-radius: 50%;
-          background: #4FD1E8;
-          pointer-events: none;
-          z-index: 3;
-          box-shadow: 0 0 0 3px rgba(79,209,232,0.22);
-        }
-
-        /* Experience stat card — left floating */
-        .mf-frame-stat {
-          position: absolute;
-          top: 50%; left: -24px;
-          transform: translateY(-50%);
-          background: #0A84D6;
-          border-radius: 14px;
-          padding: 14px 16px;
-          z-index: 5;
-          pointer-events: none;
-          box-shadow: 0 8px 28px rgba(10,132,214,0.38);
-          animation: mfFloat 5s ease-in-out infinite 0.8s;
-          text-align: center;
-        }
-        .mf-frame-stat-num {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 22px; font-weight: 800;
-          color: #fff; line-height: 1;
-          letter-spacing: -0.5px;
-          display: block;
-        }
-        .mf-frame-stat-lbl {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 8.5px; font-weight: 500;
-          color: rgba(255,255,255,0.75);
-          letter-spacing: 1px;
-          text-transform: uppercase;
-          display: block;
-          margin-top: 3px;
-          white-space: nowrap;
+        .mf-img-inner:hover {
+          transform: scale(1.015);
+          box-shadow: 0 28px 72px rgba(10,132,214,0.18);
         }
 
         .mf-aquarium-img {
           width: 100%;
           aspect-ratio: 4 / 3.15;
-          border-radius: 16px;
+          border-radius: 12px;
           overflow: hidden;
           display: block;
           position: relative;
           z-index: 1;
-          box-shadow: 0 12px 48px rgba(0,0,0,0.12);
-          transition: transform 0.55s cubic-bezier(0.16,1,0.3,1),
-                      box-shadow 0.55s ease;
         }
-        .mf-aquarium-img:hover {
-          transform: scale(1.018);
-          box-shadow: 0 24px 64px rgba(10,132,214,0.22);
-        }
-        /* Image reveal wipe */
         .mf-left.mf-in .mf-aquarium-img {
           animation: mfImageReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s both;
         }
-
-        /* Shimmer on hover */
-        .mf-aquarium-img::after {
-          content: '';
-          position: absolute; inset: 0;
-          background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.14) 50%, transparent 62%);
-          background-size: 600px 100%;
-          background-position: -600px 0;
-          border-radius: 16px;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.3s;
-        }
-        .mf-aquarium-img:hover::after {
-          opacity: 1;
-          animation: mfBtnShine 0.75s ease forwards;
-        }
-
-
 
         /* Right column */
         .mf-right { padding-left: 4px; }
@@ -447,9 +338,10 @@ export default function MayaFishFarm() {
 
         /* Eyebrow */
         .mf-eyebrow {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 12px; font-weight: 400;
-          letter-spacing: 0.5px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 2px;
+          text-transform: uppercase;
           color: rgba(10,132,214,0.85);
           margin-bottom: 16px; opacity: 0;
         }
@@ -459,7 +351,7 @@ export default function MayaFishFarm() {
 
         /* Heading bold line */
         .mf-heading {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Montserrat', sans-serif;
           font-size: clamp(2rem, 3.4vw, 2.85rem);
           font-weight: 700; color: #0c1a1f;
           line-height: 1.12; letter-spacing: -0.025em;
@@ -472,7 +364,7 @@ export default function MayaFishFarm() {
 
         /* Heading thin line */
         .mf-heading-thin {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Montserrat', sans-serif;
           font-size: clamp(2rem, 3.4vw, 2.85rem);
           font-weight: 300; color: rgba(12,26,31,0.55);
           line-height: 1.12; letter-spacing: -0.02em;
@@ -493,9 +385,9 @@ export default function MayaFishFarm() {
           animation: mfRevealUp 0.65s 0.62s cubic-bezier(0.16,1,0.3,1) both;
         }
         .mf-body-cols p {
-          font-family: 'DM Sans', sans-serif;
-          font-size: clamp(0.78rem, 0.95vw, 0.88rem);
-          color: #617d87; line-height: 1.8; font-weight: 400; margin: 0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: clamp(0.75rem, 0.92vw, 0.84rem);
+          color: #617d87; line-height: 1.9; font-weight: 400; margin: 0;
         }
 
         /* CTA Button */
@@ -511,7 +403,6 @@ export default function MayaFishFarm() {
         .mf-right.mf-in .mf-btn {
           animation: mfRevealUp 0.65s 0.76s cubic-bezier(0.16,1,0.3,1) both;
         }
-        /* Shine sweep */
         .mf-btn::before {
           content: ''; position: absolute;
           top: 0; left: -80%; width: 60%; height: 100%;
@@ -526,9 +417,9 @@ export default function MayaFishFarm() {
         }
         .mf-btn:active { transform: scale(0.97); }
         .mf-btn-label {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 11.5px; font-weight: 700;
-          letter-spacing: 0.5px; text-transform: uppercase;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10.5px; font-weight: 700;
+          letter-spacing: 1.5px; text-transform: uppercase;
           color: #fff; margin-right: 12px; white-space: nowrap;
         }
         .mf-btn-icon {
@@ -543,15 +434,12 @@ export default function MayaFishFarm() {
           transform: rotate(45deg);
         }
 
-
-
         /* ══ UNDERWATER WRAPPER ══ */
         .mf-underwater {
           position: relative;
           overflow: hidden;
         }
 
-        /* Wave SVG wrapper — sits on white bg, transitions into teal */
         .mf-wave-svg-wrap {
           background: #ffffff;
           line-height: 0;
@@ -564,10 +452,9 @@ export default function MayaFishFarm() {
           position: relative;
           overflow: hidden;
           background: #17bcca;
-          padding: 52px 56px 60px;
+          padding: 28px 56px 32px;
         }
 
-        /* Subtle light caustic overlay */
         .mf-stats-band::before {
           content: "";
           position: absolute; inset: 0; pointer-events: none; z-index: 0;
@@ -596,7 +483,6 @@ export default function MayaFishFarm() {
         }
         .mf-stat:hover { transform: translateY(-6px); }
 
-        /* Vertical divider — grows on scroll-in */
         .mf-stat:not(:last-child)::after {
           content: ''; position: absolute;
           right: 0; top: 8%; height: 84%; width: 1px;
@@ -607,12 +493,11 @@ export default function MayaFishFarm() {
         .mf-underwater.mf-in .mf-stat:nth-child(2)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(3)::after { animation: mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.80s both; }
 
-        /* Stat numbers */
         .mf-stat-num {
-          font-family: 'DM Sans', sans-serif;
-          font-size: clamp(3.6rem, 6.5vw, 5.6rem);
+          font-family: 'Montserrat', sans-serif;
+          font-size: clamp(2.8rem, 5vw, 4.2rem);
           font-weight: 800; color: #ffffff;
-          line-height: 1; margin-bottom: 10px;
+          line-height: 1; margin-bottom: 8px;
           letter-spacing: -0.03em;
           position: relative; z-index: 1; opacity: 0;
         }
@@ -621,12 +506,12 @@ export default function MayaFishFarm() {
         .mf-underwater.mf-in .mf-stat:nth-child(3) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.36s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(4) .mf-stat-num { animation: mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.50s both; }
 
-        /* Stat labels */
         .mf-stat-label {
-          font-family: 'DM Sans', sans-serif;
-          font-size: clamp(0.8rem, 1vw, 0.9rem);
-          font-weight: 400; color: rgba(255,255,255,0.82);
-          line-height: 1.6; letter-spacing: 0.2px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+          font-weight: 500; color: rgba(255,255,255,0.82);
+          line-height: 1.6; letter-spacing: 0.8px;
+          text-transform: uppercase;
           position: relative; z-index: 1; opacity: 0;
         }
         .mf-underwater.mf-in .mf-stat:nth-child(1) .mf-stat-label { animation: mfStatLabel 0.55s ease 0.34s both; }
@@ -639,17 +524,15 @@ export default function MayaFishFarm() {
           .mf-hero { grid-template-columns: 1fr; padding: 38px 26px 52px; gap: 42px; }
           .mf-right { padding-left: 0; }
           .mf-body-cols { grid-template-columns: 1fr; gap: 16px; }
-          .mf-quote { width: 200px; padding: 16px 18px; }
           .mf-left.mf-in  { animation: mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
           .mf-right.mf-in { animation: mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
         }
         @media (max-width: 580px) {
           .mf-stats-grid { grid-template-columns: repeat(2, 1fr); }
-          .mf-stats-band { padding: 40px 20px 48px; }
+          .mf-stats-band { padding: 22px 20px 26px; }
           .mf-stat { padding: 16px 10px; }
           .mf-stat:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,.18); }
           .mf-stat:nth-child(even) { border-right: none; }
-          .mf-stat:nth-last-child(-n+2) { border-bottom: none; }
           .mf-stat::after { display: none !important; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -665,16 +548,50 @@ export default function MayaFishFarm() {
         {/* ══════════════ ABOUT SECTION ══════════════ */}
         <section className="mf-hero">
 
-          {/* LEFT — image + floating quote */}
+          {/* LEFT — image with gold corner frames */}
           <div ref={imgRef} className={`mf-left${imgVisible ? " mf-in" : ""}`}>
-            <div className="mf-img-frame">
-            <div className="mf-img-frame-inner">
-              <div className="mf-aquarium-img">
-                <AquariumIllustration />
-              </div>
-            </div>
-          </div>
+            <div className="mf-gold-frame-wrap">
 
+              {/* TOP-RIGHT gold corner */}
+              <svg
+                className="mf-corner-tr"
+                width="100" height="100"
+                viewBox="0 0 100 100"
+                fill="none"
+                style={{ position: "absolute", top: 0, right: 0, zIndex: 4, pointerEvents: "none" }}
+              >
+                {/* Outer L */}
+                <line x1="22" y1="5" x2="95" y2="5" stroke="#C9A252" strokeWidth="2"/>
+                <line x1="95" y1="5" x2="95" y2="78" stroke="#C9A252" strokeWidth="2"/>
+                {/* Inner L (offset inward) */}
+                <line x1="32" y1="13" x2="87" y2="13" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
+                <line x1="87" y1="5" x2="87" y2="78" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
+              </svg>
+
+              {/* BOTTOM-LEFT gold corner */}
+              <svg
+                className="mf-corner-bl"
+                width="100" height="100"
+                viewBox="0 0 100 100"
+                fill="none"
+                style={{ position: "absolute", bottom: 0, left: 0, zIndex: 4, pointerEvents: "none" }}
+              >
+                {/* Outer L */}
+                <line x1="5" y1="22" x2="5" y2="95" stroke="#C9A252" strokeWidth="2"/>
+                <line x1="5" y1="95" x2="78" y2="95" stroke="#C9A252" strokeWidth="2"/>
+                {/* Inner L (offset inward) */}
+                <line x1="13" y1="22" x2="13" y2="87" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
+                <line x1="5" y1="87" x2="78" y2="87" stroke="#C9A252" strokeWidth="1.2" strokeOpacity="0.7"/>
+              </svg>
+
+              {/* The actual image */}
+              <div className="mf-img-inner">
+                <div className="mf-aquarium-img">
+                  <AquariumIllustration />
+                </div>
+              </div>
+
+            </div>
           </div>
 
           {/* RIGHT — text content */}
@@ -696,7 +613,6 @@ export default function MayaFishFarm() {
                 semper amet facilisi tellus nibh ex orci. Penatibus eget elit bibendum senectus
                 duis posuere mi. Ullamcorper a faucibus nascetur id taciti cras fringilla. Lorem
               </p>
-             
             </div>
 
             <a className="mf-btn" href="#">
@@ -714,7 +630,6 @@ export default function MayaFishFarm() {
         {/* ══════════════ WAVE + STATS UNDERWATER SECTION ══════════════ */}
         <div ref={statsRef} className={`mf-underwater${statsVisible ? " mf-in" : ""}`}>
 
-          {/* Wave SVG — white bg above, teal fill below */}
           <div className="mf-wave-svg-wrap">
             <svg viewBox="0 0 1440 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="1440" height="110" fill="#ffffff"/>
@@ -724,12 +639,11 @@ export default function MayaFishFarm() {
             </svg>
           </div>
 
-          {/* Underwater teal band */}
           <div className="mf-stats-band">
             <BubbleLayer />
             <div className="mf-stats-grid">
               {STATS.map((s) => (
-                <div className={`mf-stat`} key={s.label}>
+                <div className="mf-stat" key={s.label}>
                   <div className="mf-stat-num"><Counter target={s.target} suffix={s.suffix} /></div>
                   <div className="mf-stat-label">{s.label}</div>
                 </div>
