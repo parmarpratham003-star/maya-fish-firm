@@ -7,16 +7,16 @@ const services = [
     title: "Ornamental Fish Breeding",
     desc: "Breeding vibrant and healthy ornamental fish varieties such as Goldfish, Angel Fish, Guppies, and Fighter Fish.",
     tags: ["Goldfish", "Angel Fish", "Guppies", "Fighter Fish"],
-    accent: "#0A84D6",
-    light: "#E6F6FF",
+    accent: "#0A2A4A",    // navy
+    light: "#EFF3F8",     // light navy-tinted background
     num: "01",
     img: "/show-case-img-1.jpg",
     icon: (
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <path d="M3 17c2-4 5-6 9-6s7 2 9 6" stroke="#0A84D6" strokeWidth="1.8" strokeLinecap="round"/>
-        <path d="M6 17c1-2 3-3 6-3s5 1 6 3" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round"/>
-        <circle cx="12" cy="8" r="3" stroke="#0A84D6" strokeWidth="1.8"/>
-        <path d="M17 8c0-1.5-.7-2.8-2-3.5" stroke="#4FD1E8" strokeWidth="1.4" strokeLinecap="round"/>
+        <path d="M3 17c2-4 5-6 9-6s7 2 9 6" stroke="#0A2A4A" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M6 17c1-2 3-3 6-3s5 1 6 3" stroke="#2C7CB0" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="12" cy="8" r="3" stroke="#0A2A4A" strokeWidth="1.8"/>
+        <path d="M17 8c0-1.5-.7-2.8-2-3.5" stroke="#2C7CB0" strokeWidth="1.4" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -24,15 +24,15 @@ const services = [
     title: "Aquarium Fish Supply",
     desc: "Supplying quality ornamental fish to aquarium hobbyists, retailers, and pet stores.",
     tags: ["Hobbyists", "Pet Stores", "Bulk Orders"],
-    accent: "#0871B9",
-    light: "#DCF0FF",
+    accent: "#0A2A4A",
+    light: "#EFF3F8",
     num: "02",
     img: "/s2.png",
     icon: (
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="13" width="18" height="8" rx="2" stroke="#0A84D6" strokeWidth="1.8"/>
-        <path d="M7 13V9a5 5 0 0110 0v4" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M8 17h2M12 17h4" stroke="#0A84D6" strokeWidth="1.4" strokeLinecap="round"/>
+        <rect x="3" y="13" width="18" height="8" rx="2" stroke="#0A2A4A" strokeWidth="1.8"/>
+        <path d="M7 13V9a5 5 0 0110 0v4" stroke="#2C7CB0" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M8 17h2M12 17h4" stroke="#0A2A4A" strokeWidth="1.4" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -40,15 +40,15 @@ const services = [
     title: "Fish Nutrition & Care",
     desc: "Providing proper fish feeding guidance and care support to maintain healthy aquarium environments.",
     tags: ["Feeding Plans", "Water Quality", "Health Support"],
-    accent: "#0A9FBF",
-    light: "#DFF8FF",
+    accent: "#0A2A4A",
+    light: "#EFF3F8",
     num: "03",
     img: "/silde3.png",
     icon: (
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <path d="M12 3C8 3 5 6.5 5 10c0 2.5 1.3 4.7 3.3 6H12h3.7C17.7 14.7 19 12.5 19 10c0-3.5-3-7-7-7z" stroke="#0A84D6" strokeWidth="1.8"/>
-        <path d="M9 16v3h6v-3" stroke="#4FD1E8" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M10 10c0-1.1.9-2 2-2s2 .9 2 2" stroke="#4FD1E8" strokeWidth="1.4" strokeLinecap="round"/>
+        <path d="M12 3C8 3 5 6.5 5 10c0 2.5 1.3 4.7 3.3 6H12h3.7C17.7 14.7 19 12.5 19 10c0-3.5-3-7-7-7z" stroke="#0A2A4A" strokeWidth="1.8"/>
+        <path d="M9 16v3h6v-3" stroke="#2C7CB0" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M10 10c0-1.1.9-2 2-2s2 .9 2 2" stroke="#2C7CB0" strokeWidth="1.4" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -56,14 +56,14 @@ const services = [
     title: "Aquaculture Support",
     desc: "Promoting responsible fish farming practices and sustainable aquaculture methods.",
     tags: ["Sustainable Farming", "Best Practices", "Consultation"],
-    accent: "#0A84D6",
-    light: "#E6F6FF",
+    accent: "#0A2A4A",
+    light: "#EFF3F8",
     num: "04",
     img: "/show-case-img-1.jpg",
     icon: (
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2l1.8 5.5H20l-4.6 3.4 1.8 5.5L12 13l-5.2 3.4 1.8-5.5L4 7.5h6.2z" stroke="#0A84D6" strokeWidth="1.7"/>
-        <circle cx="12" cy="13" r="2.2" stroke="#4FD1E8" strokeWidth="1.4"/>
+        <path d="M12 2l1.8 5.5H20l-4.6 3.4 1.8 5.5L12 13l-5.2 3.4 1.8-5.5L4 7.5h6.2z" stroke="#0A2A4A" strokeWidth="1.7"/>
+        <circle cx="12" cy="13" r="2.2" stroke="#2C7CB0" strokeWidth="1.4"/>
       </svg>
     ),
   },
@@ -77,7 +77,7 @@ export default function KeyServices() {
 
         .ks-section {
           font-family: 'Montserrat', sans-serif;
-          background: linear-gradient(160deg, #f0f9ff 0%, #e4f4fd 50%, #d8eef9 100%);
+          background: linear-gradient(160deg, #F5F8FC 0%, #EBF0F5 50%, #E2E8F0 100%);
           padding: 5.5rem 1.5rem;
           position: relative;
           overflow: hidden;
@@ -95,11 +95,11 @@ export default function KeyServices() {
           display: inline-flex; align-items: center; gap: 10px;
           margin-bottom: 1.1rem;
         }
-        .ks-eline { width: 28px; height: 1px; background: #4FD1E8; display: block; }
+        .ks-eline { width: 28px; height: 1px; background: #2C7CB0; display: block; }
         .ks-etxt {
           font-family: 'Montserrat', sans-serif;
           font-size: 10px; font-weight: 700;
-          letter-spacing: 4px; text-transform: uppercase; color: #4FD1E8;
+          letter-spacing: 4px; text-transform: uppercase; color: #2C7CB0;
         }
         .ks-h2 {
           font-family: 'Montserrat', sans-serif;
@@ -108,7 +108,7 @@ export default function KeyServices() {
           line-height: 1.18; letter-spacing: -0.03em;
           margin: 0 0 0.9rem;
         }
-        .ks-h2 em { font-style: normal; color: #0A84D6; }
+        .ks-h2 em { font-style: normal; color: #0A2A4A; }
         .ks-lead {
           font-family: 'Montserrat', sans-serif;
           font-size: 13px; font-weight: 400;
@@ -138,9 +138,9 @@ export default function KeyServices() {
           transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
         }
         .ks-card:hover {
-          box-shadow: 0 20px 56px rgba(10,132,214,0.15);
+          box-shadow: 0 20px 56px rgba(10,42,74,0.15);
           transform: translateY(-6px);
-          border-color: rgba(10,132,214,0.2);
+          border-color: rgba(10,42,74,0.2);
           z-index: 2;
         }
 
@@ -149,7 +149,7 @@ export default function KeyServices() {
           content: '';
           position: absolute; top: 0; left: 0; right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #0A84D6, #4FD1E8);
+          background: linear-gradient(90deg, #0A2A4A, #2C7CB0);
           transform: scaleX(0);
           transform-origin: left;
           transition: transform 0.35s ease;
@@ -170,7 +170,6 @@ export default function KeyServices() {
           background-position: center;
           transform: translateY(-100%);
           transition: transform 0.55s cubic-bezier(0.4, 0, 0.08, 1);
-          /* ── NO filter, NO dark overlay ── */
           filter: none;
         }
         .ks-card:hover .ks-slide-img { transform: translateY(0); }
@@ -179,12 +178,12 @@ export default function KeyServices() {
         .ks-img-arrow {
           position: absolute; bottom: 1.2rem; right: 1.2rem;
           width: 36px; height: 36px; border-radius: 2px;
-          background: #0A84D6;
+          background: #0A2A4A;
           display: flex; align-items: center; justify-content: center;
           z-index: 6; text-decoration: none;
           opacity: 0; transform: translateY(8px);
           transition: opacity 0.28s ease 0.18s, transform 0.28s ease 0.18s;
-          box-shadow: 0 4px 14px rgba(10,132,214,0.55);
+          box-shadow: 0 4px 14px rgba(10,42,74,0.55);
           pointer-events: all;
         }
         .ks-card:hover .ks-img-arrow { opacity: 1; transform: translateY(0); }
@@ -209,7 +208,7 @@ export default function KeyServices() {
           font-family: 'Montserrat', sans-serif;
           font-size: 9.5px; font-weight: 700;
           letter-spacing: 2.5px; text-transform: uppercase;
-          color: rgba(10,132,214,0.35);
+          color: rgba(10,42,74,0.35);
         }
 
         /* icon */
@@ -222,7 +221,7 @@ export default function KeyServices() {
         /* accent bar */
         .ks-bar {
           width: 28px; height: 2px;
-          background: #0A84D6;
+          background: #0A2A4A;
           flex-shrink: 0;
         }
 
@@ -249,7 +248,7 @@ export default function KeyServices() {
           letter-spacing: 0.3px; text-transform: uppercase;
         }
 
-        /* learn more */
+        /* learn more (unused but kept) */
         .ks-more {
           display: inline-flex; align-items: center; gap: 5px;
           font-family: 'Montserrat', sans-serif;
@@ -270,18 +269,18 @@ export default function KeyServices() {
         .ks-cta {
           display: inline-flex; align-items: center; gap: 10px;
           padding: 13px 34px;
-          background: linear-gradient(135deg, #0A84D6, #0AAFCF);
+          background: linear-gradient(135deg, #0A2A4A, #2C7CB0);
           color: #fff;
           font-family: 'Montserrat', sans-serif;
           font-size: 11px; font-weight: 700;
           border-radius: 999px; text-decoration: none;
           letter-spacing: 1px; text-transform: uppercase;
-          box-shadow: 0 6px 24px rgba(10,132,214,0.30);
+          box-shadow: 0 6px 24px rgba(10,42,74,0.30);
           transition: transform 0.2s, box-shadow 0.2s;
         }
         .ks-cta:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 32px rgba(10,132,214,0.40);
+          box-shadow: 0 10px 32px rgba(10,42,74,0.40);
         }
         .ks-cta-ic {
           width: 24px; height: 24px; border-radius: 50%;
@@ -299,15 +298,15 @@ export default function KeyServices() {
 
       <section className="ks-section">
 
-        {/* Blobs */}
+        {/* Blobs - updated to navy tones */}
         <div className="ks-blob" style={{
           top: "-80px", right: "-120px", width: "480px", height: "480px",
-          background: "rgba(10,132,214,0.05)", transform: "rotate(20deg)",
+          background: "rgba(10,42,74,0.05)", transform: "rotate(20deg)",
           borderRadius: "60% 40% 55% 45% / 45% 55% 40% 60%",
         }} />
         <div className="ks-blob" style={{
           bottom: "-60px", left: "-80px", width: "360px", height: "360px",
-          background: "rgba(79,209,232,0.06)", transform: "rotate(-15deg)",
+          background: "rgba(44,124,176,0.06)", transform: "rotate(-15deg)",
           borderRadius: "40% 60% 45% 55% / 55% 45% 60% 40%",
         }} />
 
@@ -354,7 +353,7 @@ export default function KeyServices() {
 
                 <div className="ks-body-icon" style={{
                   background: svc.light,
-                  border: `1px solid rgba(10,132,214,0.13)`,
+                  border: `1px solid rgba(10,42,74,0.13)`,
                 }}>
                   {svc.icon}
                 </div>
@@ -368,19 +367,12 @@ export default function KeyServices() {
                     <span key={t} className="ks-tpill" style={{
                       color: svc.accent,
                       background: svc.light,
-                      border: `1px solid rgba(10,132,214,0.12)`,
+                      border: `1px solid rgba(10,42,74,0.12)`,
                     }}>{t}</span>
                   ))}
                 </div>
 
-                <a href="/service" className="ks-more" style={{ color: svc.accent }}>
-                  Learn more
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                    <path d="M3 11L11 3M11 3H6M11 3V8"
-                      stroke="currentColor" strokeWidth="1.6"
-                      strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
+               
               </div>
 
             </motion.div>

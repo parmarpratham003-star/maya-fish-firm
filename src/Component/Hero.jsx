@@ -2,8 +2,8 @@
   import { useEffect, useRef, useState } from "react";
 
   const slides = [
-    { image: "/ss1.png" },
-    { image: "/s2.png" },
+    { image: "/h3.jpeg" },
+    { image: "/hh1.jpg" },
     { image: "/ss3.png" },
   ];
 

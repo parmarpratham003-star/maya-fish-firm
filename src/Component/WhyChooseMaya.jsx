@@ -100,7 +100,7 @@ export default function WhyChooseMaya() {
         .wcm-left-h2 {
           font-family: 'Montserrat', sans-serif;
           font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-          font-weight: 900;
+          font-weight: 600;
           color: #ffffff;
           line-height: 1.06;
           letter-spacing: -0.03em;
@@ -269,15 +269,14 @@ export default function WhyChooseMaya() {
          <span className="wcm-left-eyebrow">Our Values</span>
 
 <h2 className="wcm-left-h2">
-  Why<br/>Choose<br/>Us?
+  Why   Choose Us?
 </h2>
 
 <p className="wcm-left-sub">
   At MAYA Fish Farm, we focus on delivering healthy, vibrant ornamental fish
   through responsible breeding and expert care.
   <br/><br/>
-  Our commitment to quality, reliability, and customer satisfaction ensures
-  that every fish meets the highest standards for aquariums and retailers.
+  
 </p>
 </motion.div>
         {/* RIGHT */}

@@ -24,7 +24,7 @@ export default function Footer1() {
         }
         .f-banner-bg {
           position: absolute; inset: 0;
-          background-image: url('/image.png');
+          background-image: url('/h1.png');
           background-size: cover;
           background-position: center 30%;
           filter: brightness(0.32) saturate(0.7);
@@ -47,7 +47,7 @@ export default function Footer1() {
         .f-banner-h {
           font-family: 'Montserrat', sans-serif;
           font-size: clamp(2rem, 4.5vw, 3.4rem);
-          font-weight: 700; color: #fff;
+          font-weight: 600; color: #fff;
           line-height: 1.15; letter-spacing: -0.025em;
           margin: 0 0 0.85rem;
         }
