@@ -5,32 +5,52 @@ import { useRef } from "react";
 
 const cards = [
   {
-    num: "1",
-    stat: "Quality Service",
-    tag: "Healthy & Vibrant Fish",
+    tag: "Healthy & Vibrant",
+    title: "Quality Service",
     desc: "We follow responsible fish breeding practices to ensure healthy and vibrant fish varieties.",
-    accent: "#0A84D6",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    ),
+    circleColor: "#071E3D",
   },
   {
-    num: "2",
-    stat: "On-time Delivery",
     tag: "Fresh & On Schedule",
+    title: "On-time Delivery",
     desc: "Reliable supply of ornamental fish to hobbyists and aquarium retailers.",
-    accent: "#0A6FBF",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="1" y="3" width="15" height="13" rx="2"/>
+        <path d="M16 8h4l3 3v5h-7V8z"/>
+        <circle cx="5.5" cy="18.5" r="2.5"/>
+        <circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+    ),
+    circleColor: "#0A84D6",
   },
   {
-    num: "3",
-    stat: "Affordable Pricing",
     tag: "High Standards, Low Cost",
+    title: "Affordable Pricing",
     desc: "Competitive pricing while maintaining high standards of fish health.",
-    accent: "#0E5EA8",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="12" y1="1" x2="12" y2="23"/>
+        <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+      </svg>
+    ),
+    circleColor: "#1D4E89",
   },
   {
-    num: "4",
-    stat: "Customer Support",
     tag: "Always Here to Help",
+    title: "Customer Support",
     desc: "Guidance for aquarium maintenance and fish care.",
-    accent: "#4FD1E8",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+    ),
+    circleColor: "#4FD1E8",
   },
 ];
 
@@ -45,281 +65,182 @@ export default function WhyChooseMaya() {
 
         .wcm-section {
           font-family: 'Montserrat', sans-serif;
-          display: grid;
-          grid-template-columns: 45% 45%;
-          min-height: 620px;
-          overflow: hidden;
-          position: relative;
+          background: #EBF4FB;
+          padding: 80px 60px 90px;
         }
 
-        /* ── LEFT dark blue panel ── */
-        .wcm-left {
-          background: #071E3D;
-          padding: 80px 60px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          position: relative;
-          overflow: hidden;
+        /* ── Heading ── */
+        .wcm-heading {
+          text-align: center;
+          margin-bottom: 60px;
         }
-        .wcm-left::before {
-          content: '';
-          position: absolute;
-          top: -80px; left: -80px;
-          width: 280px; height: 280px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(10,132,214,0.18) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .wcm-left::after {
-          content: '';
-          position: absolute;
-          bottom: -60px; right: -60px;
-          width: 220px; height: 220px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(79,209,232,0.1) 0%, transparent 70%);
-          pointer-events: none;
-        }
-
-        .wcm-left-eyebrow {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 9px; font-weight: 700;
-          letter-spacing: 3px; text-transform: uppercase;
-          color: #4FD1E8;
-          margin: 0 0 22px;
-          display: flex; align-items: center; gap: 8px;
-          position: relative; z-index: 1;
-        }
-        .wcm-left-eyebrow::before {
-          content: '';
-          width: 20px; height: 1.5px;
-          background: #4FD1E8;
-          display: block; flex-shrink: 0;
-        }
-
-        .wcm-left-h2 {
-          font-family: 'Montserrat', sans-serif;
-          font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-          font-weight: 600;
-          color: #ffffff;
-          line-height: 1.06;
-          letter-spacing: -0.03em;
-          margin: 0 0 26px;
-          position: relative; z-index: 1;
-        }
-
-        .wcm-left-sub {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 13px; font-weight: 500;
-          color: rgba(255,255,255,0.45);
-          line-height: 1.8;
-          margin: 0;
-          position: relative; z-index: 1;
-        }
-
-        /* ── RIGHT white panel ── */
-        .wcm-right {
-          background: #ffffff;
-          position: relative;
-          display: flex;
-          align-items: stretch;
-        }
-
-        /* ── Seam circles ── */
-        .wcm-seam {
-          position: absolute;
-          left: -36px;
-          top: 0; bottom: 0;
-          width: 72px;
-          z-index: 10;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .wcm-vline {
-          position: absolute;
-          top: 0; bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 2px;
-          background: linear-gradient(
-            to bottom,
-            transparent 0%,
-            #b8d6f0 8%,
-            #b8d6f0 92%,
-            transparent 100%
-          );
-          z-index: 0;
-        }
-
-        .wcm-circles {
-          position: relative; z-index: 1;
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          height: 100%;
-        }
-
-        .wcm-circ-row {
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .wcm-circle {
-          width: 70px; height: 70px;
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-          position: relative; z-index: 2;
-          cursor: default;
-          box-shadow: 0 0 0 7px #ffffff, 0 6px 22px rgba(10,80,180,0.25);
-          transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
-        }
-        .wcm-circle:hover {
-          transform: scale(1.1);
-          box-shadow: 0 0 0 7px #ffffff, 0 10px 32px rgba(10,80,180,0.42);
-        }
-
-        .wcm-circle-num {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 24px; font-weight: 800;
-          color: #fff; line-height: 1;
-        }
-
-        /* ── Items list ── */
-        .wcm-items {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          padding: 0 60px 0 60px;
-        }
-
-        .wcm-item {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 28px 0;
-          border-bottom: 1px solid #e8f1fa;
-          cursor: default;
-        }
-        .wcm-item:last-child { border-bottom: none; }
-
-        .wcm-tag {
+        .wcm-eyebrow {
           display: inline-flex;
           align-items: center;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 8.5px; font-weight: 700;
-          letter-spacing: 1.5px; text-transform: uppercase;
+          gap: 14px;
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 3.5px;
+          text-transform: uppercase;
           color: #0A84D6;
-          background: #ddeffc;
-          border-radius: 100px;
-          padding: 3px 10px;
-          margin-bottom: 9px;
-          width: fit-content;
-          transition: background 0.25s, color 0.25s;
+          margin-bottom: 20px;
         }
-        .wcm-item:hover .wcm-tag {
+        .wcm-eyebrow::before,
+        .wcm-eyebrow::after {
+          content: '';
+          width: 36px;
+          height: 1.5px;
           background: #0A84D6;
-          color: #fff;
+          display: block;
+        }
+        .wcm-h2 {
+          font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+          font-weight: 800;
+          color: #071E3D;
+          letter-spacing: -0.03em;
+          line-height: 1.15;
+          margin: 0 0 14px;
+        }
+        .wcm-h2 span { color: #0A84D6; }
+        .wcm-sub {
+          font-size: 13.5px;
+          font-weight: 400;
+          color: #8faec8;
+          line-height: 1.8;
+          max-width: 460px;
+          margin: 0 auto;
         }
 
-        .wcm-item-title {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 16px; font-weight: 700;
+        /* ── 2×2 Grid ── */
+        .wcm-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px 80px;
+          max-width: 860px;
+          margin: 0 auto;
+        }
+
+        /* ── Single card ── */
+        .wcm-card {
+          display: flex;
+          align-items: flex-start;
+          gap: 24px;
+          cursor: default;
+        }
+
+        /* Circle */
+        .wcm-circle {
+          width: 84px;
+          height: 84px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                      box-shadow 0.35s;
+        }
+        .wcm-card:hover .wcm-circle {
+          transform: scale(1.08);
+          box-shadow: 0 10px 32px rgba(7,30,61,0.22);
+        }
+
+        /* Text */
+        .wcm-card-body {
+          padding-top: 6px;
+        }
+
+        .wcm-card-tag {
+          display: inline-block;
+          font-size: 8px;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: #0A84D6;
+          background: #ffffff;
+          border: 1px solid #c8e4f7;
+          border-radius: 100px;
+          padding: 3px 10px;
+          margin-bottom: 8px;
+        }
+
+        .wcm-card-title {
+          font-size: 17px;
+          font-weight: 700;
           color: #071E3D;
           letter-spacing: -0.02em;
-          margin: 0 0 8px;
+          margin: 0 0 10px;
           line-height: 1.2;
           transition: color 0.25s;
         }
-        .wcm-item:hover .wcm-item-title { color: #0A84D6; }
+        .wcm-card:hover .wcm-card-title { color: #0A84D6; }
 
-        .wcm-item-desc {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 11.5px; font-weight: 400;
+        .wcm-card-desc {
+          font-size: 12.5px;
+          font-weight: 400;
           color: #8faec8;
           line-height: 1.85;
           margin: 0;
-          max-width: 480px;
+          max-width: 280px;
         }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-          .wcm-section { grid-template-columns: 1fr; min-height: auto; }
-          .wcm-left { padding: 56px 32px 44px; }
-          .wcm-seam { display: none; }
-          .wcm-items { padding: 0 32px; }
-          .wcm-item { padding: 22px 0; }
+        /* ── Responsive ── */
+        @media (max-width: 700px) {
+          .wcm-section { padding: 56px 24px 64px; }
+          .wcm-grid { grid-template-columns: 1fr; gap: 36px; }
+          .wcm-card-desc { max-width: 100%; }
         }
       `}</style>
 
       <section className="wcm-section" ref={sectionRef}>
 
-        {/* LEFT */}
+        {/* Heading */}
         <motion.div
-          className="wcm-left"
-          initial={{ opacity: 0, x: -60 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="wcm-heading"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-         <span className="wcm-left-eyebrow">Our Values</span>
+          <div className="wcm-eyebrow">Our Values</div>
+          <h2 className="wcm-h2">Why choose <span>MAYA</span>?</h2>
+          <p className="wcm-sub">
+            At MAYA Fish Farm, we deliver healthy, vibrant ornamental fish
+            through responsible breeding and dedicated expert care.
+          </p>
+        </motion.div>
 
-<h2 className="wcm-left-h2">
-  Why   Choose Us?
-</h2>
-
-<p className="wcm-left-sub">
-  At MAYA Fish Farm, we focus on delivering healthy, vibrant ornamental fish
-  through responsible breeding and expert care.
-  <br/><br/>
-  
-</p>
-</motion.div>
-        {/* RIGHT */}
-        <div className="wcm-right">
-
-          {/* Seam circles */}
-          <div className="wcm-seam">
-            <div className="wcm-vline" />
-            <div className="wcm-circles">
-              {cards.map((card, i) => (
-                <div className="wcm-circ-row" key={card.num}>
-                  <motion.div
-                    className="wcm-circle"
-                    style={{ background: card.accent }}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.5, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <span className="wcm-circle-num">{card.num}</span>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Text rows */}
-          <div className="wcm-items">
-            {cards.map((card, i) => (
-              <motion.div
-                key={card.stat}
-                className="wcm-item"
-                initial={{ opacity: 0, x: i % 2 === 0 ? 60 : -60 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.25 + i * 0.13, ease: [0.16, 1, 0.3, 1] }}
+        {/* 2×2 Grid */}
+        <div className="wcm-grid">
+          {cards.map((card, i) => (
+            <motion.div
+              key={card.title}
+              className="wcm-card"
+              initial={{ opacity: 0, y: 32 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: 0.6,
+                delay: 0.15 + i * 0.12,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              {/* Coloured circle with inline icon */}
+              <div
+                className="wcm-circle"
+                style={{ background: card.circleColor }}
               >
-                <span className="wcm-tag">{card.tag}</span>
-                <div className="wcm-item-title">{card.stat}</div>
-                <p className="wcm-item-desc">{card.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+                {card.icon}
+              </div>
 
+              {/* Text */}
+              <div className="wcm-card-body">
+                <span className="wcm-card-tag">{card.tag}</span>
+                <div className="wcm-card-title">{card.title}</div>
+                <p className="wcm-card-desc">{card.desc}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
       </section>
     </>
   );

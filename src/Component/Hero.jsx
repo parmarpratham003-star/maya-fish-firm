@@ -57,32 +57,27 @@ export default function Hero() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap');
 
-        /* ─── Keyframes ─── */
-
         @keyframes fillBar {
           from { width: 0%; }
           to   { width: 100%; }
         }
 
-        /* ─── Shell ─── */
         .hv-wrap {
           position: relative;
           width: 100%;
           height: 100vh;
-          min-height: 660px;
+          min-height: 620px;
           overflow: hidden;
           font-family: 'Montserrat', sans-serif;
           background: #020c18;
         }
 
-        /* ─── Slides ─── */
         .hv-slide {
           position: absolute; inset: 0;
           background-size: cover;
           background-position: center;
           z-index: 0;
           opacity: 0;
-          /* Smooth crossfade: opacity transitions over 1.2s on both enter and exit */
           transition: opacity 1.2s ease-in-out;
           will-change: opacity;
         }
@@ -91,7 +86,6 @@ export default function Hero() {
           z-index: 1;
         }
 
-        /* ─── Overlays ─── */
         .hv-overlay {
           position: absolute; inset: 0; z-index: 2;
           background:
@@ -109,7 +103,6 @@ export default function Hero() {
           background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.45) 100%);
         }
 
-        /* ─── Content — static, no animation ─── */
         .hv-content {
           position: absolute; inset: 0; z-index: 10;
           display: flex; flex-direction: column;
@@ -118,7 +111,6 @@ export default function Hero() {
           padding: 76px 2rem 76px;
         }
 
-        /* ─── Eyebrow ─── */
         .hv-eyebrow {
           font-family: 'Montserrat', sans-serif;
           font-size: 11px;
@@ -126,61 +118,58 @@ export default function Hero() {
           letter-spacing: 2px;
           color: rgba(255,255,255,0.72);
           text-transform: uppercase;
-          margin: 0 0 2.2rem;
+          margin: 0 0 1.8rem;
         }
 
-        /* ─── Headline ─── */
+        /* ─── Headline — MEDIUM scale ─── */
         .hv-h1 {
           margin: 0;
-          max-width: 900px;
+          max-width: 840px;
           width: 100%;
         }
 
-        /* INCREASED: line-height 1.5 → 1.65 for more breathing room */
         .hv-line {
           display: block;
-          line-height: 1.65;
-          padding-bottom: 0.05em;
+          line-height: 1.55;
+          padding-bottom: 0.03em;
         }
-        .hv-line + .hv-line { margin-top: 0.35em; }
+        .hv-line + .hv-line { margin-top: 0.28em; }
 
-        /* INCREASED: max font-size 3.6rem → 4.1rem, min 1.8rem → 2rem */
+        /* MEDIUM: clamp(1.75rem, 3.6vw, 3.4rem) — sits between original 4.1rem and last 2.85rem */
         .hv-bold {
           font-family: 'Montserrat', sans-serif;
-          font-weight: 600;
-          font-size: clamp(2rem, 4.2vw, 4.1rem);
+          font-weight: 700;
+          font-size: clamp(1.75rem, 3.6vw, 3.4rem);
           color: #ffffff;
-          letter-spacing: -0.03em;
-          line-height: 1.2;
+          letter-spacing: -0.028em;
+          line-height: 1.18;
           display: inline;
         }
         .hv-thin {
           font-family: 'Montserrat', sans-serif;
           font-weight: 300;
-          font-size: clamp(2rem, 4.2vw, 4.1rem);
-          color: rgba(255,255,255,0.72);
+          font-size: clamp(1.75rem, 3.6vw, 3.4rem);
+          color: rgba(255,255,255,0.70);
           letter-spacing: -0.02em;
-          line-height: 1.2;
-          margin-left: 0.18em;
+          line-height: 1.18;
+          margin-left: 0.17em;
           display: inline;
         }
 
-        /* ─── Sub ─── */
         .hv-sub {
-          margin: 2.4rem auto 0;
-          max-width: 480px;
+          margin: 2rem auto 0;
+          max-width: 470px;
           font-family: 'Montserrat', sans-serif;
-          font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+          font-size: clamp(0.71rem, 0.88vw, 0.81rem);
           font-weight: 400;
-          line-height: 1.9;
-          color: rgba(255,255,255,0.62);
+          line-height: 1.88;
+          color: rgba(255,255,255,0.60);
           letter-spacing: 0.01em;
         }
 
-        /* ─── CTAs ─── */
         .hv-cta-wrap {
-          margin-top: 3rem;
-          display: flex; gap: 14px;
+          margin-top: 2.5rem;
+          display: flex; gap: 13px;
           align-items: center; justify-content: center;
           flex-wrap: wrap;
         }
@@ -235,7 +224,6 @@ export default function Hero() {
           transform: translateY(-2px);
         }
 
-        /* ─── Side arrows ─── */
         .hv-arrow {
           position: absolute; top: 50%; transform: translateY(-50%);
           z-index: 20; width: 44px; height: 44px; border-radius: 50%;
@@ -254,7 +242,6 @@ export default function Hero() {
         .hv-arrow-left  { left: 1.8rem; }
         .hv-arrow-right { right: 1.8rem; }
 
-        /* ─── Progress dots ─── */
         .hv-dots {
           position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
           z-index: 20; display: flex; align-items: center; gap: 9px;
@@ -272,7 +259,6 @@ export default function Hero() {
           animation: fillBar 6s linear forwards;
         }
 
-        /* ─── Slide counter ─── */
         .hv-counter {
           position: absolute; bottom: 2rem; right: 2.2rem;
           z-index: 20;
@@ -292,30 +278,23 @@ export default function Hero() {
           color: rgba(255,255,255,0.28); letter-spacing: 1px;
         }
 
-        /* ─── Responsive ─── */
         @media (max-width: 768px) {
-          .hv-bold, .hv-thin { font-size: clamp(1.5rem, 7vw, 2.4rem); }
-          .hv-sub { font-size: 0.74rem; max-width: 90%; margin-top: 1.2rem; }
-          .hv-eyebrow { font-size: 9px; letter-spacing: 2px; margin-bottom: 0.9rem; }
+          /* MEDIUM mobile: clamp(1.35rem, 6.2vw, 2.1rem) */
+          .hv-bold, .hv-thin { font-size: clamp(1.35rem, 6.2vw, 2.1rem); }
+          .hv-sub { font-size: 0.73rem; max-width: 90%; margin-top: 1.1rem; }
+          .hv-eyebrow { font-size: 9px; letter-spacing: 2px; margin-bottom: 1rem; }
           .hv-arrow-left  { left: 0.6rem; }
           .hv-arrow-right { right: 0.6rem; }
           .hv-arrow { width: 36px; height: 36px; }
           .hv-counter { display: none; }
-          .hv-cta-wrap { margin-top: 1.4rem; gap: 8px; }
+          .hv-cta-wrap { margin-top: 1.5rem; gap: 8px; }
           .hv-content { padding: 60px 1.5rem 60px; }
           .hv-h1 { max-width: 100%; }
+          .hv-line + .hv-line { margin-top: 0.2em; }
         }
       `}</style>
 
       <section className="hv-wrap">
-
-        {/*
-          Slides
-          ──────
-          All slides are always mounted. The active one gets opacity:1 via CSS,
-          inactive ones are opacity:0. The CSS transition on opacity handles the
-          smooth crossfade — no remounting or keyframes needed.
-        */}
         {slides.map((s, i) => (
           <div
             key={`slide-${i}`}
@@ -324,11 +303,9 @@ export default function Hero() {
           />
         ))}
 
-        {/* Overlays */}
         <div className="hv-overlay" />
         <div className="hv-vignette" />
 
-        {/* Side Arrows */}
         <button className="hv-arrow hv-arrow-left"
           onClick={() => goTo((current - 1 + total) % total)} aria-label="Previous">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -342,9 +319,7 @@ export default function Hero() {
           </svg>
         </button>
 
-        {/* Center content — text has NO animation at all */}
         <div className="hv-content">
-
           <p className="hv-eyebrow">{c.eyebrow}</p>
 
           <h1 className="hv-h1">
@@ -379,7 +354,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Progress dots */}
         <div className="hv-dots">
           {slides.map((_, i) => (
             <div key={i}
@@ -388,13 +362,11 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Slide counter */}
         <div className="hv-counter">
           <span className="hv-counter-cur">{String(current + 1).padStart(2, "0")}</span>
           <span className="hv-counter-sep">/</span>
           <span className="hv-counter-tot">{String(total).padStart(2, "0")}</span>
         </div>
-
       </section>
     </>
   );
