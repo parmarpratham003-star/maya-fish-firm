@@ -7,16 +7,24 @@ const services = [
     title: "Ornamental Fish Breeding",
     desc: "Breeding vibrant and healthy ornamental fish varieties such as Goldfish, Angel Fish, Guppies, and Fighter Fish.",
     tags: ["Goldfish", "Angel Fish", "Guppies", "Fighter Fish"],
-    accent: "#0A2A4A",    // navy
-    light: "#EFF3F8",     // light navy-tinted background
+    accent: "#0A2A4A",
+    light: "#EFF3F8",
     num: "01",
     img: "/show-case-img-1.jpg",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <path d="M3 17c2-4 5-6 9-6s7 2 9 6" stroke="#0A2A4A" strokeWidth="1.8" strokeLinecap="round"/>
-        <path d="M6 17c1-2 3-3 6-3s5 1 6 3" stroke="#2C7CB0" strokeWidth="1.5" strokeLinecap="round"/>
-        <circle cx="12" cy="8" r="3" stroke="#0A2A4A" strokeWidth="1.8"/>
-        <path d="M17 8c0-1.5-.7-2.8-2-3.5" stroke="#2C7CB0" strokeWidth="1.4" strokeLinecap="round"/>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        {/* Fish body */}
+        <path d="M2 12c0 0 3-5 8-5c3 0 5.5 1.5 7 4" stroke="#0A2A4A" strokeWidth="1.7" strokeLinecap="round"/>
+        <path d="M2 12c0 0 3 5 8 5c3 0 5.5-1.5 7-4" stroke="#0A2A4A" strokeWidth="1.7" strokeLinecap="round"/>
+        {/* Tail */}
+        <path d="M17 8l4-3v7l-4-3z" stroke="#2C7CB0" strokeWidth="1.5" strokeLinejoin="round" fill="#dbeafe"/>
+        {/* Eye */}
+        <circle cx="8" cy="12" r="1.2" fill="#0A2A4A"/>
+        {/* Fin */}
+        <path d="M11 9c1-1.5 2.5-2 3.5-1.5" stroke="#2C7CB0" strokeWidth="1.3" strokeLinecap="round"/>
+        {/* Bubbles */}
+        <circle cx="19" cy="5" r="0.8" stroke="#2C7CB0" strokeWidth="1.2"/>
+        <circle cx="21" cy="3" r="0.5" stroke="#2C7CB0" strokeWidth="1"/>
       </svg>
     ),
   },
@@ -29,10 +37,20 @@ const services = [
     num: "02",
     img: "/s2.png",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="13" width="18" height="8" rx="2" stroke="#0A2A4A" strokeWidth="1.8"/>
-        <path d="M7 13V9a5 5 0 0110 0v4" stroke="#2C7CB0" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M8 17h2M12 17h4" stroke="#0A2A4A" strokeWidth="1.4" strokeLinecap="round"/>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        {/* Tank glass */}
+        <rect x="3" y="8" width="18" height="13" rx="2" stroke="#0A2A4A" strokeWidth="1.7" fill="#dbeafe" fillOpacity="0.4"/>
+        {/* Water line */}
+        <path d="M3 13c2-1 4 1 6 0s4-1 6 0s2 1 3 0" stroke="#2C7CB0" strokeWidth="1.3" strokeLinecap="round"/>
+        {/* Lid */}
+        <rect x="5" y="5" width="14" height="3" rx="1" stroke="#0A2A4A" strokeWidth="1.5" fill="#dbeafe" fillOpacity="0.6"/>
+        {/* Small fish inside */}
+        <path d="M8 17c1.5-1 3-1 4 0" stroke="#0A2A4A" strokeWidth="1.3" strokeLinecap="round"/>
+        <path d="M8 17c1.5 1 3 1 4 0" stroke="#0A2A4A" strokeWidth="1.3" strokeLinecap="round"/>
+        <circle cx="8.5" cy="17" r="0.7" fill="#0A2A4A"/>
+        {/* Bubble */}
+        <circle cx="15" cy="15" r="0.8" stroke="#2C7CB0" strokeWidth="1.1"/>
+        <circle cx="13" cy="13" r="0.5" stroke="#2C7CB0" strokeWidth="1"/>
       </svg>
     ),
   },
@@ -45,10 +63,18 @@ const services = [
     num: "03",
     img: "/silde3.png",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <path d="M12 3C8 3 5 6.5 5 10c0 2.5 1.3 4.7 3.3 6H12h3.7C17.7 14.7 19 12.5 19 10c0-3.5-3-7-7-7z" stroke="#0A2A4A" strokeWidth="1.8"/>
-        <path d="M9 16v3h6v-3" stroke="#2C7CB0" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M10 10c0-1.1.9-2 2-2s2 .9 2 2" stroke="#2C7CB0" strokeWidth="1.4" strokeLinecap="round"/>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        {/* Bowl / dish */}
+        <path d="M5 12a7 7 0 0014 0" stroke="#0A2A4A" strokeWidth="1.7" strokeLinecap="round"/>
+        <line x1="3" y1="12" x2="21" y2="12" stroke="#0A2A4A" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Water drops / food pellets */}
+        <circle cx="9" cy="8" r="1.2" fill="#2C7CB0" opacity="0.7"/>
+        <circle cx="12" cy="6.5" r="1.2" fill="#2C7CB0" opacity="0.7"/>
+        <circle cx="15" cy="8" r="1.2" fill="#2C7CB0" opacity="0.7"/>
+        {/* Spoon handle */}
+        <path d="M16 4l3 3" stroke="#0A2A4A" strokeWidth="1.4" strokeLinecap="round"/>
+        {/* Heart shape - care symbol */}
+        <path d="M10.5 16.5c0 0 1.5 1.5 1.5 1.5s1.5-1.5 1.5-1.5a1.06 1.06 0 00-1.5-1.5 1.06 1.06 0 00-1.5 1.5z" fill="#2C7CB0" opacity="0.8"/>
       </svg>
     ),
   },
@@ -61,9 +87,23 @@ const services = [
     num: "04",
     img: "/show-case-img-1.jpg",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2l1.8 5.5H20l-4.6 3.4 1.8 5.5L12 13l-5.2 3.4 1.8-5.5L4 7.5h6.2z" stroke="#0A2A4A" strokeWidth="1.7"/>
-        <circle cx="12" cy="13" r="2.2" stroke="#2C7CB0" strokeWidth="1.4"/>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        {/* Pond / water surface */}
+        <ellipse cx="12" cy="18" rx="9" ry="3" stroke="#0A2A4A" strokeWidth="1.6" fill="#dbeafe" fillOpacity="0.4"/>
+        {/* Plant stem left */}
+        <path d="M7 18V12" stroke="#0A2A4A" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Leaf left */}
+        <path d="M7 14c-2-1-3-3-2-5c1 2 3 3 2 5z" fill="#2C7CB0" opacity="0.75" stroke="#2C7CB0" strokeWidth="0.8"/>
+        {/* Plant stem right */}
+        <path d="M17 18V11" stroke="#0A2A4A" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Leaf right */}
+        <path d="M17 13c2-1 3-3 2-5c-1 2-3 3-2 5z" fill="#2C7CB0" opacity="0.75" stroke="#2C7CB0" strokeWidth="0.8"/>
+        {/* Center plant */}
+        <path d="M12 18V9" stroke="#0A2A4A" strokeWidth="1.6" strokeLinecap="round"/>
+        <path d="M12 11c-1.5-1.5-1.5-4 0-5c1.5 1.5 1.5 4 0 5z" fill="#2C7CB0" stroke="#2C7CB0" strokeWidth="0.8"/>
+        {/* Small fish */}
+        <path d="M9 17c1-0.5 2-0.5 3 0" stroke="#0A2A4A" strokeWidth="1.2" strokeLinecap="round"/>
+        <path d="M9 17c1 0.5 2 0.5 3 0" stroke="#0A2A4A" strokeWidth="1.2" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -157,7 +197,7 @@ export default function KeyServices() {
         }
         .ks-card:hover::before { transform: scaleX(1); }
 
-        /* ── Full-card image overlay (slides from top) — NO dark filter ── */
+        /* ── Full-card image overlay ── */
         .ks-img-area {
           position: absolute;
           inset: 0;
@@ -170,11 +210,9 @@ export default function KeyServices() {
           background-position: center;
           transform: translateY(-100%);
           transition: transform 0.55s cubic-bezier(0.4, 0, 0.08, 1);
-          filter: none;
         }
         .ks-card:hover .ks-slide-img { transform: translateY(0); }
 
-        /* Arrow button — appears on hover */
         .ks-img-arrow {
           position: absolute; bottom: 1.2rem; right: 1.2rem;
           width: 36px; height: 36px; border-radius: 2px;
@@ -198,12 +236,8 @@ export default function KeyServices() {
           background: #fff;
           transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .ks-card:hover .ks-body {
-          opacity: 0;
-          visibility: hidden;
-        }
+        .ks-card:hover .ks-body { opacity: 0; visibility: hidden; }
 
-        /* num */
         .ks-num {
           font-family: 'Montserrat', sans-serif;
           font-size: 9.5px; font-weight: 700;
@@ -211,19 +245,13 @@ export default function KeyServices() {
           color: rgba(10,42,74,0.35);
         }
 
-        /* icon */
         .ks-body-icon {
           width: 52px; height: 52px;
           display: flex; align-items: center; justify-content: center;
           border-radius: 10px;
         }
 
-        /* accent bar */
-        .ks-bar {
-          width: 28px; height: 2px;
-          background: #0A2A4A;
-          flex-shrink: 0;
-        }
+        .ks-bar { width: 28px; height: 2px; background: #0A2A4A; flex-shrink: 0; }
 
         .ks-title {
           font-family: 'Montserrat', sans-serif;
@@ -235,11 +263,9 @@ export default function KeyServices() {
         .ks-desc {
           font-family: 'Montserrat', sans-serif;
           font-size: 12px; font-weight: 400;
-          color: #6a88a0; line-height: 1.8;
-          margin: 0; flex: 1;
+          color: #6a88a0; line-height: 1.8; margin: 0; flex: 1;
         }
 
-        /* tags */
         .ks-tags { display: flex; flex-wrap: wrap; gap: 4px; }
         .ks-tpill {
           font-family: 'Montserrat', sans-serif;
@@ -248,24 +274,8 @@ export default function KeyServices() {
           letter-spacing: 0.3px; text-transform: uppercase;
         }
 
-        /* learn more (unused but kept) */
-        .ks-more {
-          display: inline-flex; align-items: center; gap: 5px;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 10.5px; font-weight: 700;
-          text-decoration: none; margin-top: 0.2rem;
-          width: fit-content; letter-spacing: 0.8px;
-          text-transform: uppercase;
-          border-bottom: 1.5px solid currentColor;
-          padding-bottom: 1px;
-          transition: opacity 0.2s;
-        }
-        .ks-more:hover { opacity: 0.75; }
-
         /* ── CTA ── */
-        .ks-cta-wrap {
-          display: flex; justify-content: center; margin-top: 3.2rem;
-        }
+        .ks-cta-wrap { display: flex; justify-content: center; margin-top: 3.2rem; }
         .ks-cta {
           display: inline-flex; align-items: center; gap: 10px;
           padding: 13px 34px;
@@ -278,27 +288,19 @@ export default function KeyServices() {
           box-shadow: 0 6px 24px rgba(10,42,74,0.30);
           transition: transform 0.2s, box-shadow 0.2s;
         }
-        .ks-cta:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 32px rgba(10,42,74,0.40);
-        }
+        .ks-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(10,42,74,0.40); }
         .ks-cta-ic {
           width: 24px; height: 24px; border-radius: 50%;
           background: rgba(255,255,255,0.22);
           display: flex; align-items: center; justify-content: center;
         }
 
-        @media (max-width: 1024px) {
-          .ks-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 560px) {
-          .ks-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1024px) { .ks-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 560px)  { .ks-grid { grid-template-columns: 1fr; } }
       `}</style>
 
       <section className="ks-section">
 
-        {/* Blobs - updated to navy tones */}
         <div className="ks-blob" style={{
           top: "-80px", right: "-120px", width: "480px", height: "480px",
           background: "rgba(10,42,74,0.05)", transform: "rotate(20deg)",
@@ -335,19 +337,15 @@ export default function KeyServices() {
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: i * 0.09, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Image — slides down from top on hover, fully clear */}
               <div className="ks-img-area">
                 <div className="ks-slide-img" style={{ backgroundImage: `url('${svc.img}')` }} />
                 <a href="/service" className="ks-img-arrow" aria-label="View service">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <path d="M7 17L17 7M17 7H7M17 7v10"
-                      stroke="#fff" strokeWidth="2.2"
-                      strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7 17L17 7M17 7H7M17 7v10" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </a>
               </div>
 
-              {/* Text body */}
               <div className="ks-body">
                 <span className="ks-num">{svc.num}</span>
 
@@ -371,10 +369,7 @@ export default function KeyServices() {
                     }}>{t}</span>
                   ))}
                 </div>
-
-               
               </div>
-
             </motion.div>
           ))}
         </div>
@@ -391,9 +386,7 @@ export default function KeyServices() {
             View All Services
             <span className="ks-cta-ic">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
-                <path d="M7 17L17 7M17 7H7M17 7v10"
-                  stroke="#fff" strokeWidth="2.2"
-                  strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </span>
           </a>

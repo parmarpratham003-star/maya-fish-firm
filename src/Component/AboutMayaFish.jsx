@@ -587,29 +587,8 @@ export default function MayaFishFarm() {
           </div>
         </section>
 
-        {/* ══════════════ WAVE + STATS ══════════════ */}
-        <div ref={statsRef} className={`mf-underwater${statsVisible ? " mf-in" : ""}`}>
-          <div className="mf-wave-svg-wrap">
-            <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="1440" height="72" fill="#ffffff"/>
-              <path d="M0,72 L0,34 C90,14 180,48 270,32 C360,16 450,46 540,30 C630,14 720,44 810,28 C900,12 990,42 1080,26 C1170,10 1260,40 1350,28 C1395,22 1420,34 1440,30 L1440,72 Z" fill="#1B3A6B"/>
-              <path d="M0,72 L0,46 C120,32 240,56 360,42 C480,28 600,52 720,40 C840,28 960,50 1080,38 C1200,26 1320,48 1440,38 L1440,72 Z" fill="rgba(27,58,107,0.6)"/>
-              <path d="M0,72 L0,58 C180,48 360,64 540,54 C720,44 900,62 1080,52 C1260,42 1380,58 1440,52 L1440,72 Z" fill="rgba(27,58,107,0.3)"/>
-            </svg>
-          </div>
-
-          <div className="mf-stats-band">
-            <BubbleLayer />
-            <div className="mf-stats-grid">
-              {STATS.map((s) => (
-                <div className="mf-stat" key={s.label}>
-                  <div className="mf-stat-num"><Counter target={s.target} suffix={s.suffix} /></div>
-                  <div className="mf-stat-label">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        
+       
 
       </div>
     </>
