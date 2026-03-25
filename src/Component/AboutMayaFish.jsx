@@ -137,57 +137,56 @@ const STATS = [
 ];
 
 /* ─────────────────────────────────────────
-   NEW FRAME — Minimal double border + soft glow hover
+   OFFSET FRAME
+   ─ sharp edges (border-radius: 0)
+   ─ two thin navy lines, the back one offset
+     bottom-right so they read as a layered
+     editorial frame — simple, premium, modern
 ───────────────────────────────────────── */
-function ImageFrame({ children }) {
+function OffsetFrame({ children }) {
   return (
-    <div
-      style={{
-        position: "relative",
-        display: "inline-block",
-        width: "100%",
-        borderRadius: "24px",
-        padding: "8px",
-        background: "transparent",
-        transition: "all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)",
-      }}
-      className="mf-frame-outer"
-    >
-      <div
-        style={{
-          position: "relative",
-          borderRadius: "20px",
-          background: "#fff",
-          padding: "4px",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.02), 0 8px 24px rgba(27,58,107,0.08)",
-          transition: "all 0.3s ease",
-        }}
-        className="mf-frame-mid"
-      >
-        <div
-          style={{
-            position: "relative",
-            borderRadius: "16px",
-            border: "1px solid rgba(27,58,107,0.15)",
-            background: "#fff",
-            overflow: "hidden",
-          }}
-          className="mf-frame-inner"
-        >
-          {children}
-        </div>
+    <div className="of-root">
+      {/* back accent border — offset bottom-right */}
+      <div className="of-back" />
+      {/* front border that sits flush around the image */}
+      <div className="of-front">
+        {children}
       </div>
-
-      <style jsx>{`
-        .mf-frame-outer:hover {
-          transform: translateY(-4px);
+      <style>{`
+        .of-root {
+          position: relative;
+          /* space so the offset back border is never clipped */
+          padding-bottom: 14px;
+          padding-right: 14px;
+          display: inline-block;
+          width: 100%;
         }
-        .mf-frame-outer:hover .mf-frame-mid {
-          box-shadow: 0 16px 32px -12px rgba(27,58,107,0.25);
+        /* ── back layer: offset, lighter navy ── */
+        .of-back {
+          position: absolute;
+          inset: 0;
+          /* shift it down-right */
+          transform: translate(14px, 14px);
+          border: 1.5px solid rgba(27, 58, 107, 0.30);
+          border-radius: 0;
+          pointer-events: none;
+          z-index: 0;
         }
-        .mf-frame-outer:hover .mf-frame-inner {
-          border-color: #1B3A6B;
-          box-shadow: 0 0 0 2px rgba(14,165,201,0.2);
+        /* ── front layer: image wrapper ── */
+        .of-front {
+          position: relative;
+          z-index: 1;
+          border: 1.5px solid rgba(27, 58, 107, 0.70);
+          border-radius: 0;
+          overflow: hidden;
+          /* very subtle shadow — depth without weight */
+          box-shadow: 0 4px 24px rgba(27, 58, 107, 0.10);
+          transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+          background: #fff;
+        }
+        .of-front:hover {
+          transform: translate(-2px, -2px);
+          box-shadow: 0 12px 40px rgba(27, 58, 107, 0.18);
         }
       `}</style>
     </div>
@@ -202,8 +201,109 @@ function AquariumIllustration() {
     <img
       src="s2.png"
       alt="Beautiful colorful aquarium with tropical fish"
-      style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", display:"block", borderRadius:"16px" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        objectPosition: "center",
+        display: "block",
+        borderRadius: 0,        /* sharp edges */
+      }}
     />
+  );
+}
+
+/* ─────────────────────────────────────────
+   FLOATING WHATSAPP BUTTON
+───────────────────────────────────────── */
+function FloatingWhatsApp({ number = "919876543210", message = "Hello! I'd like to know more about MAYA Fish Farm." }) {
+  const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  return (
+    <>
+      <style>{`
+        @keyframes wpFloat {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-8px); }
+        }
+        @keyframes wpPulse {
+          0%   { transform: scale(1); opacity: 0.55; }
+          70%  { transform: scale(1.6);  opacity: 0; }
+          100% { transform: scale(1.6);  opacity: 0; }
+        }
+        .wp-fab {
+          position: fixed;
+          left: 24px;
+          bottom: 36px;
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          text-decoration: none;
+        }
+        .wp-pulse-ring {
+          position: absolute;
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;
+          background: #25D366;
+          animation: wpPulse 2.4s ease-out infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+        .wp-circle {
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;
+          background: #25D366;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+          animation: wpFloat 3s ease-in-out infinite;
+          transition: background 0.22s, box-shadow 0.22s, transform 0.22s;
+          flex-shrink: 0;
+          position: relative;
+          z-index: 1;
+        }
+        .wp-fab:hover .wp-circle {
+          background: #1ebe5d;
+          box-shadow: 0 8px 28px rgba(37,211,102,0.62);
+          transform: scale(1.08) translateY(-2px);
+        }
+        .wp-label {
+          background: #fff;
+          color: #1a1a1a;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.4px;
+          padding: 6px 12px;
+          border-radius: 6px;
+          box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+          white-space: nowrap;
+          opacity: 0;
+          transform: translateX(-6px);
+          transition: opacity 0.22s, transform 0.22s;
+          pointer-events: none;
+        }
+        .wp-fab:hover .wp-label {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      `}</style>
+
+      <a href={href} target="_blank" rel="noopener noreferrer" className="wp-fab" aria-label="Chat on WhatsApp">
+        <div className="wp-pulse-ring" />
+        <div className="wp-circle">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd"
+              d="M16 3C9.373 3 4 8.373 4 15c0 2.385.68 4.61 1.86 6.5L4 29l7.74-1.83A11.94 11.94 0 0016 28c6.627 0 12-5.373 12-12S22.627 3 16 3zm-4.21 6.77c.2 0 .42.002.6.01.21.01.49.02.76.64.31.7 1 2.45 1.09 2.63.09.18.15.39.03.63-.12.24-.18.39-.36.6-.18.21-.38.47-.54.63-.18.18-.37.38-.16.74.21.36.94 1.55 2.02 2.51 1.39 1.24 2.56 1.62 2.92 1.8.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.81-.18.33.12 2.1.99 2.46 1.17.36.18.6.27.69.42.09.15.09.87-.21 1.71-.3.84-1.74 1.65-2.37 1.71-.63.06-1.23.09-4.11-1.17-3.45-1.5-5.65-5.01-5.82-5.25-.17-.24-1.38-1.83-1.38-3.5 0-1.67.87-2.49 1.18-2.83.31-.34.67-.42.9-.42z"
+              fill="#ffffff"/>
+          </svg>
+        </div>
+        <span className="wp-label">Chat with us</span>
+      </a>
+    </>
   );
 }
 
@@ -238,50 +338,45 @@ export default function MayaFishFarm() {
           overflow: hidden;
         }
 
+        /* ══════════════════════════════════════════
+           HERO / ABOUT GRID
+           ─ align-items: stretch so both columns
+             share the same height; the frame sits
+             top-aligned inside its column.
+        ══════════════════════════════════════════ */
         .mf-hero {
           display: grid;
           grid-template-columns: 0.9fr 1fr;
-          column-gap: 56px;
-          align-items: center;
-          padding: 62px 68px 74px 62px;
+          column-gap: 72px;
+          align-items: start;       /* top-align both columns */
+          padding: 72px 72px 80px 64px;
           background: #fff;
         }
 
-        .mf-left { position: relative; }
+        /* ── LEFT COLUMN ── */
+        .mf-left {
+          position: relative;
+          /* offset-frame needs bottom + right room */
+          padding-bottom: 0;
+        }
         .mf-left.mf-in { animation: mfSlideFromLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
 
-        /* extra padding so the frame has breathing space */
-        .mf-gold-frame-wrap {
-          position: relative;
-          padding: 20px;
-        }
-
-        .mf-img-inner {
-          position: relative;
-          z-index: 2;
-          border-radius: 12px;
-          overflow: hidden;
-          transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), box-shadow 0.55s ease;
-        }
-        .mf-img-inner:hover {
-          transform: scale(1.015);
-          box-shadow: 0 28px 72px rgba(27,58,107,0.28);
-        }
-
+        /* the image itself: fixed aspect so it never collapses */
         .mf-aquarium-img {
           width: 100%;
-          aspect-ratio: 4 / 3.15;
-          border-radius: 12px;
-          overflow: hidden;
+          aspect-ratio: 4 / 3.2;
           display: block;
-          position: relative;
-          z-index: 1;
+          overflow: hidden;
         }
         .mf-left.mf-in .mf-aquarium-img {
           animation: mfImageReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s both;
         }
 
-        .mf-right { padding-left: 4px; }
+        /* ── RIGHT COLUMN ── */
+        .mf-right {
+          /* vertically align the eyebrow with the top of the image frame */
+          padding-top: 6px;
+        }
         .mf-right.mf-in { animation: mfSlideFromRight 0.9s cubic-bezier(0.16,1,0.3,1) 0.12s both; }
 
         .mf-eyebrow {
@@ -355,6 +450,9 @@ export default function MayaFishFarm() {
         .mf-btn-icon { width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .mf-btn:hover .mf-btn-icon { background:rgba(255,255,255,0.32); transform:rotate(45deg); }
 
+        /* ══════════════════════════════════════════
+           WAVE + STATS
+        ══════════════════════════════════════════ */
         .mf-underwater { position:relative; overflow:hidden; }
         .mf-wave-svg-wrap { background:#ffffff; line-height:0; margin-bottom:-2px; }
         .mf-wave-svg-wrap svg { display:block; width:100%; }
@@ -391,9 +489,16 @@ export default function MayaFishFarm() {
         .mf-underwater.mf-in .mf-stat:nth-child(3) .mf-stat-label { animation:mfStatLabel 0.55s ease 0.62s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(4) .mf-stat-label { animation:mfStatLabel 0.55s ease 0.76s both; }
 
+        /* ══════════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════════ */
         @media (max-width: 880px) {
-          .mf-hero { grid-template-columns:1fr; padding:38px 26px 52px; gap:42px; }
-          .mf-right { padding-left:0; }
+          .mf-hero {
+            grid-template-columns: 1fr;
+            padding: 44px 28px 56px;
+            gap: 52px;         /* generous gap between stacked image & text */
+          }
+          .mf-right { padding-top: 0; }
           .mf-body-cols { grid-template-columns:1fr; gap:16px; }
           .mf-left.mf-in  { animation:mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
           .mf-right.mf-in { animation:mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
@@ -411,23 +516,23 @@ export default function MayaFishFarm() {
         }
       `}</style>
 
+      <FloatingWhatsApp />
+
       <div className="mf-root">
 
         {/* ══════════════ ABOUT SECTION ══════════════ */}
         <section className="mf-hero">
 
+          {/* LEFT — image inside offset frame */}
           <div ref={imgRef} className={`mf-left${imgVisible ? " mf-in" : ""}`}>
-            <div className="mf-gold-frame-wrap">
-              <ImageFrame>
-                <div className="mf-img-inner">
-                  <div className="mf-aquarium-img">
-                    <AquariumIllustration />
-                  </div>
-                </div>
-              </ImageFrame>
-            </div>
+            <OffsetFrame>
+              <div className="mf-aquarium-img">
+                <AquariumIllustration />
+              </div>
+            </OffsetFrame>
           </div>
 
+          {/* RIGHT — text content */}
           <div ref={textRef} className={`mf-right${textVisible ? " mf-in" : ""}`}>
 
             <p className="mf-eyebrow">About Us</p>
@@ -487,6 +592,77 @@ export default function MayaFishFarm() {
         </div>
 
       </div>
+
+      {/* ══════════════ FLOATING WHATSAPP BUTTON (left) ══════════════ */}
+      <a
+        href="https://wa.me/919876543210"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mf-wp-float"
+        aria-label="Chat on WhatsApp"
+      >
+        {/* Official WP icon paths */}
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 3C8.82 3 3 8.82 3 16c0 2.31.62 4.48 1.7 6.36L3 29l6.82-1.68A13 13 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3z" fill="#fff"/>
+          <path d="M16 5.2A10.8 10.8 0 0126.8 16 10.8 10.8 0 0116 26.8a10.75 10.75 0 01-5.44-1.47l-.38-.23-4.05 1 1.02-3.94-.25-.4A10.75 10.75 0 015.2 16 10.8 10.8 0 0116 5.2zm-2.88 6.04c-.2-.44-.4-.45-.58-.46l-.5-.01c-.17 0-.46.06-.7.32-.24.25-.93.9-.93 2.2s.95 2.55 1.08 2.73c.13.17 1.84 2.94 4.54 4 2.22.88 2.67.7 3.15.66.48-.04 1.55-.63 1.77-1.25.22-.61.22-1.14.15-1.25-.07-.1-.24-.17-.5-.3-.26-.13-1.55-.77-1.79-.85-.24-.09-.42-.13-.6.13-.17.26-.68.85-.83 1.02-.15.17-.3.2-.56.07-.26-.14-1.1-.41-2.1-1.3-.78-.7-1.3-1.56-1.45-1.82-.15-.27-.02-.41.11-.54.12-.12.26-.3.4-.46.13-.16.17-.27.26-.45.09-.17.04-.33-.02-.46-.06-.12-.57-1.42-.8-1.94z" fill="#25D366"/>
+        </svg>
+        {/* pulse ring */}
+        <span className="mf-wp-ping" />
+      </a>
+
+      <style>{`
+        /* ── circle, fixed to bottom-LEFT ── */
+        .mf-wp-float {
+          position: fixed;
+          bottom: 28px;
+          left: 28px;           /* LEFT side */
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;   /* perfect circle */
+          background: #25D366;
+          text-decoration: none;
+          box-shadow: 0 4px 18px rgba(37,211,102,0.50);
+          overflow: visible;
+          transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
+                      box-shadow 0.3s ease,
+                      background 0.2s ease;
+        }
+        .mf-wp-float:hover {
+          transform: translateY(-4px) scale(1.08);
+          background: #1ebe5d;
+          box-shadow: 0 10px 30px rgba(37,211,102,0.60);
+        }
+        .mf-wp-float:active { transform: scale(0.94); }
+
+        /* pulse ring */
+        .mf-wp-ping {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          background: rgba(37,211,102,0.40);
+          z-index: -1;
+          animation: wpPing 2.6s cubic-bezier(0,0,0.2,1) infinite;
+        }
+        @keyframes wpPing {
+          0%   { transform: scale(1);    opacity: 0.75; }
+          70%  { transform: scale(1.55); opacity: 0;    }
+          100% { transform: scale(1.55); opacity: 0;    }
+        }
+
+        @media (max-width: 480px) {
+          .mf-wp-float {
+            width: 48px;
+            height: 48px;
+            bottom: 20px;
+            left: 20px;
+          }
+        }
+      `}</style>
+
     </>
   );
 }
