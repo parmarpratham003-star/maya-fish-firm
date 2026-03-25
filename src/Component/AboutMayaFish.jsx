@@ -138,55 +138,52 @@ const STATS = [
 
 /* ─────────────────────────────────────────
    OFFSET FRAME
-   ─ sharp edges (border-radius: 0)
-   ─ two thin navy lines, the back one offset
-     bottom-right so they read as a layered
-     editorial frame — simple, premium, modern
+   — soft shadow added, sharp edges retained
 ───────────────────────────────────────── */
 function OffsetFrame({ children }) {
   return (
     <div className="of-root">
-      {/* back accent border — offset bottom-right */}
       <div className="of-back" />
-      {/* front border that sits flush around the image */}
       <div className="of-front">
         {children}
       </div>
       <style>{`
         .of-root {
           position: relative;
-          /* space so the offset back border is never clipped */
           padding-bottom: 14px;
           padding-right: 14px;
           display: inline-block;
           width: 100%;
         }
-        /* ── back layer: offset, lighter navy ── */
         .of-back {
           position: absolute;
           inset: 0;
-          /* shift it down-right */
           transform: translate(14px, 14px);
-          border: 1.5px solid rgba(27, 58, 107, 0.30);
+          border: 1.5px solid rgba(27, 58, 107, 0.25);
           border-radius: 0;
           pointer-events: none;
           z-index: 0;
         }
-        /* ── front layer: image wrapper ── */
         .of-front {
           position: relative;
           z-index: 1;
-          border: 1.5px solid rgba(27, 58, 107, 0.70);
+          border: 1.5px solid rgba(27, 58, 107, 0.65);
           border-radius: 0;
           overflow: hidden;
-          /* very subtle shadow — depth without weight */
-          box-shadow: 0 4px 24px rgba(27, 58, 107, 0.10);
+          /* FIX: soft, layered shadow for depth */
+          box-shadow:
+            0 2px 8px rgba(27, 58, 107, 0.08),
+            0 8px 24px rgba(27, 58, 107, 0.12),
+            0 20px 48px rgba(27, 58, 107, 0.10);
           transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
           background: #fff;
         }
         .of-front:hover {
           transform: translate(-2px, -2px);
-          box-shadow: 0 12px 40px rgba(27, 58, 107, 0.18);
+          box-shadow:
+            0 4px 12px rgba(27, 58, 107, 0.10),
+            0 16px 40px rgba(27, 58, 107, 0.18),
+            0 32px 64px rgba(27, 58, 107, 0.12);
         }
       `}</style>
     </div>
@@ -207,50 +204,39 @@ function AquariumIllustration() {
         objectFit: "cover",
         objectPosition: "center",
         display: "block",
-        borderRadius: 0,        /* sharp edges */
+        borderRadius: 0,
+        /* ensure it stretches inside the flex .mf-aquarium-img */
+        minHeight: 0,
       }}
     />
   );
 }
 
 /* ─────────────────────────────────────────
-   FLOATING WHATSAPP BUTTON
+   FLOATING WHATSAPP BUTTON  (single, bottom-left)
 ───────────────────────────────────────── */
-function FloatingWhatsApp({ number = "919876543210", message = "Hello! I'd like to know more about MAYA Fish Farm." }) {
+function FloatingWhatsApp({
+  number = "919876543210",
+  message = "Hello! I'd like to know more about MAYA Fish Farm.",
+}) {
   const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
   return (
     <>
       <style>{`
-        @keyframes wpFloat {
-          0%, 100% { transform: translateY(0px); }
-          50%       { transform: translateY(-8px); }
+        @keyframes wpPing {
+          0%   { transform: scale(1);    opacity: 0.70; }
+          70%  { transform: scale(1.55); opacity: 0;    }
+          100% { transform: scale(1.55); opacity: 0;    }
         }
-        @keyframes wpPulse {
-          0%   { transform: scale(1); opacity: 0.55; }
-          70%  { transform: scale(1.6);  opacity: 0; }
-          100% { transform: scale(1.6);  opacity: 0; }
+        @keyframes wpFloat {
+          0%, 100% { transform: translateY(0px);  }
+          50%       { transform: translateY(-7px); }
         }
         .wp-fab {
           position: fixed;
-          left: 24px;
-          bottom: 36px;
+          bottom: 28px;
+          left: 28px;
           z-index: 9999;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          text-decoration: none;
-        }
-        .wp-pulse-ring {
-          position: absolute;
-          width: 54px;
-          height: 54px;
-          border-radius: 50%;
-          background: #25D366;
-          animation: wpPulse 2.4s ease-out infinite;
-          pointer-events: none;
-          z-index: 0;
-        }
-        .wp-circle {
           width: 54px;
           height: 54px;
           border-radius: 50%;
@@ -258,50 +244,38 @@ function FloatingWhatsApp({ number = "919876543210", message = "Hello! I'd like 
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 18px rgba(37,211,102,0.45);
-          animation: wpFloat 3s ease-in-out infinite;
+          text-decoration: none;
+          box-shadow: 0 4px 18px rgba(37,211,102,0.50);
+          overflow: visible;
+          animation: wpFloat 3.2s ease-in-out infinite;
           transition: background 0.22s, box-shadow 0.22s, transform 0.22s;
-          flex-shrink: 0;
-          position: relative;
-          z-index: 1;
         }
-        .wp-fab:hover .wp-circle {
+        .wp-fab:hover {
           background: #1ebe5d;
-          box-shadow: 0 8px 28px rgba(37,211,102,0.62);
-          transform: scale(1.08) translateY(-2px);
+          box-shadow: 0 10px 30px rgba(37,211,102,0.62);
+          transform: scale(1.08) translateY(-3px);
+          animation: none;
         }
-        .wp-label {
-          background: #fff;
-          color: #1a1a1a;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.4px;
-          padding: 6px 12px;
-          border-radius: 6px;
-          box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-          white-space: nowrap;
-          opacity: 0;
-          transform: translateX(-6px);
-          transition: opacity 0.22s, transform 0.22s;
-          pointer-events: none;
+        .wp-fab:active { transform: scale(0.94); }
+        .wp-ping {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          background: rgba(37,211,102,0.40);
+          z-index: -1;
+          animation: wpPing 2.6s cubic-bezier(0,0,0.2,1) infinite;
         }
-        .wp-fab:hover .wp-label {
-          opacity: 1;
-          transform: translateX(0);
+        @media (max-width: 480px) {
+          .wp-fab { width: 48px; height: 48px; bottom: 20px; left: 20px; }
         }
       `}</style>
 
       <a href={href} target="_blank" rel="noopener noreferrer" className="wp-fab" aria-label="Chat on WhatsApp">
-        <div className="wp-pulse-ring" />
-        <div className="wp-circle">
-          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fillRule="evenodd" clipRule="evenodd"
-              d="M16 3C9.373 3 4 8.373 4 15c0 2.385.68 4.61 1.86 6.5L4 29l7.74-1.83A11.94 11.94 0 0016 28c6.627 0 12-5.373 12-12S22.627 3 16 3zm-4.21 6.77c.2 0 .42.002.6.01.21.01.49.02.76.64.31.7 1 2.45 1.09 2.63.09.18.15.39.03.63-.12.24-.18.39-.36.6-.18.21-.38.47-.54.63-.18.18-.37.38-.16.74.21.36.94 1.55 2.02 2.51 1.39 1.24 2.56 1.62 2.92 1.8.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.81-.18.33.12 2.1.99 2.46 1.17.36.18.6.27.69.42.09.15.09.87-.21 1.71-.3.84-1.74 1.65-2.37 1.71-.63.06-1.23.09-4.11-1.17-3.45-1.5-5.65-5.01-5.82-5.25-.17-.24-1.38-1.83-1.38-3.5 0-1.67.87-2.49 1.18-2.83.31-.34.67-.42.9-.42z"
-              fill="#ffffff"/>
-          </svg>
-        </div>
-        <span className="wp-label">Chat with us</span>
+        <span className="wp-ping" />
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 3C8.82 3 3 8.82 3 16c0 2.31.62 4.48 1.7 6.36L3 29l6.82-1.68A13 13 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3z" fill="#fff"/>
+          <path d="M16 5.2A10.8 10.8 0 0126.8 16 10.8 10.8 0 0116 26.8a10.75 10.75 0 01-5.44-1.47l-.38-.23-4.05 1 1.02-3.94-.25-.4A10.75 10.75 0 015.2 16 10.8 10.8 0 0116 5.2zm-2.88 6.04c-.2-.44-.4-.45-.58-.46l-.5-.01c-.17 0-.46.06-.7.32-.24.25-.93.9-.93 2.2s.95 2.55 1.08 2.73c.13.17 1.84 2.94 4.54 4 2.22.88 2.67.7 3.15.66.48-.04 1.55-.63 1.77-1.25.22-.61.22-1.14.15-1.25-.07-.1-.24-.17-.5-.3-.26-.13-1.55-.77-1.79-.85-.24-.09-.42-.13-.6.13-.17.26-.68.85-.83 1.02-.15.17-.3.2-.56.07-.26-.14-1.1-.41-2.1-1.3-.78-.7-1.3-1.56-1.45-1.82-.15-.27-.02-.41.11-.54.12-.12.26-.3.4-.46.13-.16.17-.27.26-.45.09-.17.04-.33-.02-.46-.06-.12-.57-1.42-.8-1.94z" fill="#25D366"/>
+        </svg>
       </a>
     </>
   );
@@ -311,8 +285,7 @@ function FloatingWhatsApp({ number = "919876543210", message = "Hello! I'd like 
    MAIN EXPORT
 ───────────────────────────────────────── */
 export default function MayaFishFarm() {
-  const [imgRef,   imgVisible]   = useScrollReveal(0.1);
-  const [textRef,  textVisible]  = useScrollReveal(0.1);
+  const [heroRef,  heroVisible]  = useScrollReveal(0.05);
   const [statsRef, statsVisible] = useScrollReveal(0.1);
 
   return (
@@ -339,63 +312,92 @@ export default function MayaFishFarm() {
         }
 
         /* ══════════════════════════════════════════
-           HERO / ABOUT GRID
-           ─ align-items: stretch so both columns
-             share the same height; the frame sits
-             top-aligned inside its column.
+           HERO — stretch both columns to equal height
+           so image bottom === button bottom
         ══════════════════════════════════════════ */
         .mf-hero {
-          display: grid;
-          grid-template-columns: 0.9fr 1fr;
-          column-gap: 72px;
-          align-items: start;       /* top-align both columns */
-          padding: 72px 72px 80px 64px;
+          display: flex;
+          flex-direction: row;
+          align-items: stretch;      /* both columns share the same height */
+          gap: 64px;
+          padding: 72px 72px 72px 64px;
           background: #fff;
         }
 
         /* ── LEFT COLUMN ── */
         .mf-left {
+          flex: 0 0 46%;
+          max-width: 46%;
           position: relative;
-          /* offset-frame needs bottom + right room */
-          padding-bottom: 0;
+          /* stretch the offset-frame + image to fill the column height */
+          display: flex;
+          flex-direction: column;
         }
         .mf-left.mf-in { animation: mfSlideFromLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
 
-        /* the image itself: fixed aspect so it never collapses */
+        /* Make OffsetFrame root fill the column */
+        .mf-left .of-root {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        /* Make of-front fill the root (minus the 14px offset padding) */
+        .mf-left .of-front {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+
         .mf-aquarium-img {
+          /* Fill the frame — no fixed aspect-ratio so it matches right-column height */
+          flex: 1;
           width: 100%;
-          aspect-ratio: 4 / 3.2;
+          min-height: 320px;         /* floor so it never collapses */
           display: block;
           overflow: hidden;
+        }
+        /* The <img> inside needs to stretch too */
+        .mf-aquarium-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
         }
         .mf-left.mf-in .mf-aquarium-img {
           animation: mfImageReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s both;
         }
 
-        /* ── RIGHT COLUMN ── */
+        /* ── RIGHT COLUMN — flex column, button pinned to bottom ── */
         .mf-right {
-          /* vertically align the eyebrow with the top of the image frame */
-          padding-top: 6px;
+          flex: 1 1 0;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          /* content group at top, button pushed to bottom */
+          justify-content: space-between;
+          padding-top: 0;
         }
         .mf-right.mf-in { animation: mfSlideFromRight 0.9s cubic-bezier(0.16,1,0.3,1) 0.12s both; }
 
+        /* Groups eyebrow + heading + body together at the top */
+        .mf-right-top { display: flex; flex-direction: column; }
+
         .mf-eyebrow {
-          font-family: 'Montserrat', sans-serif;
           font-size: 11px; font-weight: 700;
           letter-spacing: 2px; text-transform: uppercase;
           color: #00BCD4;
-          margin-bottom: 16px; opacity: 0;
+          margin: 0 0 18px 0;
+          opacity: 0;
         }
         .mf-right.mf-in .mf-eyebrow {
           animation: mfLetterBlur 0.7s 0.25s cubic-bezier(0.16,1,0.3,1) both;
         }
 
         .mf-heading {
-          font-family: 'Montserrat', sans-serif;
-          font-size: clamp(2rem, 3.4vw, 2.85rem);
+          font-size: clamp(1.9rem, 3.2vw, 2.75rem);
           font-weight: 700; color: #1B3A6B;
-          line-height: 1.12; letter-spacing: -0.025em;
-          margin: 0 0 8px 0; display: block;
+          line-height: 1.13; letter-spacing: -0.025em;
+          margin: 0 0 6px 0; display: block;
           overflow: hidden; opacity: 0;
         }
         .mf-right.mf-in .mf-heading {
@@ -403,29 +405,39 @@ export default function MayaFishFarm() {
         }
 
         .mf-heading-thin {
-          font-family: 'Montserrat', sans-serif;
-          font-size: clamp(2rem, 3.4vw, 2.85rem);
-          font-weight: 300; color: rgba(27,58,107,0.50);
-          line-height: 1.12; letter-spacing: -0.02em;
-          display: block; margin: 0 0 26px 0;
+          font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+          font-weight: 300; color: rgba(27,58,107,0.48);
+          line-height: 1.13; letter-spacing: -0.02em;
+          display: block; margin: 0 0 28px 0;
           overflow: hidden; opacity: 0;
         }
         .mf-right.mf-in .mf-heading-thin {
           animation: mfClipUp 0.72s 0.50s cubic-bezier(0.16,1,0.3,1) both;
         }
 
-        .mf-body-cols {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 22px; margin-bottom: 34px; opacity: 0;
+        /* Single paragraph — clean, readable, no two-column split */
+        .mf-body-para {
+          font-size: clamp(0.8rem, 0.95vw, 0.875rem);
+          color: #3a5580;
+          line-height: 1.85;
+          font-weight: 400;
+          margin: 0;
+          opacity: 0;
+          /* gentle max-width so long lines don't stretch awkwardly */
+          max-width: 52ch;
         }
-        .mf-right.mf-in .mf-body-cols {
+        .mf-right.mf-in .mf-body-para {
           animation: mfRevealUp 0.65s 0.62s cubic-bezier(0.16,1,0.3,1) both;
         }
-        .mf-body-cols p {
-          font-family: 'Montserrat', sans-serif;
-          font-size: clamp(0.75rem, 0.92vw, 0.84rem);
-          color: #2a4a7f; line-height: 1.9; font-weight: 400; margin: 0;
+
+        /* Button wrapper — sits at the very bottom of the right column */
+        .mf-btn-wrap {
+          /* no top margin — space-between handles the gap */
+          padding-top: 32px;          /* minimum breathing room above button */
+          opacity: 0;
+        }
+        .mf-right.mf-in .mf-btn-wrap {
+          animation: mfRevealUp 0.65s 0.76s cubic-bezier(0.16,1,0.3,1) both;
         }
 
         .mf-btn {
@@ -435,9 +447,8 @@ export default function MayaFishFarm() {
           border-radius: 50px; cursor: pointer; text-decoration: none;
           box-shadow: 0 4px 20px rgba(27,58,107,0.40);
           transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-          position: relative; overflow: hidden; opacity: 0;
+          position: relative; overflow: hidden;
         }
-        .mf-right.mf-in .mf-btn { animation: mfRevealUp 0.65s 0.76s cubic-bezier(0.16,1,0.3,1) both; }
         .mf-btn::before {
           content:''; position:absolute; top:0; left:-80%; width:60%; height:100%;
           background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);
@@ -446,7 +457,7 @@ export default function MayaFishFarm() {
         .mf-btn:hover::before { animation: mfBtnShine 0.55s ease forwards; }
         .mf-btn:hover { background:#142d55; border-color:#142d55; transform:translateY(-2px); box-shadow:0 8px 28px rgba(27,58,107,0.50); }
         .mf-btn:active { transform:scale(0.97); }
-        .mf-btn-label { font-family:'Montserrat',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#fff; margin-right:12px; white-space:nowrap; }
+        .mf-btn-label { font-size:10.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#fff; margin-right:12px; white-space:nowrap; }
         .mf-btn-icon { width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .mf-btn:hover .mf-btn-icon { background:rgba(255,255,255,0.32); transform:rotate(45deg); }
 
@@ -477,13 +488,13 @@ export default function MayaFishFarm() {
         .mf-underwater.mf-in .mf-stat:nth-child(2)::after { animation:mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(3)::after { animation:mfDividerGrow 0.5s cubic-bezier(0.16,1,0.3,1) 0.80s both; }
 
-        .mf-stat-num { font-family:'Montserrat',sans-serif; font-size:clamp(2.2rem, 4vw, 3.2rem); font-weight:800; color:#ffffff; line-height:1; margin-bottom:6px; letter-spacing:-0.03em; position:relative; z-index:1; opacity:0; }
+        .mf-stat-num { font-size:clamp(2.2rem, 4vw, 3.2rem); font-weight:800; color:#ffffff; line-height:1; margin-bottom:6px; letter-spacing:-0.03em; position:relative; z-index:1; opacity:0; }
         .mf-underwater.mf-in .mf-stat:nth-child(1) .mf-stat-num { animation:mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.08s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(2) .mf-stat-num { animation:mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(3) .mf-stat-num { animation:mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.36s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(4) .mf-stat-num { animation:mfStatPop 0.72s cubic-bezier(0.16,1,0.3,1) 0.50s both; }
 
-        .mf-stat-label { font-family:'Montserrat',sans-serif; font-size:clamp(0.68rem, 0.85vw, 0.78rem); font-weight:500; color:rgba(255,255,255,0.78); line-height:1.6; letter-spacing:0.8px; text-transform:uppercase; position:relative; z-index:1; opacity:0; }
+        .mf-stat-label { font-size:clamp(0.68rem, 0.85vw, 0.78rem); font-weight:500; color:rgba(255,255,255,0.78); line-height:1.6; letter-spacing:0.8px; text-transform:uppercase; position:relative; z-index:1; opacity:0; }
         .mf-underwater.mf-in .mf-stat:nth-child(1) .mf-stat-label { animation:mfStatLabel 0.55s ease 0.34s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(2) .mf-stat-label { animation:mfStatLabel 0.55s ease 0.48s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(3) .mf-stat-label { animation:mfStatLabel 0.55s ease 0.62s both; }
@@ -494,12 +505,15 @@ export default function MayaFishFarm() {
         ══════════════════════════════════════════ */
         @media (max-width: 880px) {
           .mf-hero {
-            grid-template-columns: 1fr;
-            padding: 44px 28px 56px;
-            gap: 52px;         /* generous gap between stacked image & text */
+            flex-direction: column;
+            align-items: stretch;
+            gap: 36px;
+            padding: 44px 28px 52px;
           }
-          .mf-right { padding-top: 0; }
-          .mf-body-cols { grid-template-columns:1fr; gap:16px; }
+          .mf-left  { flex: none; max-width: 100%; width: 100%; }
+          .mf-aquarium-img { flex: none; aspect-ratio: 4 / 2.8; min-height: 0; }
+          .mf-right { flex: none; width: 100%; justify-content: flex-start; }
+          .mf-btn-wrap { padding-top: 28px; }
           .mf-left.mf-in  { animation:mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
           .mf-right.mf-in { animation:mfRevealUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
         }
@@ -516,15 +530,17 @@ export default function MayaFishFarm() {
         }
       `}</style>
 
+      {/* FIX: Single WhatsApp button — rendered once here */}
       <FloatingWhatsApp />
 
       <div className="mf-root">
 
         {/* ══════════════ ABOUT SECTION ══════════════ */}
-        <section className="mf-hero">
+        {/* FIX: one ref wraps the whole hero row so both columns animate together */}
+        <section ref={heroRef} className="mf-hero">
 
-          {/* LEFT — image inside offset frame */}
-          <div ref={imgRef} className={`mf-left${imgVisible ? " mf-in" : ""}`}>
+          {/* LEFT — image inside offset frame, stretches to right-column height */}
+          <div className={`mf-left${heroVisible ? " mf-in" : ""}`}>
             <OffsetFrame>
               <div className="mf-aquarium-img">
                 <AquariumIllustration />
@@ -532,42 +548,47 @@ export default function MayaFishFarm() {
             </OffsetFrame>
           </div>
 
-          {/* RIGHT — text content */}
-          <div ref={textRef} className={`mf-right${textVisible ? " mf-in" : ""}`}>
+          {/* RIGHT — flex column: content top, button bottom */}
+          <div className={`mf-right${heroVisible ? " mf-in" : ""}`}>
 
-            <p className="mf-eyebrow">About Us</p>
+            {/* Top group: eyebrow, heading, body */}
+            <div className="mf-right-top">
+              <p className="mf-eyebrow">About Us</p>
 
-            <h2 style={{ margin: 0 }}>
-              <span className="mf-heading">
-                Discover the most beautiful{" "}
-                <span style={{ fontWeight:300, color:"rgba(27,58,107,0.45)", letterSpacing:"-0.02em" }}>fish</span>
-              </span>
-              <span className="mf-heading-thin">tanks from around the world</span>
-            </h2>
+              <h2 style={{ margin: 0 }}>
+                <span className="mf-heading">
+                  Discover the most beautiful{" "}
+                  <span style={{ fontWeight:300, color:"rgba(27,58,107,0.45)", letterSpacing:"-0.02em" }}>fish</span>
+                </span>
+                <span className="mf-heading-thin">tanks from around the world</span>
+              </h2>
 
-            <div className="mf-body-cols">
-              <p>
-                Fusce duis non turpis nec vestibulum magnis torquent lacinia. Parturient hac nec
-                semper amet facilisi tellus nibh ex orci. Penatibus eget elit bibendum senectus
-                duis posuere mi. Ullamcorper a faucibus nascetur id taciti cras fringilla. Lorem
+              <p className="mf-body-para">
+                At MAYA Fish Farm, we curate the world's most vibrant aquatic ecosystems — from
+                hand-picked tropical species to bespoke tank designs crafted for both collectors
+                and enthusiasts. With over 15 years of expertise, our team brings clarity,
+                colour, and life to every aquarium we build, blending science with artistry
+                to create living landscapes that inspire wonder.
               </p>
             </div>
 
-            <a className="mf-btn" href="#">
-              <span className="mf-btn-label">Discover More</span>
-              <span className="mf-btn-icon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-                  <path d="M7 17L17 7M17 7H7M17 7v10" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </a>
+            {/* Button pinned to the bottom of the column */}
+            <div className="mf-btn-wrap">
+              <a className="mf-btn" href="#">
+                <span className="mf-btn-label">Discover More</span>
+                <span className="mf-btn-icon">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 17L17 7M17 7H7M17 7v10" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
 
           </div>
         </section>
 
         {/* ══════════════ WAVE + STATS ══════════════ */}
         <div ref={statsRef} className={`mf-underwater${statsVisible ? " mf-in" : ""}`}>
-
           <div className="mf-wave-svg-wrap">
             <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="1440" height="72" fill="#ffffff"/>
@@ -588,81 +609,9 @@ export default function MayaFishFarm() {
               ))}
             </div>
           </div>
-
         </div>
 
       </div>
-
-      {/* ══════════════ FLOATING WHATSAPP BUTTON (left) ══════════════ */}
-      <a
-        href="https://wa.me/919876543210"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mf-wp-float"
-        aria-label="Chat on WhatsApp"
-      >
-        {/* Official WP icon paths */}
-        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 3C8.82 3 3 8.82 3 16c0 2.31.62 4.48 1.7 6.36L3 29l6.82-1.68A13 13 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3z" fill="#fff"/>
-          <path d="M16 5.2A10.8 10.8 0 0126.8 16 10.8 10.8 0 0116 26.8a10.75 10.75 0 01-5.44-1.47l-.38-.23-4.05 1 1.02-3.94-.25-.4A10.75 10.75 0 015.2 16 10.8 10.8 0 0116 5.2zm-2.88 6.04c-.2-.44-.4-.45-.58-.46l-.5-.01c-.17 0-.46.06-.7.32-.24.25-.93.9-.93 2.2s.95 2.55 1.08 2.73c.13.17 1.84 2.94 4.54 4 2.22.88 2.67.7 3.15.66.48-.04 1.55-.63 1.77-1.25.22-.61.22-1.14.15-1.25-.07-.1-.24-.17-.5-.3-.26-.13-1.55-.77-1.79-.85-.24-.09-.42-.13-.6.13-.17.26-.68.85-.83 1.02-.15.17-.3.2-.56.07-.26-.14-1.1-.41-2.1-1.3-.78-.7-1.3-1.56-1.45-1.82-.15-.27-.02-.41.11-.54.12-.12.26-.3.4-.46.13-.16.17-.27.26-.45.09-.17.04-.33-.02-.46-.06-.12-.57-1.42-.8-1.94z" fill="#25D366"/>
-        </svg>
-        {/* pulse ring */}
-        <span className="mf-wp-ping" />
-      </a>
-
-      <style>{`
-        /* ── circle, fixed to bottom-LEFT ── */
-        .mf-wp-float {
-          position: fixed;
-          bottom: 28px;
-          left: 28px;           /* LEFT side */
-          z-index: 9999;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 54px;
-          height: 54px;
-          border-radius: 50%;   /* perfect circle */
-          background: #25D366;
-          text-decoration: none;
-          box-shadow: 0 4px 18px rgba(37,211,102,0.50);
-          overflow: visible;
-          transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
-                      box-shadow 0.3s ease,
-                      background 0.2s ease;
-        }
-        .mf-wp-float:hover {
-          transform: translateY(-4px) scale(1.08);
-          background: #1ebe5d;
-          box-shadow: 0 10px 30px rgba(37,211,102,0.60);
-        }
-        .mf-wp-float:active { transform: scale(0.94); }
-
-        /* pulse ring */
-        .mf-wp-ping {
-          position: absolute;
-          inset: 0;
-          border-radius: 50%;
-          background: rgba(37,211,102,0.40);
-          z-index: -1;
-          animation: wpPing 2.6s cubic-bezier(0,0,0.2,1) infinite;
-        }
-        @keyframes wpPing {
-          0%   { transform: scale(1);    opacity: 0.75; }
-          70%  { transform: scale(1.55); opacity: 0;    }
-          100% { transform: scale(1.55); opacity: 0;    }
-        }
-
-        @media (max-width: 480px) {
-          .mf-wp-float {
-            width: 48px;
-            height: 48px;
-            bottom: 20px;
-            left: 20px;
-          }
-        }
-      `}</style>
-
     </>
   );
 }
