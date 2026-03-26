@@ -123,9 +123,7 @@ export default function CallToAction() {
                 Get Quote
               </a>
 
-              <a href="#" className="cta-btn-link">
-                WhatsApp Us
-              </a>
+             
             </div>
 
           </div>
