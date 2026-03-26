@@ -10,10 +10,12 @@ export default function CallToAction() {
           font-family: 'Montserrat', sans-serif;
         }
 
-        /* 🔥 CTA STRIP */
+        /* 🔥 CTA STRIP (MATCH FOOTER) */
         .cta-strip {
-          background: #4FD1E8; /* cyan */
-          padding: 1.8rem 2rem;
+          background: linear-gradient(90deg, #060e1f);
+          padding: 2rem 2rem;
+          border-top: 1px solid rgba(255,255,255,0.05);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .cta-inner {
@@ -34,45 +36,47 @@ export default function CallToAction() {
         }
 
         .cta-title {
-          font-size: 1.4rem;
+          font-size: 1.5rem;
           font-weight: 600;
-          color: #060e1f;
+          color: #fff;
         }
 
         .cta-sub {
-          font-size: 12px;
-          color: rgba(6,14,31,0.7);
-          letter-spacing: 0.5px;
+          font-size: 12.5px;
+          color: rgba(255,255,255,0.55);
         }
 
         /* RIGHT BUTTONS */
         .cta-actions {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 1.2rem;
           flex-wrap: wrap;
         }
 
+        /* PRIMARY BUTTON */
         .cta-btn-primary {
-          padding: 12px 22px;
-          background: #060e1f;
-          color: #fff;
-          border-radius: 4px;
+          padding: 12px 24px;
+          background: #4FD1E8; /* cyan accent */
+          color: #060e1f;
+          border-radius: 6px;
           font-size: 12px;
           font-weight: 700;
-          letter-spacing: 0.5px;
           text-decoration: none;
           transition: 0.3s;
+          box-shadow: 0 0 20px rgba(79,209,232,0.3);
         }
 
         .cta-btn-primary:hover {
-          background: #0d1b36;
+          background: #6ce0f0;
+          transform: translateY(-2px);
         }
 
+        /* LINK BUTTON */
         .cta-btn-link {
-          font-size: 12px;
+          font-size: 12.5px;
           font-weight: 600;
-          color: #060e1f;
+          color: #4FD1E8;
           text-decoration: none;
           display: flex;
           align-items: center;
@@ -123,7 +127,7 @@ export default function CallToAction() {
                 Get Quote
               </a>
 
-             
+              
             </div>
 
           </div>
@@ -132,4 +136,4 @@ export default function CallToAction() {
       </div>
     </>
   );
-}
+} 
