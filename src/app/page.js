@@ -14,7 +14,8 @@ export default function Home() {
       <Hero />
       <AboutMayaFish/>
       <KeyServices/>
-      <WhyChooseMaya/>    
+      <WhyChooseMaya/>   
+      <CallToAction/> 
       <Footer1 />
     </div>
   );
