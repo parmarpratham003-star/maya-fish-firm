@@ -117,7 +117,7 @@ export default function KeyServices() {
 
         .ks-section {
           font-family: 'Montserrat', sans-serif;
-          background: linear-gradient(160deg, #F5F8FC 0%, #EBF0F5 50%, #E2E8F0 100%);
+         background: #F8FBFF;
           padding: 5.5rem 1.5rem;
           position: relative;
           overflow: hidden;
@@ -276,24 +276,66 @@ export default function KeyServices() {
 
         /* ── CTA ── */
         .ks-cta-wrap { display: flex; justify-content: center; margin-top: 3.2rem; }
-        .ks-cta {
-          display: inline-flex; align-items: center; gap: 10px;
-          padding: 13px 34px;
-          background: linear-gradient(135deg, #0A2A4A, #2C7CB0);
-          color: #fff;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 11px; font-weight: 700;
-          border-radius: 999px; text-decoration: none;
-          letter-spacing: 1px; text-transform: uppercase;
-          box-shadow: 0 6px 24px rgba(10,42,74,0.30);
-          transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .ks-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(10,42,74,0.40); }
+       .ks-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 6px 6px 6px 24px;
+  background: linear-gradient(135deg, #0A2A4A, #2C7CB0);
+  border: 1.5px solid #1B3A6B;
+  border-radius: 50px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+
+  box-shadow: 0 4px 20px rgba(27,58,107,0.40);
+  transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+  .ks-cta::before {
+  content:'';
+  position:absolute;
+  top:0;
+  left:-80%;
+  width:60%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);
+  transform:skewX(-20deg);
+}
+  .ks-cta:hover::before {
+  animation: mfBtnShine 0.55s ease forwards;
+}
+
+/* Hover */
+.ks-cta:hover {
+  background:#142d55;
+  border-color:#142d55;
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(27,58,107,0.50);
+}
+       .ks-cta:active {
+  transform:scale(0.97);
+}
         .ks-cta-ic {
-          width: 24px; height: 24px; border-radius: 50%;
-          background: rgba(255,255,255,0.22);
-          display: flex; align-items: center; justify-content: center;
-        }
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+  .ks-cta:hover .ks-cta-ic {
+  background:rgba(255,255,255,0.32);
+  transform:rotate(45deg);
+}
 
         @media (max-width: 1024px) { .ks-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 560px)  { .ks-grid { grid-template-columns: 1fr; } }

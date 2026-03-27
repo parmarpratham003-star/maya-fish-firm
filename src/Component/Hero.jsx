@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const slides = [
   { image: "/h3.jpeg" },
-  { image: "/hh1.jpg" },
+  { image: "/g1.png" },
   { image: "/ss3.png" },
 ];
 
@@ -204,19 +204,33 @@ export default function Hero() {
         }
 
         .hv-btn-call {
-          display: inline-flex; align-items: center; gap: 7px;
-          padding: 10px 18px;
-          border: 1px solid rgba(255,255,255,0.18);
-          border-radius: 50px;
-          background: rgba(255,255,255,0.06);
-          font-family: 'Montserrat', sans-serif;
-          font-size: 10.5px; font-weight: 600;
-          letter-spacing: 1px; text-transform: uppercase;
-          color: rgba(255,255,255,0.65);
-          cursor: pointer; text-decoration: none;
-          transition: all 0.25s;
-          backdrop-filter: blur(4px);
-        }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  /* ✅ SAME HEIGHT + FEEL */
+  padding: 6px 18px 6px 24px;
+  min-height: 46px;
+
+  /* ✅ SAME WIDTH BEHAVIOR */
+  min-width: 160px;
+
+  border: 1.5px solid rgba(255,255,255,0.18);
+  border-radius: 50px;
+  background: rgba(255,255,255,0.06);
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  transition: all 0.25s;
+  backdrop-filter: blur(4px);
+}
         .hv-btn-call:hover {
           background: rgba(255,255,255,0.12);
           border-color: rgba(255,255,255,0.4);

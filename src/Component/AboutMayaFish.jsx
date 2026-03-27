@@ -443,7 +443,7 @@ export default function MayaFishFarm() {
         .mf-btn {
           display: inline-flex; align-items: center; gap: 0;
           padding: 6px 6px 6px 24px;
-          background: #1B3A6B; border: 1.5px solid #1B3A6B;
+          background: linear-gradient(135deg, #0A2A4A, #2C7CB0); border: 1.5px solid #1B3A6B;
           border-radius: 50px; cursor: pointer; text-decoration: none;
           box-shadow: 0 4px 20px rgba(27,58,107,0.40);
           transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
