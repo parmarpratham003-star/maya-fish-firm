@@ -37,7 +37,7 @@ const services = [
     accent: "#0A2A4A",
     light: "#EFF3F8",
     num: "04",
-    img: "/show-case-img-1.jpg",
+    img: "/ss1.png",
     icon: <Sprout size={38} strokeWidth={1.6} color="#0A2A4A" />,
   },
 ];

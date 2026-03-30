@@ -92,7 +92,7 @@ export default function Footer1() {
           border-top: 1px solid rgba(255,255,255,0.07);
           padding: 1.1rem 0 1.4rem;
           display: flex; align-items: center;
-          justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+          justify-content: center; flex-wrap: wrap; gap: 0.5rem;
         }
         .f-bar-l {
           font-family: 'Montserrat', sans-serif;
@@ -119,7 +119,7 @@ export default function Footer1() {
         @media (max-width: 900px) { .f-grid { grid-template-columns: 1fr 1fr; gap: 2rem; } }
         @media (max-width: 520px) {
           .f-grid { grid-template-columns: 1fr; }
-          .f-bar { flex-direction: column; align-items: flex-start; }
+          .f-bar { flex-direction: column; align-items: center; }
         }
       `}</style>
 
@@ -140,7 +140,7 @@ export default function Footer1() {
                 </a>
                 <p className="f-desc">
                   MAYA Fish Farm is dedicated to producing high-quality ornamental fish through responsible breeding,
-                  proper water management and balanced nutrition — supplying pet stores, hobbyists and aquarium businesses.
+                  proper water management and balanced nutrition.
                 </p>
                 <div className="f-socials">
                   {[{ I: FaFacebookF, l: "Facebook", href: "#" }, { I: FaInstagram, l: "Instagram", href: "#" }, { I: FaYoutube, l: "YouTube", href: "#" }].map(({ I, l, href }) => (
@@ -194,11 +194,7 @@ export default function Footer1() {
 
             <div className="f-bar">
               <span className="f-bar-l">Copyright © 2026 <a href="/">MAYA FISH FARM</a>. All rights reserved.</span>
-              <div className="f-bar-r">
-                <a href="/privacy">Privacy Policy</a>
-                <span className="f-bar-sep">|</span>
-                <a href="/terms">Terms of Service</a>
-              </div>
+             
             </div>
           </div>
         </div>
