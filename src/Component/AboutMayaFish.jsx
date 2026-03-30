@@ -138,7 +138,6 @@ const STATS = [
 
 /* ─────────────────────────────────────────
    OFFSET FRAME
-   — soft shadow added, sharp edges retained
 ───────────────────────────────────────── */
 function OffsetFrame({ children }) {
   return (
@@ -170,7 +169,6 @@ function OffsetFrame({ children }) {
           border: 1.5px solid rgba(27, 58, 107, 0.65);
           border-radius: 0;
           overflow: hidden;
-          /* FIX: soft, layered shadow for depth */
           box-shadow:
             0 2px 8px rgba(27, 58, 107, 0.08),
             0 8px 24px rgba(27, 58, 107, 0.12),
@@ -205,7 +203,6 @@ function AquariumIllustration() {
         objectPosition: "center",
         display: "block",
         borderRadius: 0,
-        /* ensure it stretches inside the flex .mf-aquarium-img */
         minHeight: 0,
       }}
     />
@@ -213,7 +210,7 @@ function AquariumIllustration() {
 }
 
 /* ─────────────────────────────────────────
-   FLOATING WHATSAPP BUTTON  (single, bottom-left)
+   FLOATING WHATSAPP BUTTON
 ───────────────────────────────────────── */
 function FloatingWhatsApp({
   number = "919876543210",
@@ -291,12 +288,12 @@ export default function MayaFishFarm() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap');
 
         @keyframes mfSlideFromLeft  { from{opacity:0;transform:translateX(-52px)} to{opacity:1;transform:translateX(0)} }
         @keyframes mfSlideFromRight { from{opacity:0;transform:translateX(52px)}  to{opacity:1;transform:translateX(0)} }
         @keyframes mfRevealUp       { from{opacity:0;transform:translateY(30px)}  to{opacity:1;transform:translateY(0)} }
-        @keyframes mfLetterBlur     { from{opacity:0;letter-spacing:0.5em;filter:blur(8px)} to{opacity:1;letter-spacing:2px;filter:blur(0)} }
+        @keyframes mfLetterBlur     { from{opacity:0;letter-spacing:0.5em;filter:blur(8px)} to{opacity:1;letter-spacing:3px;filter:blur(0)} }
         @keyframes mfClipUp         { from{clip-path:inset(100% 0 0 0);opacity:0} to{clip-path:inset(0% 0 0 0);opacity:1} }
         @keyframes mfStatPop        { 0%{opacity:0;transform:scale(0.65) translateY(24px)} 65%{transform:scale(1.07) translateY(-4px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
         @keyframes mfStatLabel      { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
@@ -311,111 +308,115 @@ export default function MayaFishFarm() {
           overflow: hidden;
         }
 
-        /* ══════════════════════════════════════════
-           HERO — stretch both columns to equal height
-           so image bottom === button bottom
-        ══════════════════════════════════════════ */
+        /* ══ HERO ══ */
         .mf-hero {
           display: flex;
           flex-direction: row;
-          align-items: stretch;      /* both columns share the same height */
+          align-items: stretch;
           gap: 64px;
           padding: 72px 72px 72px 64px;
           background: #fff;
         }
 
-        /* ── LEFT COLUMN ── */
+        /* LEFT COLUMN */
         .mf-left {
           flex: 0 0 46%;
           max-width: 46%;
           position: relative;
-          /* stretch the offset-frame + image to fill the column height */
           display: flex;
           flex-direction: column;
         }
         .mf-left.mf-in { animation: mfSlideFromLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
-
-        /* Make OffsetFrame root fill the column */
-        .mf-left .of-root {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-        }
-        /* Make of-front fill the root (minus the 14px offset padding) */
-        .mf-left .of-front {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-        }
+        .mf-left .of-root { flex: 1; display: flex; flex-direction: column; }
+        .mf-left .of-front { flex: 1; display: flex; flex-direction: column; }
 
         .mf-aquarium-img {
-          /* Fill the frame — no fixed aspect-ratio so it matches right-column height */
           flex: 1;
           width: 100%;
-          min-height: 320px;         /* floor so it never collapses */
+          min-height: 320px;
           display: block;
           overflow: hidden;
         }
-        /* The <img> inside needs to stretch too */
-        .mf-aquarium-img img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
+        .mf-aquarium-img img { width:100%; height:100%; object-fit:cover; display:block; }
         .mf-left.mf-in .mf-aquarium-img {
           animation: mfImageReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s both;
         }
 
-        /* ── RIGHT COLUMN — flex column, button pinned to bottom ── */
+        /* RIGHT COLUMN */
         .mf-right {
           flex: 1 1 0;
           min-width: 0;
           display: flex;
           flex-direction: column;
-          /* content group at top, button pushed to bottom */
           justify-content: space-between;
           padding-top: 0;
         }
         .mf-right.mf-in { animation: mfSlideFromRight 0.9s cubic-bezier(0.16,1,0.3,1) 0.12s both; }
-
-        /* Groups eyebrow + heading + body together at the top */
         .mf-right-top { display: flex; flex-direction: column; }
 
+        /* ── EYEBROW (Tailwind-style via CSS to keep animation hooks) ── */
         .mf-eyebrow {
-          font-size: 11px; font-weight: 700;
-          letter-spacing: 2px; text-transform: uppercase;
-          color: #00BCD4;
-          margin: 0 0 18px 0;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color:#2C7CB0;
+          margin: 0 0 20px 0;
           opacity: 0;
+        }
+        .mf-eyebrow-line {
+          height: 1.5px;
+          width: 36px;
+          background: #2C7CB0;
+          flex-shrink: 0;
         }
         .mf-right.mf-in .mf-eyebrow {
           animation: mfLetterBlur 0.7s 0.25s cubic-bezier(0.16,1,0.3,1) both;
         }
 
+        /* ── MAIN HEADING — bold dark navy matching image ── */
         .mf-heading {
-          font-size: clamp(1.9rem, 3.2vw, 2.75rem);
-          font-weight: 700; color: #1B3A6B;
-          line-height: 1.13; letter-spacing: -0.025em;
-          margin: 0 0 6px 0; display: block;
-          overflow: hidden; opacity: 0;
+          display: block;
+          font-size: clamp(2rem, 3.4vw, 2.9rem);
+          font-weight: 900;
+          color: #0D2B4E;
+          line-height: 1.10;
+          letter-spacing: -0.03em;
+          margin: 0 0 4px 0;
+          overflow: hidden;
+          opacity: 0;
         }
         .mf-right.mf-in .mf-heading {
           animation: mfClipUp 0.72s 0.36s cubic-bezier(0.16,1,0.3,1) both;
         }
 
+        /* fish word — lighter weight, muted navy */
+        .mf-heading-word-light {
+          font-weight: 300;
+          color: rgba(13, 43, 78, 0.40);
+          letter-spacing: -0.02em;
+        }
+
+        /* ── THIN SUBHEADING ── */
         .mf-heading-thin {
-          font-size: clamp(1.9rem, 3.2vw, 2.75rem);
-          font-weight: 300; color: rgba(27,58,107,0.48);
-          line-height: 1.13; letter-spacing: -0.02em;
-          display: block; margin: 0 0 28px 0;
-          overflow: hidden; opacity: 0;
+          display: block;
+          font-size: clamp(2rem, 3.4vw, 2.9rem);
+          font-weight: 300;
+          color: rgba(13, 43, 78, 0.42);
+          line-height: 1.10;
+          letter-spacing: -0.025em;
+          margin: 0 0 30px 0;
+          overflow: hidden;
+          opacity: 0;
         }
         .mf-right.mf-in .mf-heading-thin {
           animation: mfClipUp 0.72s 0.50s cubic-bezier(0.16,1,0.3,1) both;
         }
 
-        /* Single paragraph — clean, readable, no two-column split */
+        /* ── BODY PARAGRAPH ── */
         .mf-body-para {
           font-size: clamp(0.8rem, 0.95vw, 0.875rem);
           color: #3a5580;
@@ -423,19 +424,14 @@ export default function MayaFishFarm() {
           font-weight: 400;
           margin: 0;
           opacity: 0;
-          /* gentle max-width so long lines don't stretch awkwardly */
           max-width: 52ch;
         }
         .mf-right.mf-in .mf-body-para {
           animation: mfRevealUp 0.65s 0.62s cubic-bezier(0.16,1,0.3,1) both;
         }
 
-        /* Button wrapper — sits at the very bottom of the right column */
-        .mf-btn-wrap {
-          /* no top margin — space-between handles the gap */
-          padding-top: 32px;          /* minimum breathing room above button */
-          opacity: 0;
-        }
+        /* ── BUTTON ── */
+        .mf-btn-wrap { padding-top: 32px; opacity: 0; }
         .mf-right.mf-in .mf-btn-wrap {
           animation: mfRevealUp 0.65s 0.76s cubic-bezier(0.16,1,0.3,1) both;
         }
@@ -443,7 +439,8 @@ export default function MayaFishFarm() {
         .mf-btn {
           display: inline-flex; align-items: center; gap: 0;
           padding: 6px 6px 6px 24px;
-          background: linear-gradient(135deg, #0A2A4A, #2C7CB0); border: 1.5px solid #1B3A6B;
+          background: linear-gradient(135deg, #0A2A4A, #2C7CB0);
+          border: 1.5px solid #1B3A6B;
           border-radius: 50px; cursor: pointer; text-decoration: none;
           box-shadow: 0 4px 20px rgba(27,58,107,0.40);
           transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
@@ -461,9 +458,7 @@ export default function MayaFishFarm() {
         .mf-btn-icon { width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .mf-btn:hover .mf-btn-icon { background:rgba(255,255,255,0.32); transform:rotate(45deg); }
 
-        /* ══════════════════════════════════════════
-           WAVE + STATS
-        ══════════════════════════════════════════ */
+        /* ══ WAVE + STATS ══ */
         .mf-underwater { position:relative; overflow:hidden; }
         .mf-wave-svg-wrap { background:#ffffff; line-height:0; margin-bottom:-2px; }
         .mf-wave-svg-wrap svg { display:block; width:100%; }
@@ -500,9 +495,7 @@ export default function MayaFishFarm() {
         .mf-underwater.mf-in .mf-stat:nth-child(3) .mf-stat-label { animation:mfStatLabel 0.55s ease 0.62s both; }
         .mf-underwater.mf-in .mf-stat:nth-child(4) .mf-stat-label { animation:mfStatLabel 0.55s ease 0.76s both; }
 
-        /* ══════════════════════════════════════════
-           RESPONSIVE
-        ══════════════════════════════════════════ */
+        /* ══ RESPONSIVE ══ */
         @media (max-width: 880px) {
           .mf-hero {
             flex-direction: column;
@@ -530,16 +523,14 @@ export default function MayaFishFarm() {
         }
       `}</style>
 
-      {/* FIX: Single WhatsApp button — rendered once here */}
       <FloatingWhatsApp />
 
       <div className="mf-root">
 
         {/* ══════════════ ABOUT SECTION ══════════════ */}
-        {/* FIX: one ref wraps the whole hero row so both columns animate together */}
         <section ref={heroRef} className="mf-hero">
 
-          {/* LEFT — image inside offset frame, stretches to right-column height */}
+          {/* LEFT — image inside offset frame */}
           <div className={`mf-left${heroVisible ? " mf-in" : ""}`}>
             <OffsetFrame>
               <div className="mf-aquarium-img">
@@ -551,14 +542,21 @@ export default function MayaFishFarm() {
           {/* RIGHT — flex column: content top, button bottom */}
           <div className={`mf-right${heroVisible ? " mf-in" : ""}`}>
 
-            {/* Top group: eyebrow, heading, body */}
+            {/* Top group */}
             <div className="mf-right-top">
-              <p className="mf-eyebrow">About Us</p>
 
+              {/* Eyebrow with decorative lines — matches "OUR SERVICES" style in image */}
+              <p className="mf-eyebrow">
+                <span className="mf-eyebrow-line" />
+                About Us
+                <span className="mf-eyebrow-line" />
+              </p>
+
+              {/* Main heading — font-weight 900, color #0D2B4E matches image exactly */}
               <h2 style={{ margin: 0 }}>
                 <span className="mf-heading">
                   Discover the most beautiful{" "}
-                  <span style={{ fontWeight:300, color:"rgba(27,58,107,0.45)", letterSpacing:"-0.02em" }}>fish</span>
+                  <span className="mf-heading-word-light">fish</span>
                 </span>
                 <span className="mf-heading-thin">tanks from around the world</span>
               </h2>
@@ -572,7 +570,7 @@ export default function MayaFishFarm() {
               </p>
             </div>
 
-            {/* Button pinned to the bottom of the column */}
+            {/* Button pinned to bottom */}
             <div className="mf-btn-wrap">
               <a className="mf-btn" href="#">
                 <span className="mf-btn-label">Discover More</span>
@@ -586,9 +584,6 @@ export default function MayaFishFarm() {
 
           </div>
         </section>
-
-        
-       
 
       </div>
     </>

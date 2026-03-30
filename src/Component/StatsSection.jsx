@@ -2,160 +2,83 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/* 🔥 COUNT HOOK */
-function useCountUp(target, duration = 1800, start = false) {
+function useCountUp(target, duration = 2000, start = false) {
   const [count, setCount] = useState(0);
-
   useEffect(() => {
     if (!start) return;
-
-    let startTime = null;
-
-    const animate = (time) => {
-      if (!startTime) startTime = time;
-
-      const progress = Math.min((time - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      setCount(Math.floor(eased * target));
-
-      if (progress < 1) requestAnimationFrame(animate);
+    let t0 = null;
+    const tick = (t) => {
+      if (!t0) t0 = t;
+      const p = Math.min((t - t0) / duration, 1);
+      const e = 1 - Math.pow(1 - p, 3);
+      setCount(Math.floor(e * target));
+      if (p < 1) requestAnimationFrame(tick);
     };
-
-    requestAnimationFrame(animate);
+    requestAnimationFrame(tick);
   }, [target, duration, start]);
-
   return count;
 }
 
-/* 🔥 COUNTER */
-function StatCounter({ value, suffix, label, start }) {
-  const count = useCountUp(value, 1800, start);
+const stats = [
+  { value: 10,  suffix: "+", label: "Years of Service" },
+  { value: 500, suffix: "+", label: "Happy Clients"    },
+  { value: 50,  suffix: "+", label: "Fish Varieties"   },
+];
 
+function StatItem({ value, suffix, label, start, delay }) {
+  const count = useCountUp(value, 2000, start);
   return (
-    <div className="stat-item">
-      <p className="stat-num">
-        {count}
-        {suffix}
+    <div
+      className="flex flex-col items-center gap-1 opacity-0 animate-fadeUp"
+      style={{ animationDelay: delay, animationFillMode: "forwards" }}
+    >
+      <div className="flex items-end leading-none">
+        <span className="text-6xl md:text-7xl font-black tabular-nums tracking-tight text-blue-950">
+          {count}
+        </span>
+        <span className="text-3xl md:text-4xl font-bold text-blue-500 mb-1 ml-0.5">
+          {suffix}
+        </span>
+      </div>
+      <p className="text-xs font-semibold tracking-widest uppercase text-blue-900/50 mt-1">
+        {label}
       </p>
-      <p className="stat-label">{label}</p>
     </div>
   );
 }
 
-/* 🔥 MAIN SECTION */
 export default function StatsSection() {
   const ref = useRef(null);
   const [start, setStart] = useState(false);
 
-  const stats = [
-    { value: 10, suffix: "+", label: "Years of Service" },
-    { value: 500, suffix: "+", label: "Happy Clients" },
-    { value: 50, suffix: "+", label: "Fish Varieties" },
-  ];
-
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setStart(true);
-          obs.disconnect();
-        }
-      },
+      ([e]) => { if (e.isIntersecting) { setStart(true); obs.disconnect(); } },
       { threshold: 0.3 }
     );
-
     if (ref.current) obs.observe(ref.current);
   }, []);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
-
-        .stats-root {
-          font-family: 'Montserrat', sans-serif;
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-
-        /* 🔥 SAME AS CTA HEIGHT */
-        .stats-strip {
-          background: #060e1f;
-          padding: 2rem 2rem; /* EXACT SAME AS CTA */
-          border-top: 1px solid rgba(255,255,255,0.05);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-
-          min-height: 120px;
-          display: flex;
-          align-items: center;
-        }
-
-        .stats-inner {
-          max-width: 1100px;
-          margin: auto;
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 1rem;
-          flex-wrap: wrap;
-        }
-
-        .stat-item {
-          flex: 1;
-          text-align: center;
-          border-right: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .stat-item:last-child {
-          border-right: none;
-        }
-
-        .stat-num {
-          font-size: 28px;
-          font-weight: 800;
-          color: #4FD1E8;
-          margin-bottom: 4px;
-        }
-
-        .stat-label {
-          font-size: 11px;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.6);
-        }
-
-        /* MOBILE */
-        @media (max-width: 768px) {
-          .stats-inner {
-            flex-direction: column;
-            gap: 1.2rem;
-          }
-
-          .stat-item {
-            border-right: none;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding-bottom: 10px;
-          }
-
-          .stat-item:last-child {
-            border-bottom: none;
-          }
-        }
+        .animate-fadeUp { animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) both; }
       `}</style>
 
-      <section ref={ref} className="stats-root stats-strip">
-        <div className="stats-inner">
-
-          {stats.map((item, i) => (
-            <StatCounter
-              key={i}
-              value={item.value}
-              suffix={item.suffix}
-              label={item.label}
-              start={start}
-            />
+      <section ref={ref} className="py-8 px-6">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-0">
+          {stats.map((s, i) => (
+            <div key={i} className="flex flex-col sm:flex-row items-center flex-1 justify-center">
+              <StatItem {...s} start={start} delay={`${i * 140}ms`} />
+              {i < stats.length - 1 && (
+                <div className="hidden sm:block w-px h-10 bg-blue-200 mx-8" />
+              )}
+            </div>
           ))}
-
         </div>
       </section>
     </>

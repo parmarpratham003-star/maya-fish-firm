@@ -6,63 +6,80 @@ const features = [
   {
     num: "01",
     title: "Quality Service",
-    desc: "Healthy, vibrant fish through responsible and ethical breeding practices.",
-    dark: true,
+    desc: "We ensure healthy, vibrant fish through responsible and ethical breeding practices, maintaining the highest standards of quality.",
   },
   {
     num: "02",
     title: "On-time Delivery",
-    desc: "Reliable and timely delivery for hobbyists, retailers, and bulk orders.",
-    dark: false,
+    desc: "Reliable and timely delivery for hobbyists, retailers, and bulk buyers with complete safety and freshness.",
   },
   {
     num: "03",
     title: "Affordable Pricing",
-    desc: "High-quality fish at competitive prices with no hidden costs.",
-    dark: false,
+    desc: "Premium-quality fish at competitive prices with transparent pricing and no hidden costs.",
   },
   {
     num: "04",
     title: "Customer Support",
-    desc: "Expert guidance for fish care, feeding, and aquarium maintenance.",
-    dark: true,
+    desc: "Expert guidance on fish care, feeding, and aquarium maintenance from our experienced team.",
   },
 ];
-function FeatureCard({ feature }) {
-  const { num, title, desc, dark } = feature;
+
+function FeatureCard({ feature, index }) {
+  const styles = [
+    {
+      bg: "bg-[#0B2545]",
+      text: "text-white",
+      sub: "text-[#c9d8ea]",
+      num: "text-[#1e4f85]",
+    },
+    {
+      bg: "bg-[#F0F7FF]",
+      text: "text-[#0B2545]",
+      sub: "text-[#5f7f9a]",
+      num: "text-[#dbe9f7]",
+    },
+    {
+      bg: "bg-[#E3F0FC]",
+      text: "text-[#0B2545]",
+      sub: "text-[#5f7f9a]",
+      num: "text-[#cfe3f5]",
+    },
+    {
+      bg: "bg-[#0B2545]",
+      text: "text-white",
+      sub: "text-[#c9d8ea]",
+      num: "text-[#1e4f85]",
+    },
+  ];
+
+  const s = styles[index];
+  const { num, title, desc } = feature;
 
   return (
     <div
-      className={`relative overflow-hidden group transition-all duration-500 hover:-translate-y-1
-        ${
-          dark
-            ? "bg-[#0A2A4A] text-white"
-            : "bg-[#E6F2FF] text-[#0A2A4A] border border-[#cfe3f5]"
-        }
-      `}
-      style={{ borderRadius: "2px 24px 2px 24px", padding: "40px 36px 36px" }}
+      className={`relative overflow-visible group transition-all duration-500 hover:-translate-y-1
+      ${s.bg} ${s.text}
+      p-[70px_38px_38px]`}
+      style={{ borderRadius: "0px 28px 0px 28px" }}
     >
+      {/* Number (shifted up) */}
       <span
-        className={`absolute top-4 right-6 text-[88px] font-black transition-all duration-500
-          ${
-            dark
-              ? "text-[#123b6d]"
-              : "text-[#d9e9f7]"
-          }
-        `}
+        className={`absolute -top-4 right-6 text-[90px] font-black ${s.num}`}
       >
         {num}
       </span>
 
-      <div className="w-2 h-2 rounded-full mb-5 bg-[#2C7CB0]" />
-
-      <h3 className={`text-[19px] font-semibold mb-3`}>
+      {/* Title */}
+      <h3 className="text-[22px] font-semibold mb-3">
         {title}
       </h3>
 
-      <div className="w-8 h-[1.5px] mb-4 bg-[#2C7CB0] transition-all duration-500 group-hover:w-16" />
+      {/* Divider */}
+      <div className="w-8 h-[1.5px] mb-4 bg-[#4DA3FF] transition-all duration-500 group-hover:w-16" />
 
-      <p className={`text-[12.5px] leading-[1.8] ${dark ? "text-[#b8cbe0]" : "text-[#4a6b85]"}`}>
+      {/* Description */}
+      <p className={`text-[14px] leading-[1.9] ${s.sub}`}>
         {desc}
       </p>
     </div>
@@ -100,45 +117,44 @@ export default function WhyChooseUs() {
         .fade-right.show { opacity: 1; transform: translateX(0); }
       `}</style>
 
-      {/* ✅ NO BACKGROUND COLOR */}
       <section ref={rootRef} className="px-8 py-20 bg-transparent">
 
         <div className="max-w-5xl mx-auto">
 
           {/* Top label */}
           <div className={`fade-up ${visible ? "show" : ""} flex items-center gap-3 mb-6`}>
-            <div className="w-7 h-[1px] bg-[#2C7CB0]" />
-            <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#2C7CB0]">
+            <div className="w-7 h-[1px] bg-[#4DA3FF]" />
+            <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#4DA3FF]">
               Why Choose Us
             </span>
           </div>
 
-        <div className="flex flex-col md:flex-row justify-between gap-6 mb-14">
+          {/* Heading */}
+          <div className="flex flex-col md:flex-row justify-between gap-6 mb-14">
 
             <div className={`fade-left ${visible ? "show" : ""}`}>
-              <h2 className="text-[36px] font-bold text-[#0A2A4A] leading-[1.2]">
-                Why Choose Our 
+              <h2 className="text-[36px] font-bold text-[#0B2545] leading-[1.2]">
+                Why Choose Our
               </h2>
-              <h2 className="text-[36px] font-bold italic text-[#2C7CB0]">
+              <h2 className="text-[36px] font-bold italic text-[#4DA3FF]">
                 Fish Farm
               </h2>
             </div>
 
-            {/* RIGHT */}
-            <p className={`fade-right ${visible ? "show" : ""} text-[13.5px] text-[#5a7a90] max-w-xs`}>
-              Trusted by aquarium enthusiasts for quality breeding and reliable service.
+            <p className={`fade-right ${visible ? "show" : ""} text-[14px] text-[#5f7f9a] max-w-xs`}>
+              We deliver premium-quality fish, reliable service, and expert support for every aquarium need.
             </p>
           </div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((f, i) => (
               <div
                 key={i}
                 className={`fade-up ${visible ? "show" : ""}`}
                 style={{ transitionDelay: `${i * 0.15}s` }}
               >
-                <FeatureCard feature={f} />
+                <FeatureCard feature={f} index={i} />
               </div>
             ))}
           </div>
