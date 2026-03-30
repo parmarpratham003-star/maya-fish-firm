@@ -1,138 +1,150 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const data = [
+const features = [
   {
     num: "01",
-    title: "Premium Fish Quality",
-    text: "We ensure top-grade ornamental fish through ethical and responsible breeding practices, resulting in healthy, colorful, and long-living aquarium fish.",
-    dir: "left",
-    bg: "bg-[#0d1f5c]",
-    titleColor: "text-white",
-    textColor: "text-[#a8b8d8]",
+    title: "Quality Service",
+    desc: "Healthy, vibrant fish through responsible and ethical breeding practices.",
+    dark: true,
   },
   {
     num: "02",
-    title: "Fast & Safe Delivery",
-    text: "Our logistics system ensures that your fish are delivered safely, on time, and stress-free with proper packaging and handling.",
-    dir: "right",
-    bg: "bg-[#3346c8]",
-    titleColor: "text-white",
-    textColor: "text-[#c0ccf8]",
+    title: "On-time Delivery",
+    desc: "Reliable and timely delivery for hobbyists, retailers, and bulk orders.",
+    dark: false,
   },
   {
     num: "03",
-    title: "Best Pricing Guarantee",
-    text: "We offer competitive pricing without compromising on quality, making premium fish accessible to everyone.",
-    dir: "left",
-    bg: "bg-[#30a8d8]",
-    titleColor: "text-white",
-    textColor: "text-[#d0f0ff]",
+    title: "Affordable Pricing",
+    desc: "High-quality fish at competitive prices with no hidden costs.",
+    dark: false,
   },
   {
     num: "04",
-    title: "Expert Aquarium Guidance",
-    text: "From setup to maintenance, our expert guidance helps you maintain a thriving aquarium long-term.",
-    dir: "right",
-    bg: "bg-[#a8d8f0]",
-    titleColor: "text-[#0a2a40]",
-    textColor: "text-[#1a4060]",
+    title: "Customer Support",
+    desc: "Expert guidance for fish care, feeding, and aquarium maintenance.",
+    dark: true,
   },
 ];
+function FeatureCard({ feature }) {
+  const { num, title, desc, dark } = feature;
+
+  return (
+    <div
+      className={`relative overflow-hidden group transition-all duration-500 hover:-translate-y-1
+        ${
+          dark
+            ? "bg-[#0A2A4A] text-white"
+            : "bg-[#E6F2FF] text-[#0A2A4A] border border-[#cfe3f5]"
+        }
+      `}
+      style={{ borderRadius: "2px 24px 2px 24px", padding: "40px 36px 36px" }}
+    >
+      <span
+        className={`absolute top-4 right-6 text-[88px] font-black transition-all duration-500
+          ${
+            dark
+              ? "text-[#123b6d]"
+              : "text-[#d9e9f7]"
+          }
+        `}
+      >
+        {num}
+      </span>
+
+      <div className="w-2 h-2 rounded-full mb-5 bg-[#2C7CB0]" />
+
+      <h3 className={`text-[19px] font-semibold mb-3`}>
+        {title}
+      </h3>
+
+      <div className="w-8 h-[1.5px] mb-4 bg-[#2C7CB0] transition-all duration-500 group-hover:w-16" />
+
+      <p className={`text-[12.5px] leading-[1.8] ${dark ? "text-[#b8cbe0]" : "text-[#4a6b85]"}`}>
+        {desc}
+      </p>
+    </div>
+  );
+}
 
 export default function WhyChooseUs() {
-  const ref = useRef(null);
-  const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const rootRef = useRef(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
-          setShow(true);
+          setVisible(true);
           obs.disconnect();
         }
       },
       { threshold: 0.1 }
     );
-    if (ref.current) obs.observe(ref.current);
+    if (rootRef.current) obs.observe(rootRef.current);
+    return () => obs.disconnect();
   }, []);
 
   return (
-    <section
-      ref={ref}
-      className="py-[110px] px-5 bg-[#dde4ed] overflow-hidden font-[Montserrat]"
-    >
-      {/* HEADING */}
-      <div
-  className={`text-center max-w-[700px] mx-auto mb-14 transition-all duration-700 ${
-    show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-  }`}
->
-  {/* EYEBROW */}
-  <div className="flex items-center justify-center gap-[10px] mb-4">
-    <span className="w-[28px] h-[1px] bg-[#2C7CB0]" />
-    <span className="text-[10px] font-bold tracking-[4px] uppercase text-[#2C7CB0]">
-      WHY CHOOSE US
-    </span>
-    <span className="w-[28px] h-[1px] bg-[#2C7CB0]" />
-  </div>
+    <>
+      <style>{`
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+        .fade-up.show { opacity: 1; transform: translateY(0); }
 
-  {/* ONE LINE HEADING */}
-  <h2 className="text-[28px] md:text-[40px] font-extrabold text-[#083B66] leading-[1.15] tracking-[-0.03em] mb-3 whitespace-nowrap">
-    Why Choose <span className="text-[#0A2A4A]">MAYA Fish Farm</span>
-  </h2>
+        .fade-left { opacity: 0; transform: translateX(-60px); transition: all 0.8s ease; }
+        .fade-left.show { opacity: 1; transform: translateX(0); }
 
-  {/* 2 LINE CONTENT */}
-  <p className="text-[13px] text-[#5a7a90] leading-[1.8] max-w-[580px] mx-auto">
-    From responsible breeding to complete aquaculture solutions — we provide everything you need
-    for a thriving aquarium experience, ensuring quality and reliability.
-  </p>
-</div>
-        
+        .fade-right { opacity: 0; transform: translateX(60px); transition: all 0.8s ease; }
+        .fade-right.show { opacity: 1; transform: translateX(0); }
+      `}</style>
 
-      {/* CARDS */}
-      <div className="max-w-[1000px] mx-auto flex flex-col gap-7">
-        {data.map((item, i) => (
-          <div
-            key={i}
-            style={{ transitionDelay: `${i * 120}ms` }}
-            className={`flex items-center transition-all duration-700
-              ${item.dir === "right" ? "flex-row-reverse" : "flex-row"}
-              ${
-                show
-                  ? "opacity-100 translate-x-0"
-                  : item.dir === "left"
-                  ? "opacity-0 -translate-x-10"
-                  : "opacity-0 translate-x-10"
-              }
-              max-md:flex-col max-md:gap-4`}
-          >
-            {/* CARD */}
-            <div
-              className={`flex-1 rounded-[22px] p-7 ${item.bg}
-                hover:-translate-y-1 transition-all duration-300`}
-            >
-              <h3 className={`text-[18px] font-bold mb-2 ${item.titleColor}`}>
-                {item.title}
-              </h3>
-              <p className={`text-[14px] leading-[1.8] ${item.textColor}`}>
-                {item.text}
-              </p>
-            </div>
+      {/* ✅ NO BACKGROUND COLOR */}
+      <section ref={rootRef} className="px-8 py-20 bg-transparent">
 
-            {/* NUMBER CIRCLE */}
-            <div
-              className={`w-[72px] h-[72px] rounded-full flex-shrink-0
-                flex items-center justify-center font-bold text-[18px] text-[#0F2854]                bg-white
-                ${item.dir === "left" ? "ml-5" : "mr-5"}
-                max-md:ml-0 max-md:mr-0`}
-            >
-              {item.num}
-            </div>
+        <div className="max-w-5xl mx-auto">
+
+          {/* Top label */}
+          <div className={`fade-up ${visible ? "show" : ""} flex items-center gap-3 mb-6`}>
+            <div className="w-7 h-[1px] bg-[#2C7CB0]" />
+            <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#2C7CB0]">
+              Why Choose Us
+            </span>
           </div>
-        ))}
-      </div>
-    </section>
+
+        <div className="flex flex-col md:flex-row justify-between gap-6 mb-14">
+
+            <div className={`fade-left ${visible ? "show" : ""}`}>
+              <h2 className="text-[36px] font-bold text-[#0A2A4A] leading-[1.2]">
+                Why Choose Our 
+              </h2>
+              <h2 className="text-[36px] font-bold italic text-[#2C7CB0]">
+                Fish Farm
+              </h2>
+            </div>
+
+            {/* RIGHT */}
+            <p className={`fade-right ${visible ? "show" : ""} text-[13.5px] text-[#5a7a90] max-w-xs`}>
+              Trusted by aquarium enthusiasts for quality breeding and reliable service.
+            </p>
+          </div>
+
+          {/* Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {features.map((f, i) => (
+              <div
+                key={i}
+                className={`fade-up ${visible ? "show" : ""}`}
+                style={{ transitionDelay: `${i * 0.15}s` }}
+              >
+                <FeatureCard feature={f} />
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+    </>
   );
 }
