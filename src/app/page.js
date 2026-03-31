@@ -7,6 +7,7 @@ import WhyChooseMaya from "@/Component/WhyChooseMaya";
 import CallToAction from "@/Component/CallToAction";
 import StatsSection from "@/Component/StatsSection";
 import Footer1 from "../Component/Footer1";
+import StatsScoreboard from "@/Component/StatsScoreboard";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
       <Header />
       <Hero />
       <AboutMayaFish/>
-      <StatsSection/>
+      <StatsScoreboard/>
       <KeyServices/>
       <CallToAction/>
       <WhyChooseMaya/>   
