@@ -51,7 +51,7 @@ export default function KeyServices() {
         .ks-section {
           font-family: 'Montserrat', sans-serif;
           background: transparent;
-          padding: 5.5rem 1.5rem; 
+          padding: 4rem 1.5rem; 
           position: relative;
           overflow: hidden;
         }

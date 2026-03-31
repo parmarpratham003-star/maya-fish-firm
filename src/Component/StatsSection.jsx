@@ -123,7 +123,7 @@ export default function StatsSection() {
         }
       `}</style>
 
-      <section ref={ref} className="py-12 px-4">
+      <section ref={ref} className="py-4 px-4">
         <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-10">
           {stats.map((s, i) => (
             <CircleStat
